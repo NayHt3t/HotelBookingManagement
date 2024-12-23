@@ -55,5 +55,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="{{asset('js/magnific-popup-options.js')}}"></script>
 
     <script src="{{asset('js/main.js')}}"></script>
+
+    <script src="https://kit.fontawesome.com/a67197b46d.js" crossorigin="anonymous"></script>
   </body>
 </html>
