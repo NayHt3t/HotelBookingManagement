@@ -12,11 +12,13 @@ class AuthController extends Controller
 {
     public function registerForm(){
 
-        return view('auth.register');
+        return view('auth.register1');
     }
 
     public function registration(Request $request)
     {
+        //dd('pk');
+        // dd($request->all());
         $request->validate([
             "name" => "required",
             "email" => "required|unique:users,email",
@@ -39,7 +41,7 @@ class AuthController extends Controller
 
     public function loginForm()
     {
-        return view('auth.login');
+        return view('auth.login1');
     }
 
     public function login(Request $request)

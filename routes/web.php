@@ -31,5 +31,6 @@ Route::group(['namespace'=>'App\Http\Controllers'],function(){
     Route::get('/login','AuthController@loginForm');
     Route::post('/login','AuthController@login');
     Route::get('/logout','AuthController@logout');
+   
     
 });

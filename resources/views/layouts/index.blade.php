@@ -32,7 +32,7 @@
                   <label for="checkout_date" class="font-weight-bold text-black">Check Out</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="text" id="checkout_date" class="form-control">
+                    <input type="date" id="checkout_date" class="form-control">
                   </div>
                 </div>
 
