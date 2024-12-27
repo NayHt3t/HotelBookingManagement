@@ -1,4 +1,5 @@
-@extends('layouts.auth-master')
+@extends('layouts.user_type.auth')
+
 @section('content')
 <div id="wrapper" class="">
     <div class="container">
