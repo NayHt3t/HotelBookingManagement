@@ -36,6 +36,11 @@
                
             </div>
 
+            <div class="input-field otp-field" style="display: none;">
+               <input type="text" id="otp" name="otp" placeholder="Enter OTP">
+               <span id="otpError" class="error"></span>
+            </div>
+
             <div class="input-field">
                <input class="pswrd" type="password" name="password" placeholder="Enter Password" >
                <span class="show">SHOW</span>
