@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\RoomTypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +17,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
+});
+
+Route::prefix('admin')->group(function() {
+
+    Route::resource('/categories', CategoryController::class);
+    Route::resource('/room-types', RoomTypeController::class);
+    Route::resource('/rooms', RoomController::class);
+
+
 });
 
 
