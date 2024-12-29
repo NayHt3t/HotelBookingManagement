@@ -17,4 +17,9 @@ class Promotion extends Model
     {
         return $this->belongsTo(RoomPrice::class, 'room_price_id');
     }
+
+    public function roomType()
+    {
+        return $this->hasManyThrough(RoomType::class, RoomPrice::class);
+    }
 }

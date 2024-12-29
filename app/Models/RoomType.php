@@ -12,7 +12,7 @@ class RoomType extends Model
 
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['category_id', 'name', 'facilities', 'num_rooms', 'num_people', 'extrabed_status', 'status'];
+    protected $fillable = ['category_id', 'name', 'facilities', 'num_rooms', 'num_people', 'extrabed_status', 'status','featured_image'];
 
     public function category()
     {
@@ -27,6 +27,10 @@ class RoomType extends Model
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function promotion(){
+        return $this->belongsTo(Promotion::class);
     }
 
     public function roomPrices()

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UIController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,12 @@ Route::group(['namespace'=>'App\Http\Controllers'],function(){
     Route::post('/login','AuthController@login');
     Route::get('/logout','AuthController@logout');
     Route::post('/verify-otp',[AuthController::class,'verifyOtp']);
+
+
+
+    Route::get('/promotion',[UIController::class,'promotion']);
+    Route::post('/search',[UIController::class,'search']);
+
 
 
 });

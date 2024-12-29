@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\RoomType;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -22,9 +24,11 @@ class HomeController extends Controller
         return view('nav.contact');
     }
 
-    public function rooms()
+
+    public function rooms(Request $request)
     {
-        return view('nav.rooms');
+        $rooms = RoomType::paginate(9);
+        return view('nav.rooms',['rooms'=>$rooms])->with('i',$request->input('page',-1)*5);
     }
 
     public function blog()
