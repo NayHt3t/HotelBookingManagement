@@ -115,8 +115,8 @@
                   <div class="body-text">
                     <div class="category"></div>
                     <h3 class="mb-3">{{ $promo->roomPrice->roomType->name }}</h3>
-                    <h4 class="mb-3">Price {{ $promo->roomPrice->price }}</h4>
-                    <h2 class="mb-3">Now {{ $promo->discount }} % OFF</h2>
+                    {{-- <h5 class="mb-3">Normal price - {{ $promo->roomPrice->price }}</h5> --}}
+                    <h2 class="mb-3 font-weight-bold">{{ $promo->discount }} % OFF</h2>
 
                     <p class="mb-4">Promotion start date : {{ $promo->start_date }}</p>
                     <p class="mb-4">Promotion end date : {{ $promo->end_date }}</p>
