@@ -4,36 +4,36 @@
 
 
 
-    
+
 
     <section class="site-hero overlay" data-stellar-background-ratio="0.5" style="background-image: url(images/big_image_1.jpg);">
       <div class="container">
 
-      
+
 
         <div class="row align-items-center site-hero-inner justify-content-center">
 
-       
-       
-    
+
+
+
 
           <div class="col-md-12 text-center">
 
             <div class="mb-5 element-animate">
               <h1>Welcome To Our Luxury Rooms</h1>
               <p>Discover our world's #1 Luxury Room For VIP.</p>
-              
+
             </div>
 
-           
+
 
           </div>
 
           <section class="section bg-light pb-0  roomsserach" style="border-radius :15px"  >
       <div class="container p-4 ">
-       
+
         <div class="row check-availabilty" id="next">
-          
+
           <div class="block-32" data-aos="fade-up" data-aos-offset="-200">
 
             <form action="/search" class="ml-3 mr-3" method="post">
@@ -61,18 +61,18 @@
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                       <label for="adults" class="font-weight-bold text-black">Room Type</label>
                       <div class="field-icon-wrap">
-                      
+
                       <select name="category" id="" class="form-control">
                         <option value="">Room Type</option>
                         @foreach ($categories as $category  )
 
                         <option value="{{$category->id}}">{{$category->name}}</option>
-                        
+
                         @endforeach
 
                       </select>
-                      
-                      </div>  
+
+                      </div>
                 </div>
 
                 <div class="col-md-6 col-lg-3 align-self-end">
@@ -92,65 +92,48 @@
     </section>
     <!-- END section -->
 
-   
+
 
     <section class="site-section">
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12 heading-wrap text-center">
             <h4 class="sub-heading">Our Promotions</h4>
-              <h2 class="heading">Our Recent Blog</h2>
+              <h2 class="heading">Our December Promotions</h2>
           </div>
         </div>
         <div class="row ">
-          <div class="col-md-4">
-            <div class="post-entry">
 
-           
+            @php
+                $promotions = \App\Models\Promotion::all();
+            @endphp
+
+            @foreach ($promotions as $promo )
+            <div class="col-md-4">
+                <div class="post-entry">
+                <img src="{{ $promo->roomPrice->roomType->featured_image }}" alt="Image placeholder" class="img-fluid">
+                  <div class="body-text">
+                    <div class="category"></div>
+                    <h3 class="mb-3">{{ $promo->roomPrice->roomType->name }}</h3>
+                    <h4 class="mb-3">Price {{ $promo->roomPrice->price }}</h4>
+                    <h2 class="mb-3">Now {{ $promo->discount }} % OFF</h2>
+
+                    <p class="mb-4">Promotion start date : {{ $promo->start_date }}</p>
+                    <p class="mb-4">Promotion end date : {{ $promo->end_date }}</p>
+                    <p><a href="#" class="btn btn-primary btn-outline-primary btn-sm">Book now</a></p>
+                  </div>
+                </div>
+              </div>
+            @endforeach
 
 
-            <img src="" alt="Image placeholder" class="img-fluid">
-         
-            
-            
-           
-            
-              <div class="body-text">
-                <div class="category">Room</div>
-                <h3 class="mb-3"><a href="#">New Rooms</a></h3>
-                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum deserunt illo quis similique dolore voluptatem culpa voluptas rerum, dolor totam.</p>
-                <p><a href="#" class="btn btn-primary btn-outline-primary btn-sm">Read More</a></p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="post-entry">
-              <img src="images/img_6.jpg" alt="Image placeholder" class="img-fluid">
-              <div class="body-text">
-                <div class="category">News</div>
-                <h3 class="mb-3"><a href="#">New Staff Added</a></h3>
-                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum deserunt illo quis similique dolore voluptatem culpa voluptas rerum, dolor totam.</p>
-                <p><a href="#" class="btn btn-primary btn-outline-primary btn-sm">Read More</a></p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="post-entry">
-              <img src="images/img_5.jpg" alt="Image placeholder" class="img-fluid">
-              <div class="body-text">
-                <div class="category">New Rooms</div>
-                <h3 class="mb-3"><a href="#">Big Rooms for All</a></h3>
-                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum deserunt illo quis similique dolore voluptatem culpa voluptas rerum, dolor totam.</p>
-                <p><a href="#" class="btn btn-primary btn-outline-primary btn-sm">Read More</a></p>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
     </section>
     <!-- END section -->
 
-    
+
 
     <section class="site-section bg-light">
       <div class="container">
@@ -165,18 +148,18 @@
             <div class="media d-block room mb-0">
           <figure>
 
-        
-         
 
-          <img src="" alt="Generic placeholder image" class="img-fluid">
-          
-          
-         
 
-                
+
+          <img src="https://assets.simpleviewinc.com/simpleview/image/upload/c_limit,h_1200,q_75,w_1200/v1/clients/milwaukee/VM_Hilton_Plaza_Suite_King_Room_9b5d673a-95c6-445e-ad6b-5ae85e260f18.jpg" alt="Generic placeholder image" class="img-fluid">
+
+
+
+
+
                 <div class="overlap-text">
                   <span>
-                    Featured Room 
+                    Featured Room
                     <span class="ion-ios-star"></span>
                     <span class="ion-ios-star"></span>
                     <span class="ion-ios-star"></span>
@@ -200,7 +183,7 @@
               <!-- <figure> -->
                 <div class="overlap-text">
                   <span>
-                    Hotel Room 
+                    Hotel Room
                     <span class="ion-ios-star"></span>
                     <span class="ion-ios-star"></span>
                     <span class="ion-ios-star"></span>
@@ -216,7 +199,7 @@
               <!-- <figure> -->
                 <div class="overlap-text">
                   <span>
-                    Hotel Room 
+                    Hotel Room
                     <span class="ion-ios-star"></span>
                     <span class="ion-ios-star"></span>
                     <span class="ion-ios-star"></span>
@@ -227,15 +210,15 @@
                 </div>
               <!-- </figure> -->
             </a>
-            
+
           </div>
         </div>
       </div>
     </section>
 
-   
-    
-    <section class="section-cover" data-stellar-background-ratio="0.5" 
+
+
+    <section class="section-cover" data-stellar-background-ratio="0.5"
     style="background-image: url(images/img_5.jpg);">
       <div class="container">
         <div class="row justify-content-center align-items-center intro">
@@ -248,7 +231,7 @@
       </div>
     </section>
     <!-- END section -->
-    
+
     <section class="site-section bg-light">
       <div class="container">
         <div class="row mb-5">
