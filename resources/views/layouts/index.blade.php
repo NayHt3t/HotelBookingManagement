@@ -13,10 +13,27 @@
 
         <div class="row align-items-center site-hero-inner justify-content-center">
 
-        <section class="section bg-light pb-0  roomsserach" style="border-radius :15px"  >
+       
+       
+    
+
+          <div class="col-md-12 text-center">
+
+            <div class="mb-5 element-animate">
+              <h1>Welcome To Our Luxury Rooms</h1>
+              <p>Discover our world's #1 Luxury Room For VIP.</p>
+              
+            </div>
+
+           
+
+          </div>
+
+          <section class="section bg-light pb-0  roomsserach" style="border-radius :15px"  >
       <div class="container p-4 ">
        
         <div class="row check-availabilty" id="next">
+          
           <div class="block-32" data-aos="fade-up" data-aos-offset="-200">
 
             <form action="#" class="ml-3 mr-3">
@@ -55,18 +72,7 @@
         </div>
       </div>
     </section>
-       
-    
 
-          <div class="col-md-12 text-center">
-
-            <div class="mb-5 element-animate">
-              <h1>Welcome To Our Luxury Rooms</h1>
-              <p>Discover our world's #1 Luxury Room For VIP.</p>
-              <p><a href="booknow.html" class="btn btn-primary">Book Now</a></p>
-            </div>
-
-          </div>
         </div>
       </div>
     </section>

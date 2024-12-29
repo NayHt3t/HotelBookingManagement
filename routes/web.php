@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\RoomController;
-use App\Http\Controllers\RoomTypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,11 +26,15 @@ Route::prefix('admin')->group(function() {
 
 });
 
+// Route::get('/otp', function () {
+//     return view('auth.otp');
+// });
+
 
 
 Route::group(['namespace'=>'App\Http\Controllers'],function(){
 
-    Route::get('/','HomeController@home'); 
+    Route::get('/','HomeController@home')->name('home');
     Route::get('/about','HomeController@about');
     Route::get('/contact','HomeController@contact');
     Route::get('/blog','HomeController@blog');
@@ -43,6 +44,7 @@ Route::group(['namespace'=>'App\Http\Controllers'],function(){
     Route::get('/login','AuthController@loginForm');
     Route::post('/login','AuthController@login');
     Route::get('/logout','AuthController@logout');
-   
-    
+    Route::post('/verify-otp',[AuthController::class,'verifyOtp']);
+
+
 });

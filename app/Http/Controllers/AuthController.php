@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
@@ -26,19 +28,34 @@ class AuthController extends Controller
             "confirm_password" => "required|same:password"
         ]);
 
-        $data = User::create([
+        Session([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),]);
 
-            "name" => $request->name,
-            "email" => $request->email,
-            "password" => Hash::make($request->password),
-            "role" => "user",
-            "status" => 1
 
-        ]);
 
-        auth()->login($data);
+        $otp = rand(100000,999999);
 
-        return redirect('/');
+        //Cache the otp for 5 minutes
+        Cache::put('otp_' . $request->email, $otp, now()->addMinutes(5));
+        //dd($otp);
+        Mail::raw("Your OTP is : $otp",function ($message) use ($request)
+        {
+
+            $message->to($request->email)->subject("Your OTP For Login");
+            //dd($message);
+
+
+        });
+
+       // return response()->json(['message' => 'OTP Code Send To Your Email.Please Check!']);
+
+
+
+        return view('auth.otp');
+
+        //return redirect('/');
     }
 
     public function loginForm()
@@ -68,5 +85,55 @@ class AuthController extends Controller
         Session::flush();
         Auth::logout();
         return redirect('/');
+    }
+
+
+
+
+    public function verifyOtp(Request $request)
+    {
+
+        $request->validate([
+
+
+            'otp' => 'required|numeric'
+        ]);
+
+        $request->merge([
+            'name' => session('name'),
+            'email' => session('email'),
+            'password' => session('password'),
+        ]);
+
+        //dd($request->all());
+
+        $cachedOtp = Cache::get('otp_'.$request->email);
+
+        if($cachedOtp != $request->otp)
+        {
+            return response()->json(['message' => 'Invalid or Expired OTP'],401);
+            // $token = $user->createToken('auth_token')->plainTextToken;
+
+            // return response()->json([
+            //     'message' => 'Login Successful',
+            //     'token' => $token
+            // ]);
+        }
+
+        $data = User::create([
+
+            "name" => session('name'),
+            "email" => session('email'),
+            "password" => session('password'),
+
+        ]);
+
+        //$user = User::where('email',$request->email)->first();
+        auth()->login($data);
+        Cache::forget('otp_'.$request->email);
+        //return response()->json(['message' => 'Registration Successful']);
+
+        return redirect()->route('home')->with('success','Registration Successful');
+
     }
 }
