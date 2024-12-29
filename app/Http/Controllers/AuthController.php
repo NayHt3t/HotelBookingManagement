@@ -31,7 +31,10 @@ class AuthController extends Controller
         Session([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),]);
+            'password' => Hash::make($request->password),
+            'role' => 'user',
+            'status' => 1,
+        ]);
 
 
 
@@ -103,6 +106,8 @@ class AuthController extends Controller
             'name' => session('name'),
             'email' => session('email'),
             'password' => session('password'),
+            'role' => session('role'),
+            'status' => session('status')
         ]);
 
         //dd($request->all());
@@ -125,6 +130,8 @@ class AuthController extends Controller
             "name" => session('name'),
             "email" => session('email'),
             "password" => session('password'),
+            'role' => session('role'),
+            'status' => session('status')
 
         ]);
 

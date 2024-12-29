@@ -10,7 +10,7 @@ class RoomPrice extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'room_price'; // Specify the table name if it doesn't follow Laravel's plural naming convention
+    protected $table = 'room_prices'; // Specify the table name if it doesn't follow Laravel's plural naming convention
     protected $fillable = ['room_type_id', 'price_type_id', 'price'];
 
     // Relationships

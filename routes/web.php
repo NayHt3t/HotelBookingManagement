@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,16 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('dashboard');
-});
-
-Route::prefix('admin')->group(function() {
-
-    Route::resource('/categories', CategoryController::class);
-    Route::resource('/room-types', RoomTypeController::class);
-    Route::resource('/rooms', RoomController::class);
-
-
+    return view('welcome');
 });
 
 // Route::get('/otp', function () {
