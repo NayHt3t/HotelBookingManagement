@@ -36,33 +36,47 @@
           
           <div class="block-32" data-aos="fade-up" data-aos-offset="-200">
 
-            <form action="#" class="ml-3 mr-3">
+            <form action="/search" class="ml-3 mr-3" method="post">
+              @csrf
               <div class="row">
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                   <label for="checkin_date" class="font-weight-bold text-black">Check In</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="date" id="checkin_date" class="form-control">
+                    <input type="date" name="checkin" id="checkin_date" class="form-control">
                   </div>
                 </div>
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                   <label for="checkout_date" class="font-weight-bold text-black">Check Out</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="date" id="checkout_date" class="form-control">
+                    <input type="date" name="checkout" id="checkout_date" class="form-control">
                   </div>
                 </div>
+
+                @php
+                       $categories = \App\Models\Category::all();
+                @endphp
 
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                       <label for="adults" class="font-weight-bold text-black">Room Type</label>
                       <div class="field-icon-wrap">
-                      <div class="icon"><span class="icon-calendar"></span></div>
-                      <input type="text" id="checkout_date" class="form-control">
+                      
+                      <select name="category" id="" class="form-control">
+                        <option value="">Room Type</option>
+                        @foreach ($categories as $category  )
+
+                        <option value="{{$category->id}}">{{$category->name}}</option>
+                        
+                        @endforeach
+
+                      </select>
+                      
                       </div>  
                 </div>
 
                 <div class="col-md-6 col-lg-3 align-self-end">
-                  <button class="btn btn-primary btn-block text-white">Check</button>
+                  <button type="submit" class="btn btn-primary btn-block text-white">Check</button>
                 </div>
               </div>
             </form>
@@ -82,23 +96,61 @@
 
     <section class="site-section">
       <div class="container">
-        <div class="row align-items-center">
+        <div class="row mb-5">
+          <div class="col-md-12 heading-wrap text-center">
+            <h4 class="sub-heading">Our Promotions</h4>
+              <h2 class="heading">Our Recent Blog</h2>
+          </div>
+        </div>
+        <div class="row ">
           <div class="col-md-4">
-            <div class="heading-wrap text-center element-animate">
-              <h4 class="sub-heading">Stay with our luxury rooms</h4>
-              <h2 class="heading">Stay and Enjoy</h2>
-              <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus illo similique natus, a recusandae? Dolorum, unde a quibusdam est? Corporis deleniti obcaecati quibusdam inventore fuga eveniet! Qui delectus tempore amet!</p>
-              <p><a href="#" class="btn btn-primary btn-sm">More About Us</a></p>
+            <div class="post-entry">
+
+           
+
+
+            <img src="" alt="Image placeholder" class="img-fluid">
+         
+            
+            
+           
+            
+              <div class="body-text">
+                <div class="category">Room</div>
+                <h3 class="mb-3"><a href="#">New Rooms</a></h3>
+                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum deserunt illo quis similique dolore voluptatem culpa voluptas rerum, dolor totam.</p>
+                <p><a href="#" class="btn btn-primary btn-outline-primary btn-sm">Read More</a></p>
+              </div>
             </div>
           </div>
-          <div class="col-md-1"></div>
-          <div class="col-md-7">
-            <img src="images/f_img_1.png" alt="Image placeholder" class="img-md-fluid">
+          <div class="col-md-4">
+            <div class="post-entry">
+              <img src="images/img_6.jpg" alt="Image placeholder" class="img-fluid">
+              <div class="body-text">
+                <div class="category">News</div>
+                <h3 class="mb-3"><a href="#">New Staff Added</a></h3>
+                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum deserunt illo quis similique dolore voluptatem culpa voluptas rerum, dolor totam.</p>
+                <p><a href="#" class="btn btn-primary btn-outline-primary btn-sm">Read More</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="post-entry">
+              <img src="images/img_5.jpg" alt="Image placeholder" class="img-fluid">
+              <div class="body-text">
+                <div class="category">New Rooms</div>
+                <h3 class="mb-3"><a href="#">Big Rooms for All</a></h3>
+                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum deserunt illo quis similique dolore voluptatem culpa voluptas rerum, dolor totam.</p>
+                <p><a href="#" class="btn btn-primary btn-outline-primary btn-sm">Read More</a></p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
     <!-- END section -->
+
+    
 
     <section class="site-section bg-light">
       <div class="container">
@@ -111,8 +163,17 @@
         <div class="row ">
           <div class="col-md-7">
             <div class="media d-block room mb-0">
-              <figure>
-                <img src="images/img_1.jpg" alt="Generic placeholder image" class="img-fluid">
+          <figure>
+
+        
+         
+
+          <img src="" alt="Generic placeholder image" class="img-fluid">
+          
+          
+         
+
+                
                 <div class="overlap-text">
                   <span>
                     Featured Room 
@@ -134,7 +195,8 @@
             </div>
           </div>
           <div class="col-md-5 room-thumbnail-absolute">
-            <a href="#" class="media d-block room bg first-room" style="background-image: url(images/img_2.jpg); ">
+            <a href="#" class="media d-block room bg first-room"
+             style="background-image: url(images/img_2.jpg); ">
               <!-- <figure> -->
                 <div class="overlap-text">
                   <span>
@@ -173,7 +235,8 @@
 
    
     
-    <section class="section-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/img_5.jpg);">
+    <section class="section-cover" data-stellar-background-ratio="0.5" 
+    style="background-image: url(images/img_5.jpg);">
       <div class="container">
         <div class="row justify-content-center align-items-center intro">
           <div class="col-md-9 text-center element-animate">
