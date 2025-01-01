@@ -45,7 +45,7 @@ class CategoryController extends Controller
             [
                 "name"=>"required"
             ],
-            ["name.requried"=>"Enter Category name"]
+            ["name.required"=>"Enter Category name"]
             );
             Category::create($request->except('_token'));
             return redirect()->route('categories.index')->with('success','Category is successfully added');
@@ -93,7 +93,7 @@ class CategoryController extends Controller
             [
                 "name"=>"required"
             ],
-            ["name.requried"=>"Enter Category name"]
+            ["name.required"=>"Enter Category name"]
             );
             
             $category=Category::find($id);
@@ -110,22 +110,26 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+{
+    // Find the category
+    $category = Category::find($id);
 
-        //
-        $category = Category::find($id);
-
-        try{
-            $category->delete();
-        }
-        catch(QueryException $e){
-
-            return redirect()->route('categories.index')->with(["success"=>"Category can't be deleted ."]);
-
-        }
-       
-        return redirect()->route('categories.index')->with(["success"=>"Category is successfully deleted."]);
-
+    if (!$category) {
+        return redirect()->route('categories.index')->with(['unsuccess' => 'Category not found.']);
     }
+
+    // Check if the category has related RoomType records
+    if ($category->roomTypes()->exists()) {
+        return redirect()->route('categories.index')->with(['unsuccess' => "Category can't be deleted because it has associated Room Types."]);
+    }
+
+    try {
+        // Delete the category
+        $category->delete();
+        return redirect()->route('categories.index')->with(['success' => 'Category is successfully deleted.']);
+    } catch (QueryException $e) {
+        return redirect()->route('categories.index')->with(['unsuccess' => "An error occurred while deleting the category."]);
+    }
+}
+
 }

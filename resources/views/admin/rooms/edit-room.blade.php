@@ -1,5 +1,4 @@
-@extends('layouts.auth-master')
-
+@extends('layouts.user_type.auth') 
 @section('content')
 
 <div id="content">
@@ -49,17 +48,34 @@
                         @enderror
                     </div>
 
-                    <!-- Status -->
-                    <div class="form-group mt-3">
-                        <label for="status">Status</label>
-                        <select name="status" id="status" class="form-control">
-                            <option value="available" {{ $room->status == 'available' ? 'selected' : '' }}>Available</option>
-                            <option value="unavailable" {{ $room->status == 'unavailable' ? 'selected' : '' }}>Unavailable</option>
-                        </select>
-                        @error('status')
+                     <!-- Room Location -->
+                     <div class="form-group mt-3">
+                        <label for="location">Location</label>
+                        <input 
+                            type="text" 
+                            name="room_number" 
+                            id="room_number" 
+                            class="form-control" 
+                            value="{{ old('location', $room->location) }}" 
+                            placeholder="Enter room number" 
+                            required
+                        >
+                        @error('location')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+
+                    <!-- Status -->
+                    <div class="form-group mt-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="0" {{ $room->status == 0 ? 'selected' : '' }}>Unavailable</option>
+                                <option value="1" {{ $room->status == 1 ? 'selected' : '' }}>Available</option>
+                                <option value="2" {{ $room->status == 2 ? 'selected' : '' }}>Booking</option>
+                            </select>
+                            @error('status')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
 
                     <!-- Submit and Cancel buttons -->
                     <div class="form-group mt-4">

@@ -1,4 +1,4 @@
-@extends('layouts.auth-master')
+@extends('layouts.user_type.auth') 
 @section('content')
 
 
@@ -12,7 +12,7 @@
                 @csrf
                     <div class="mt-4">
                     <label for="" class="form-label"> Name</label>
-                    <input type="text" name="name" id="" class="form-control">
+                    <input type="text" name="name" id="" class="form-control" value="{{ old('name') }}">
                     @error('name')
                     <span class="text-danger">{{$message}}</span>
                     @enderror

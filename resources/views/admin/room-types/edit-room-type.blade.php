@@ -1,115 +1,123 @@
-@extends('layouts.auth-master')
+@extends('layouts.user_type.auth') 
 @section('content')
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Edit Room Type</h1>
 
-<div id="content">
-    <div class="container">
-        <div class="row mt-5">
-            <div class="col-md-8 offset-md-2">
-                <h2>Edit Room Type</h2>
-                <form 
-                    action="{{route('room-types.update', $roomType->id) }}" 
-                    method="POST"
-                >
-                    @csrf
-                    @method('PUT')
-                  
-                    <div class="form-group mt-3">
-                        <label for="category_id">Category</label>
-                        <select name="category_id" id="category_id" class="form-control">
-                            <option value="">Select a category</option>
-                            @foreach($categories as $category)
-                                <option 
-                                    value="{{ $category->id }}" 
-                                    {{ $roomType->category_id == $category->id ? 'selected' : '' }}
-                                >
-                                    {{ $category->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('category_id')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+    <div class="card shadow-lg">
+        <div class="card-body" style="max-height: 70vh; overflow-y: auto;">
+            <form action="{{ route('room-types.update',$roomType->id) }}" method="POST">
+            @method("put")
+            @csrf
+
+                <div class="row">
+                    <!-- Column 1 -->
+                    <div class="col-md-6">
+
+                        <!-- Name -->
+                        <div class="form-group mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" name="name" id="name" class="form-control" value="{{$roomType->name}}" required>
+                            @error('name')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
+
+                        <!-- Number of Rooms -->
+                        <div class="form-group mb-3">
+                            <label for="num_rooms" class="form-label">Number of Rooms</label>
+                            <input type="number" name="num_rooms" id="num_rooms" class="form-control" value="{{ $roomType->num_rooms }}" required>
+                            @error('num_rooms')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Extra Bed Status -->
+                        <div class="form-group mb-3">
+                            <label for="extrabed_status" class="form-label">Extra Bed Available</label>
+                            <select name="extrabed_status" id="extrabed_status" class="form-control">
+                                <option value="1" {{ $roomType->extrabed_status == 1 ? 'selected' : '' }}>Yes</option>
+                                <option value="0" {{ $roomType->extrabed_status == 0 ? 'selected' : '' }}>No</option>
+                            </select>
+                            @error('extrabed_status')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
                     </div>
 
-                    <div class="form-group mt-3">
-                        <label for="name">Room Type Name</label>
-                        <input 
-                            type="text" 
-                            name="name" 
-                            id="name" 
-                            class="form-control" 
-                            value="{{ old('name', $roomType->name) }}" 
-                            placeholder="Enter room type name" 
-                            required
-                        >
-                        @error('name')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
+                    <!-- Column 2 -->
+                    <div class="col-md-6">
 
-                    <div class="form-group mt-3">
-                        <label for="facilities">Facilities</label>
-                        <textarea 
-                            name="facilities" 
-                            id="facilities" 
-                            class="form-control" 
-                            rows="3" 
-                            placeholder="List facilities for the room"
-                        >{{ old('facilities', $roomType->facilities) }}</textarea>
-                        @error('facilities')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
 
-                    <div class="form-group mt-3">
-                        <label for="num_rooms">Number of Rooms</label>
-                        <input 
-                            type="number" 
-                            name="num_rooms" 
-                            id="num_rooms" 
-                            class="form-control" 
-                            value="{{ old('num_rooms', $roomType->num_rooms) }}" 
-                            required
-                        >
-                        @error('num_rooms')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
+                        <!-- Category -->
+                        <div class="form-group mb-3">
+                            <label for="category_id" class="form-label">Category</label>
+                            <select name="category_id" id="category_id" class="form-control" required>
+                                <option value="">Select Category</option>
+                                @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
 
-                    <div class="form-group mt-3">
-                        <label for="num_people">Number of People</label>
-                        <input 
-                            type="number" 
-                            name="num_people" 
-                            id="num_people" 
-                            class="form-control" 
-                            value="{{ old('num_people', $roomType->num_people) }}" 
-                            required
-                        >
-                        @error('num_people')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
+                                @if($roomType->category->id == $category->id)
+                                <option value="{{$category->id}}" selected>.{{$category->name}}</option>
+                                @endif
 
-                    <div class="form-group mt-3">
-                        <label for="extrabed_status">Extra Bed Status</label>
-                        <select name="extrabed_status" id="extrabed_status" class="form-control">
-                            <option value="1" {{ $roomType->extrabed_status ? 'selected' : '' }}>Available</option>
-                            <option value="0" {{ !$roomType->extrabed_status ? 'selected' : '' }}>Not Available</option>
-                        </select>
-                        @error('extrabed_status')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
+                                @endforeach
+                            </select>
+                            @error('category_id')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                    <div class="form-group mt-4">
-                        <button type="submit" class="btn btn-success">Update</button>
-                        <a href="{{ route('room-types.index') }}" class="btn btn-secondary">Cancel</a>
+
+
+                        <!-- Number of People -->
+                        <div class="form-group mb-3">
+                            <label for="num_people" class="form-label">Number of People</label>
+                            <input type="number" name="num_people" id="num_people" class="form-control" value="{{ $roomType->num_people }}" required>
+                            @error('num_people')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Status -->
+                        <div class="form-group mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="0" {{ $roomType->status == 0 ? 'selected' : '' }}>Unavailable</option>
+                                <option value="1" {{ $roomType->status == 1 ? 'selected' : '' }}>Available</option>
+                                <option value="2" {{ $roomType->status == 2 ? 'selected' : '' }}>Booking</option>
+                            </select>
+                            @error('status')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
-                </form>
-            </div>
+                </div>
+
+                <!-- Facilities -->
+                <div class="form-group mb-6">
+                    <label for="facilities" class="form-label ">Facilities</label>
+                    <textarea name="facilities" id="facilities" class="form-control " style="resize: none;" required>{{ $roomType->facilities }}</textarea>
+                    @error('facilities')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+
+
+
+
+                <div class="d-flex justify-content-center align-items-center mt-3 ">
+                    <button class="btn btn-primary w-25">Submit</button>
+                </div>
+
+
+
+            </form>
         </div>
     </div>
 </div>
-
 @endsection

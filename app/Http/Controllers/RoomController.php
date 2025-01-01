@@ -41,28 +41,39 @@ class RoomController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+{
+    // Validate the request
+    $request->validate([
+        'room_type_id' => 'required|exists:room_types,id',
+        'room_number' => 'required|string|max:255',
+        'location' => 'required|string|max:255',
+        'status' => 'required|in:0,1,2',
+    ], [
+        'room_type_id.required' => 'Select Room Type',
+        'room_number.required' => 'Enter Room number',
+        'location.required' => 'Enter Room location',
+        'status.required' => 'Select Status',
+    ]);
 
-        $request->validate([
-            'room_type_id' => 'required|exists:room_types,id',
-            'room_number' => 'required|string|max:255',
-            'status'=>'required|string|max:255'
-        ],
-        [
-            'room_type_id.required'=>'Select Room Type',
-             'room_number.required'=>'Enter room number',
-              'status.required'=>'Select Status'
+    $currentRoomTypeId = $request->input('room_type_id');
+    $roomType = RoomType::findOrFail($currentRoomTypeId);
 
-        ]);
+    // Count the current number of rooms for the given room type
+    $currentRoomCount = Room::where('room_type_id', $currentRoomTypeId)->count();
 
+    if ($roomType->num_rooms > $currentRoomCount) {
+        // Create the room
         Room::create($request->except('_token'));
 
-        // Redirect to the categories index page with a success message
+        // Redirect with success message
         return redirect()->route('rooms.index')->with('success', 'Room is successfully added.');
-
-
+    } else {
+        // Redirect with error message
+        return redirect()->route('rooms.index')
+            ->with('unsuccess', 'Only ' . $roomType->num_rooms . ' rooms can be created for this type.');
     }
+}
+
 
     /**
      * Display the specified resource.

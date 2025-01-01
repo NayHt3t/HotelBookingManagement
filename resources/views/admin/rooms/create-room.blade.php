@@ -1,5 +1,4 @@
-@extends('layouts.auth-master')
-
+@extends('layouts.user_type.auth') 
 @section('content')
 
 <div id="content">
@@ -36,12 +35,23 @@
                         @enderror
                     </div>
 
+                    <!-- Location -->
+                    <div class="form-group mt-3">
+                        <label for="room_number">Location</label>
+                        <input type="text" name="location" id="room_number" class="form-control" 
+                            value="{{ old('location')}}" required>
+                        @error('location')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
+                    </div>
+
                     <!-- Status -->
                     <div class="form-group mt-3">
                         <label for="status">Status</label>
                         <select name="status" id="status" class="form-control">
-                            <option value="available" >Available</option>
-                            <option value="unavailable">Unavailable</option>
+                            <option value="1" >Available</option>
+                            <option value="0">Unavailable</option>
+                            <option value="2">Booking</option>
                         </select>
                         @error('status')
                             <span class="text-danger">{{ $message }}</span>
