@@ -1,4 +1,4 @@
-@extends('layouts.user_type.auth') 
+@extends('layouts.user_type.auth')
 @section('content')
 <div id="wrapper" class="">
     <div class="container">
@@ -17,7 +17,7 @@
                         @enderror
                     </div>
                     <div class="mt-4">
-                        <button class="btn btn-primary" type="submit">Update</button>
+                        <button class="btn btn-primary btn-md active px-3 text-white" type="submit">Update</button>
                         <a href="{{route('categories.index')}}" class="btn btn primary">Cancel</a>
                     </div>
 

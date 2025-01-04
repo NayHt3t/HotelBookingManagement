@@ -1,4 +1,4 @@
-@extends('layouts.user_type.auth') 
+@extends('layouts.user_type.auth')
 @section('content')
 <div class="container mt-5">
     <h1 class="text-center mb-4">Create Room Type</h1>
@@ -131,7 +131,7 @@
 
 
                 <div class="d-flex justify-content-center align-items-center ">
-                <button class="btn btn-primary w-25">Submit</button>
+                <button class="btn btn-primary btn-md active px-3 text-white">Submit</button>
                 </div>
 
 

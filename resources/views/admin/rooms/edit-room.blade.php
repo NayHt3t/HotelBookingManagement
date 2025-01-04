@@ -1,4 +1,4 @@
-@extends('layouts.user_type.auth') 
+@extends('layouts.user_type.auth')
 @section('content')
 
 <div id="content">
@@ -18,8 +18,8 @@
                         <select name="room_type_id" id="room_type_id" class="form-control">
                             <option value="">Select Room Type</option>
                             @foreach($roomTypes as $roomType)
-                                <option 
-                                    value="{{ $roomType->id }}" 
+                                <option
+                                    value="{{ $roomType->id }}"
                                     {{ $room->room_type_id == $roomType->id ? 'selected' : '' }}
                                 >
                                     {{ $roomType->name }}
@@ -34,13 +34,13 @@
                     <!-- Room Number -->
                     <div class="form-group mt-3">
                         <label for="room_number">Room Number</label>
-                        <input 
-                            type="text" 
-                            name="room_number" 
-                            id="room_number" 
-                            class="form-control" 
-                            value="{{ old('room_number', $room->room_number) }}" 
-                            placeholder="Enter room number" 
+                        <input
+                            type="text"
+                            name="room_number"
+                            id="room_number"
+                            class="form-control"
+                            value="{{ old('room_number', $room->room_number) }}"
+                            placeholder="Enter room number"
                             required
                         >
                         @error('room_number')
@@ -51,13 +51,13 @@
                      <!-- Room Location -->
                      <div class="form-group mt-3">
                         <label for="location">Location</label>
-                        <input 
-                            type="text" 
-                            name="room_number" 
-                            id="room_number" 
-                            class="form-control" 
-                            value="{{ old('location', $room->location) }}" 
-                            placeholder="Enter room number" 
+                        <input
+                            type="text"
+                            name="room_number"
+                            id="room_number"
+                            class="form-control"
+                            value="{{ old('location', $room->location) }}"
+                            placeholder="Enter room number"
                             required
                         >
                         @error('location')
@@ -79,7 +79,7 @@
 
                     <!-- Submit and Cancel buttons -->
                     <div class="form-group mt-4">
-                        <button type="submit" class="btn btn-success">Update Room</button>
+                        <button type="submit" class="btn btn-primary btn-md active px-3 text-white">Update Room</button>
                         <a href="{{ route('rooms.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>

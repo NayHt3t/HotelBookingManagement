@@ -1,4 +1,4 @@
-@extends('layouts.user_type.auth') 
+@extends('layouts.user_type.auth')
 @section('content')
 
 
@@ -18,9 +18,9 @@
                     @enderror
                     </div>
                     <div class="mt-4">
-                        <button class="btn btn-primary">Add Category</button>
+                        <button class="btn btn-primary btn-md active px-3 text-white">Add Category</button>
                     </div>
-                    
+
                 </form>
             </div>
         </div>

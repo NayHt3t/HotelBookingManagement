@@ -1,4 +1,4 @@
-@extends('layouts.user_type.auth') 
+@extends('layouts.user_type.auth')
 @section('content')
 
 
@@ -7,13 +7,13 @@
 
     <div class="row ">
         <div class="col-md-3">
-            <a href="{{ route('room-types.create') }}" class="btn btn-primary">Add New Room Types</a>
+            <a href="{{ route('room-types.create') }}" class="btn btn-primary btn-md active px-3 text-white">Add New Room Types</a>
         </div>
     </div>
 
     <div class="row mt-1">
         <div class="col-md-12">
-           
+
                 <div class="text-center">
 
                     @if($message = Session::get('success'))

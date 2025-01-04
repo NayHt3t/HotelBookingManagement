@@ -1,11 +1,11 @@
-@extends('layouts.user_type.auth') 
+@extends('layouts.user_type.auth')
 @section('content')
 
 <div id="content">
     <div class="container">
         <div class="row mt-5">
             <div class="col-md-3">
-                <a href="{{route('categories.create')}}" class="btn btn-primary">Add New Category</a>
+                <a href="{{route('categories.create')}}" class="btn btn-primary btn-md active px-3 text-white">Add New Category</a>
             </div>
 
         </div>

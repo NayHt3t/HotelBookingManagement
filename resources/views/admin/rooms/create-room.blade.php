@@ -1,4 +1,4 @@
-@extends('layouts.user_type.auth') 
+@extends('layouts.user_type.auth')
 @section('content')
 
 <div id="content">
@@ -28,7 +28,7 @@
                     <!-- Room Number -->
                     <div class="form-group mt-3">
                         <label for="room_number">Room Number</label>
-                        <input type="text" name="room_number" id="room_number" class="form-control" 
+                        <input type="text" name="room_number" id="room_number" class="form-control"
                             value="{{ old('room_number')}}" required>
                         @error('room_number')
                             <span class="text-danger">{{$message}}</span>
@@ -38,7 +38,7 @@
                     <!-- Location -->
                     <div class="form-group mt-3">
                         <label for="room_number">Location</label>
-                        <input type="text" name="location" id="room_number" class="form-control" 
+                        <input type="text" name="location" id="room_number" class="form-control"
                             value="{{ old('location')}}" required>
                         @error('location')
                             <span class="text-danger">{{$message}}</span>
@@ -60,7 +60,7 @@
 
                     <!-- Submit Button -->
                     <div class="form-group mt-4">
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-md active px-3 text-white">Submit</button>
                         <a href="{{ route('rooms.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
