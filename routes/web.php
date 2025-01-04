@@ -7,7 +7,10 @@ use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\PriceTypeController;
+use App\Http\Controllers\RoomPriceController;
 use App\Http\Controllers\RoomTypeController;
+use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\SessionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -42,6 +45,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/room-types/{id}/remove-gallery/{image}', [RoomTypeController::class, 'removeGallery'])->name('room-types.removeGallery');
     Route::patch('/room-types/{id}/update-featured-image', [RoomTypeController::class, 'updateFeaturedImage'])->name('room-types.updateFeaturedImage');
     Route::post('/room-types/{id}/add-gallery', [RoomTypeController::class, 'addGallery'])->name('room-types.addGallery');
+
+    Route::resource('/price-types', PriceTypeController::class);
+    Route::resource('/room-prices', RoomPriceController::class);
+    Route::resource('/facilities', FacilityController::class);
 
 	Route::get('billing', function () {
 		return view('billing');
