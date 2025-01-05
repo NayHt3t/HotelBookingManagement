@@ -99,7 +99,7 @@
         <div class="row mb-5">
           <div class="col-md-12 heading-wrap text-center">
             <h4 class="sub-heading">Our Promotions</h4>
-              <h2 class="heading">Our December Promotions</h2>
+              <h2 class="heading">Our Available Promotions</h2>
           </div>
         </div>
         <div class="row ">
@@ -108,7 +108,7 @@
                 $promotions = \App\Models\Promotion::all();
             @endphp
 
-            @foreach ($promotions as $promo )
+            @forelse ($promotions as $promo)
             <div class="col-md-4">
                 <div class="post-entry">
                 <img src="{{ $promo->roomPrice->roomType->featured_image }}" alt="Image placeholder" class="img-fluid">
@@ -118,13 +118,21 @@
                     {{-- <h5 class="mb-3">Normal price - {{ $promo->roomPrice->price }}</h5> --}}
                     <h2 class="mb-3 font-weight-bold">{{ $promo->discount }} % OFF</h2>
 
-                    <p class="mb-4">Promotion start date : {{ $promo->start_date }}</p>
-                    <p class="mb-4">Promotion end date : {{ $promo->end_date }}</p>
+                    <p class="mb-4">start date : {{ date('j F Y',strtotime($promo->start_date)) }}</p>
+                    <p class="mb-4">end date : {{ date('j F Y',strtotime($promo->end_date)) }}</p>
                     <p><a href="#" class="btn btn-primary btn-outline-primary btn-sm">Book now</a></p>
                   </div>
                 </div>
               </div>
-            @endforeach
+            @empty
+
+
+                <div class="col-md-12 heading-wrap text-center">
+                    <h2 class="heading text-black-50">There is no promotions currently available now....</h2>
+                </div>
+
+
+            @endforelse
 
 
 
