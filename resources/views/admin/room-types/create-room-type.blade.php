@@ -77,6 +77,7 @@
 
 
 
+
                         <!-- Number of People -->
                         <div class="form-group mb-3">
                             <label for="num_people" class="form-label">Number of People</label>

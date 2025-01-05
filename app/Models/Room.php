@@ -14,7 +14,6 @@ class Room extends Model
     {
         return $this->belongsTo(RoomType::class);
     }
-
     public function guest()
     {
         return $this->belongsTo(Guest::class);
