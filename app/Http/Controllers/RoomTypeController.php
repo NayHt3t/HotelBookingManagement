@@ -53,8 +53,8 @@ class RoomTypeController extends Controller
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
             'facilities' => 'required|string',
-            'num_rooms' => 'required|integer',
-            'num_people' => 'required|integer',
+            'description' => 'required|string',
+            'num_people' => 'required|integer|min:1',
             'extrabed_status' => 'required|boolean',
             'featured_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'gallery' => 'required|array',
@@ -94,7 +94,7 @@ class RoomTypeController extends Controller
             'category_id' => $request->category_id,
             'name' => $request->name,
             'facilities' => $request->facilities,
-            'num_rooms' => $request->num_rooms,
+            'description' => $request->description,
             'num_people' => $request->num_people,
             'extrabed_status' => $request->extrabed_status,
             'featured_image' => $featuredImageName,
@@ -169,8 +169,8 @@ class RoomTypeController extends Controller
         'category_id' => 'required|exists:categories,id',
         'name' => 'required|string|max:255',
         'facilities' => 'required|string',
-        'num_rooms' => 'required|integer',
-        'num_people' => 'required|integer',
+        'description' => 'required|string',
+        'num_people' => 'required|integer|min:1',
         'extrabed_status' => 'required|boolean',
         'status' => 'required|in:0,1,2'
     ]);
@@ -179,7 +179,7 @@ class RoomTypeController extends Controller
             $roomType->name=$request->input('name');
             $roomType->category_id=$request->input('category_id');
             $roomType->facilities=$request->input('facilities');
-            $roomType->num_rooms=$request->input('num_rooms');
+            $roomType->description=$request->input('description');
             $roomType->num_people=$request->input('num_people');
             $roomType->extrabed_status=$request->input('extrabed_status');
             $roomType->status=$request->input('status');

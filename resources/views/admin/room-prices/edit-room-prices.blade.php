@@ -66,9 +66,9 @@
                         @enderror
                     </div>
 
-                    <div class="form-group mt-4">
-                        <button type="submit" class="btn btn-success">Update</button>
+                    <div class="form-group mt-4 ">
                         <a href="{{ route('room-prices.index') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-success">Update</button>
                     </div>
                 </form>
             </div>

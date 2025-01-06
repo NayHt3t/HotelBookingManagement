@@ -49,6 +49,8 @@
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
 
+                                
+
                                 <button type="button" class="btn btn-outline-danger rounded-pill"
                                     data-bs-toggle="modal"
                                     data-bs-target="#deleteModal{{ $room->id }}">
@@ -67,10 +69,11 @@
                                                 Are you sure you want to delete room <strong>{{ $room->room_number }}</strong>?
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                                 <form action="{{ route('rooms.destroy', $room->id) }}" method="POST">
                                                     @method('delete')
                                                     @csrf
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
                                             </div>

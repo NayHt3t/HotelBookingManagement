@@ -13,7 +13,7 @@ class RoomType extends Model
     use HasFactory, SoftDeletes;
 
 
-    protected $fillable = ['category_id', 'name', 'facilities', 'num_rooms', 'num_people', 'extrabed_status','description', 'status'];
+    protected $fillable = ['category_id', 'name', 'facilities', 'num_rooms', 'num_people', 'extrabed_status','gallery','featured_image','description', 'status'];
 
     public function category()
     {

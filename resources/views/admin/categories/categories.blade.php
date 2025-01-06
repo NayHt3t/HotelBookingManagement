@@ -1,23 +1,55 @@
-@extends('layouts.user_type.auth') 
+@extends('layouts.user_type.auth')
 @section('content')
 
 <div id="content">
     <div class="container">
         <div class="row mt-5">
             <div class="col-md-3">
+                <!-- 
                 <a href="{{route('categories.create')}}" class="btn btn-primary">Add New Category</a>
+ -->
+                <button class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#addCategoryModal">Add New Category</button>
+
+                <!-- Add Category Modal -->
+                <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategryModal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="">Add Category</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="p-3 d-flex justify-content-center">
+                                <form action="{{route('categories.store')}}" method="post" class="w-90">
+                                    @csrf
+                                    <input type="text" name="name" id="" class="form-control" value="{{ old('name') }}" placeholder="Enter Category Name">
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
 
         </div>
 
         <div class="row mt-1">
-            <di class="col-md-8">
+            <di class="col-md-12">
                 <div class="row">
-                    <div class="col-md-3"></div>
+
 
                     <div class="mt-2 mb-3 text-center">
 
-
+                        @error('name')
+                        <span class="text-danger">{{$message}}</span>
+                        @enderror
                         @if($message = Session::get('success'))
                         <span class="text-success">{{ $message }}</span>
                         @endif
@@ -46,9 +78,12 @@
                             <td>{{++ $i }}</td>
                             <td>{{ $category->name }}</td>
                             <td>
-                                <a href="{{ route('categories.edit', $category) }}" class="btn btn-outline-success mr-2 rounded-pill">
+                                <!-- <a href="{{ route('categories.edit', $category) }}" class="btn btn-outline-success mr-2 rounded-pill">
                                     <i class="fa-solid fa-pen-to-square"></i>
-                                </a>
+                                </a> -->
+
+                                <a class="btn btn-outline-success mr-2 rounded-pill" data-bs-toggle="modal"
+                                    data-bs-target="#editCategoryModal"> <i class="fa-solid fa-pen-to-square"></i> </a>
 
                                 <!-- Delete Button (Opens the Modal) -->
                                 <button type="button" class="btn btn-outline-danger rounded-pill"
@@ -58,6 +93,34 @@
                                 </button>
                             </td>
                         </tr>
+
+                        <!-- Edit Category Modal -->
+                        <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategryModal" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="">Edit Category</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="p-3  justify-content-center">
+                                        <form action="{{route('categories.update',$category->id)}}" method="post" class="w-90">
+                                        @method("put")
+                                        @csrf
+
+                                        <input type="text" name="name" id="" class="form-control" value="{{$category->name}}">
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
 
                         <!-- Delete Confirmation Modal -->
                         <div class="modal fade" id="deleteModal{{ $category->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $category->id }}" aria-hidden="true">
@@ -81,6 +144,8 @@
                                 </div>
                             </div>
                         </div>
+
+
 
                         @empty
                         <tr>

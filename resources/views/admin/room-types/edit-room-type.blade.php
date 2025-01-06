@@ -1,13 +1,14 @@
 @extends('layouts.user_type.auth') 
 @section('content')
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Edit Room Type</h1>
 
+<div class="container">
+    <h1 class="text-center ">Edit Room Type</h1>
+    <a href="{{ route('room-types.index') }}" class="btn btn-outline-success mb-2"><i class="fas fa-arrow-left"></i></a>
     <div class="card shadow-lg">
         <div class="card-body" style="max-height: 70vh; overflow-y: auto;">
             <form action="{{ route('room-types.update',$roomType->id) }}" method="POST">
-            @method("put")
-            @csrf
+                @method("put")
+                @csrf
 
                 <div class="row">
                     <!-- Column 1 -->
@@ -24,23 +25,20 @@
 
 
 
-                        <!-- Number of Rooms -->
-                        <div class="form-group mb-3">
-                            <label for="num_rooms" class="form-label">Number of Rooms</label>
-                            <input type="number" name="num_rooms" id="num_rooms" class="form-control" value="{{ $roomType->num_rooms }}" required>
-                            @error('num_rooms')
+                        <!-- Facilities -->
+                        <div class="form-group mb-6">
+                            <label for="facilities" class="form-label ">Facilities</label>
+                            <textarea name="facilities" id="facilities" class="form-control" style="resize: none;" required>{{ $roomType->facilities }}</textarea>
+                            @error('facilities')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Extra Bed Status -->
-                        <div class="form-group mb-3">
-                            <label for="extrabed_status" class="form-label">Extra Bed Available</label>
-                            <select name="extrabed_status" id="extrabed_status" class="form-control">
-                                <option value="1" {{ $roomType->extrabed_status == 1 ? 'selected' : '' }}>Yes</option>
-                                <option value="0" {{ $roomType->extrabed_status == 0 ? 'selected' : '' }}>No</option>
-                            </select>
-                            @error('extrabed_status')
+                        <!-- Descriptions -->
+                        <div class="form-group mb-6">
+                            <label for="description" class="form-label ">Description</label>
+                            <textarea name="description" id="description" class="form-control" rows="4" style="resize: none;" required>{{ $roomType->description}}</textarea>
+                            @error('description')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -61,7 +59,7 @@
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
 
                                 @if($roomType->category->id == $category->id)
-                                <option value="{{$category->id}}" selected>.{{$category->name}}</option>
+                                <option value="{{$category->id}}" selected>{{$category->name}}</option>
                                 @endif
 
                                 @endforeach
@@ -72,7 +70,6 @@
                         </div>
 
 
-
                         <!-- Number of People -->
                         <div class="form-group mb-3">
                             <label for="num_people" class="form-label">Number of People</label>
@@ -81,6 +78,19 @@
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        <!-- Extra Bed Status -->
+                        <div class="form-group mb-2">
+                            <label for="extrabed_status" class="form-label">Extra Bed Available</label>
+                            <select name="extrabed_status" id="extrabed_status" class="form-control">
+                                <option value="1" {{ $roomType->extrabed_status == 1 ? 'selected' : '' }}>Yes</option>
+                                <option value="0" {{ $roomType->extrabed_status == 0 ? 'selected' : '' }}>No</option>
+                            </select>
+                            @error('extrabed_status')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
 
                         <!-- Status -->
                         <div class="form-group mb-3">
@@ -94,21 +104,11 @@
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
+
+
                     </div>
                 </div>
-
-                <!-- Facilities -->
-                <div class="form-group mb-6">
-                    <label for="facilities" class="form-label ">Facilities</label>
-                    <textarea name="facilities" id="facilities" class="form-control " style="resize: none;" required>{{ $roomType->facilities }}</textarea>
-                    @error('facilities')
-                    <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-
-
-
 
                 <div class="d-flex justify-content-center align-items-center mt-3 ">
                     <button class="btn btn-primary w-25">Submit</button>
