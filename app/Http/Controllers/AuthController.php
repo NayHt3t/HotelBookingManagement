@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,6 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'user',
             'status' => 1,
         ]);
 
@@ -106,7 +106,6 @@ class AuthController extends Controller
             'name' => session('name'),
             'email' => session('email'),
             'password' => session('password'),
-            'role' => session('role'),
             'status' => session('status')
         ]);
 
@@ -125,12 +124,11 @@ class AuthController extends Controller
             // ]);
         }
 
-        $data = User::create([
+        $data = Customer::create([
 
             "name" => session('name'),
             "email" => session('email'),
             "password" => session('password'),
-            'role' => session('role'),
             'status' => session('status')
 
         ]);
