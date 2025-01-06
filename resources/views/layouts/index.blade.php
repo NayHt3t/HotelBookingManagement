@@ -99,17 +99,25 @@
         <div class="row mb-5">
           <div class="col-md-12 heading-wrap text-center">
             <h4 class="sub-heading">Our Promotions</h4>
-              <h2 class="heading">Our Available Promotions</h2>
+            @php
+              $todayMonth = date('F');
+            @endphp
+              <h2 class="heading">Our {{ $todayMonth }} Promotions</h2>
           </div>
         </div>
         <div class="row ">
 
             @php
                 $promotions = \App\Models\Promotion::all();
+          $today = date('Y-m-d');
+
             @endphp
 
             @forelse ($promotions as $promo)
-            <div class="col-md-4">
+
+              @if ($today >= $promo->start_date && $today <= $promo->end_date)
+
+              <div class="col-md-4">
                 <div class="post-entry">
                 <img src="{{ $promo->roomPrice->roomType->featured_image }}" alt="Image placeholder" class="img-fluid">
                   <div class="body-text">
@@ -118,12 +126,15 @@
                     {{-- <h5 class="mb-3">Normal price - {{ $promo->roomPrice->price }}</h5> --}}
                     <h2 class="mb-3 font-weight-bold">{{ $promo->discount }} % OFF</h2>
 
-                    <p class="mb-4">start date : {{ date('j F Y',strtotime($promo->start_date)) }}</p>
+                    {{-- <p class="mb-4">start date : {{ date('j F Y',strtotime($promo->start_date)) }}</p> --}}
                     <p class="mb-4">end date : {{ date('j F Y',strtotime($promo->end_date)) }}</p>
                     <p><a href="#" class="btn btn-primary btn-outline-primary btn-sm">Book now</a></p>
                   </div>
                 </div>
               </div>
+
+              @endif
+
             @empty
 
 
