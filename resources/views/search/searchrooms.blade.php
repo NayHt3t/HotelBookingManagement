@@ -63,29 +63,35 @@
   </div>
 </nav>
 
-<div class="container py-5">
-<div class="card mb-3 p-4" style="max-width: 100%">
+@foreach ($data as $rooms )
+
+<div class="container py-2">
+<div class="card shadow mb-3 p-4 "style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); " style="max-width: 100%">
   <div class="row g-0 vh-100">
     <div class="col-md-4">
-      <img src="{{asset('images/img_1.jpg')}}" class="img-fluid rounded-start" alt="...">
+      <img src="{{$rooms->featured_image}}" class="img-fluid rounded-start" alt="...">
     </div>
+
     <div class="col-md-4">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, recusandae neque doloribus dolorum aut ipsam, officiis autem ratione maiores nesciunt quo pariatur doloremque quae modi commodi, ducimus dicta reiciendis debitis!</p>
+      <h3>{{$rooms->category->name}}</h3>
+      <h4>{{$rooms->name}}</h4>
+      <p>{{$rooms->description}}</p>
     </div>
-    <div class="col-md-4 d-flex align-items-end justify-content-end text-end ">
+
+    <div class="col-md-4 position-relative">
       
-      
+      <div class="position-absolute " style="bottom: 10px; right: 10px">
       <p>Price : 100$</p><br>
+    <button class="btn btn-primary">Book Now</button>
+      </div>
 
-      <button class="btn btn-primary">Book</button>
-
-      
-  
-      
     </div>
+
   </div>
 </div>
 </div>
+
+@endforeach
   
 </body>
 <script src="https://kit.fontawesome.com/a67197b46d.js" crossorigin="anonymous"></script>
