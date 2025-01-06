@@ -44,45 +44,41 @@
                                     <td>
 
 
-                                        <!-- Edit Button -->
-                                        <a href="{{ route('rooms.edit', $room->id) }}"
-                                            class="btn btn-outline-success mr-2 rounded-pill">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
+                                <!-- Edit Button -->
+                                <a href="{{ route('rooms.edit', $room->id) }}" class="btn btn-outline-success mr-2 rounded-pill">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+
+                                
 
                                         <button type="button" class="btn btn-outline-danger rounded-pill"
                                             data-bs-toggle="modal" data-bs-target="#deleteModal{{ $room->id }}">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
 
-                                        <!-- Delete Confirmation Modal -->
-                                        <div class="modal fade" id="deleteModal{{ $room->id }}" tabindex="-1"
-                                            aria-labelledby="deleteModalLabel{{ $room->id }}" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteModalLabel{{ $room->id }}">
-                                                            Confirm Deletion</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Are you sure you want to delete room
-                                                        <strong>{{ $room->room_number }}</strong>?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Cancel</button>
-                                                        <form action="{{ route('rooms.destroy', $room->id) }}"
-                                                            method="POST">
-                                                            @method('delete')
-                                                            @csrf
-                                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
+                                <!-- Delete Confirmation Modal -->
+                                <div class="modal fade" id="deleteModal{{ $room->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $room->id }}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteModalLabel{{ $room->id }}">Confirm Deletion</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want to delete room <strong>{{ $room->room_number }}</strong>?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <form action="{{ route('rooms.destroy', $room->id) }}" method="POST">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
 
 
                                     </td>

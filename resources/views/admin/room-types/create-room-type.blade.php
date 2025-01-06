@@ -1,8 +1,8 @@
 @extends('layouts.user_type.auth')
 @section('content')
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Create Room Type</h1>
-
+<div class="container">
+    <h1 class="text-center mb-1">Create Room Type</h1>
+    <a href="{{ route('room-types.index') }}" class="btn btn-outline-success"><i class="fas fa-arrow-left"></i></a>
     <div class="card shadow-lg">
         <div class="card-body" style="max-height: 70vh; overflow-y: auto;">
             <form action="{{ route('room-types.store') }}" method="POST" enctype="multipart/form-data">
@@ -21,17 +21,6 @@
                             @enderror
                         </div>
 
-
-
-                        <!-- Number of Rooms -->
-                        <div class="form-group mb-3">
-                            <label for="num_rooms" class="form-label">Number of Rooms</label>
-                            <input type="number" name="num_rooms" id="num_rooms" class="form-control" value="{{ old('num_rooms') }}" required>
-                            @error('num_rooms')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
                         <!-- Extra Bed Status -->
                         <div class="form-group mb-3">
                             <label for="extrabed_status" class="form-label">Extra Bed Available</label>
@@ -45,10 +34,20 @@
                         </div>
 
                         <!-- Facilities -->
-                        <div class="form-group mb-3">
+                        <div class="form-group mb-1">
                             <label for="facilities" class="form-label">Facilities</label>
-                            <textarea name="facilities" id="facilities" class="form-control " rows="5" style="resize: none;" required>{{ old('facilities') }}</textarea>
+                            <textarea name="facilities" id="facilities" class="form-control " rows="2" style="resize: none;" required>{{ old('facilities') }}</textarea>
                             @error('facilities')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
+                        <!-- Description -->
+                        <div class="form-group mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea name="description" id="description" class="form-control " rows="4" style="resize: none;" required>{{ old('facilities') }}</textarea>
+                            @error('description')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -76,16 +75,6 @@
                         </div>
 
 
-
-                        <!-- Number of People -->
-                        <div class="form-group mb-3">
-                            <label for="num_people" class="form-label">Number of People</label>
-                            <input type="number" name="num_people" id="num_people" class="form-control" value="{{ old('num_people') }}" required>
-                            @error('num_people')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
                         <!-- Status -->
                         <div class="form-group mb-3">
                             <label for="status" class="form-label">Status</label>
@@ -95,6 +84,15 @@
                                 <option value="2" {{ old('status', 1) == 2 ? 'selected' : '' }}>Booking</option>
                             </select>
                             @error('status')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                         <!-- Number of People -->
+                         <div class="form-group mb-3">
+                            <label for="num_people" class="form-label">Number of People</label>
+                            <input type="number" name="num_people" id="num_people" class="form-control" value="{{ old('num_people') }}" required>
+                            @error('num_people')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>

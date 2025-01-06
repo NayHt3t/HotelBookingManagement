@@ -3,8 +3,7 @@
 
 
 <div class="container">
-    <h1 class="text-center mt-2"> Room Type</h1>
-
+    <h1 class="text-center"> Room Type</h1>
     <div class="row ">
         <div class="col-md-3">
             <a href="{{ route('room-types.create') }}" class="btn btn-primary btn-md active px-3 text-white">Add New Room Types</a>

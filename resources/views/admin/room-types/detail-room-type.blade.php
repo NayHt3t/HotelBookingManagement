@@ -1,6 +1,6 @@
 @extends('layouts.user_type.auth') 
 @section('content')
-<div class="container mt-5">
+<div class="container">
     <div class="card shadow-lg">
         <div class="card-header bg-primary text-white text-center">
             <h4>{{ $roomType->name }} - Room Type Details</h4> 
@@ -24,6 +24,7 @@
                         @endif
                     </p>
                     <p><strong>Facilities:</strong> {{ $roomType->facilities }}</p>
+                    <p><strong>Description:</strong> {{ $roomType->description }}</p>
                 </div>
 
                 <!-- Right Column for Featured Image, Gallery -->
@@ -220,7 +221,7 @@
 
             <!-- Action Buttons -->
             <div class="d-flex justify-content-between mt-4">
-                <a href="{{ route('room-types.edit', $roomType) }}" class="btn btn-outline-success px-4 py-2">Edit</a>
+                <a href="{{ route('room-types.index') }}" class="btn btn-outline-success px-4 py-2"><i class="fas fa-arrow-left"></i></a>
                 <a href="{{ route('room-types.index') }}" class="btn btn-outline-secondary px-4 py-2">Back to Room Types</a>
             </div>
         </div>

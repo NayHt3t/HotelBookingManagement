@@ -1,4 +1,4 @@
-@extends('layouts.user_type.auth')
+@extends('layouts.auth-master')
 @section('content')
 
 <div id="content">
@@ -59,7 +59,7 @@
                         @enderror
                     </div>
                     <div class="form-group mt-4">
-                        <button type="submit" class="btn btn-primary btn-md active px-3 text-white">Submit
+                        <button type="submit" class="btn btn-success"> submit
                         </button>
                         <a href="{{ route('facilities.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>

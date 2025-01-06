@@ -95,7 +95,7 @@ class PriceTypeController extends Controller
         ],[
             'name.required' => 'Price Type is required'
         ]);
-
+        
         //character change to lowercase and remove all extra blank space
         $updateName = str(Str::lower($request->name))->squish();
 

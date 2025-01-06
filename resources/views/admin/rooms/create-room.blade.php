@@ -59,9 +59,9 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <div class="form-group mt-4">
-                        <button type="submit" class="btn btn-primary btn-md active px-3 text-white">Submit</button>
+                    <div class="form-group mt-4 d-flex justify-content-end">
                         <a href="{{ route('rooms.index') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-success ms-3">Submit</button>
                     </div>
                 </form>
             </div>
