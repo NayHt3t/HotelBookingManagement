@@ -18,11 +18,12 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->string('name');
             $table->text('facilities');
-            $table->integer('num_rooms');
+            $table->integer('num_rooms')->default(0);
             $table->integer('num_people');
             $table->boolean('extrabed_status');
             $table->string('featured_image');
             $table->text('gallery');
+            $table->text('description');
             $table->integer('status')->default(value: 1);
             $table->timestamps();
             $table->softDeletes();

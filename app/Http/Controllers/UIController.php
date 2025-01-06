@@ -16,7 +16,8 @@ class UIController extends Controller
 
     public function search(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
+        $rooms = $request->all();
         return view('search.searchrooms',);
     }
 
