@@ -12,11 +12,15 @@ class Booking extends Model
 
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['user_id', 'room_type_id', 'qty', 'check_in', 'check_out', 'adult', 'child', 'status'];
+    protected $fillable = ['customer_id', 'room_type_id', 'qty', 'check_in', 'check_out', 'adult', 'child', 'status'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function customer(){
+        return $this->belongsTo(Customer::class);
     }
 
     public function roomType()

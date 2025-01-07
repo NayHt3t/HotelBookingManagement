@@ -13,8 +13,6 @@
     
       <a class="navbar-brand" href="#">Luxury Hotel</a>
 
-    
-
    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -63,39 +61,67 @@
   </div>
 </nav>
 
-@foreach ($data as $rooms )
+    <div class="container mt-2">
+        <div class="row">
+            
+        </div>
 
-<form action="/booking" method="post">
-  @csrf
-<div class="container py-2">
-<div class="card shadow mb-3 p-4 "style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); " style="max-width: 100%">
-  <div class="row g-0 vh-100">
-    <div class="col-md-4">
-      <img src="{{$rooms->featured_image}}" class="img-fluid rounded-start" alt="...">
+        <div class="row">
+
+        
+
+        <div class="col-md-10 m-auto">
+
+        <table class="table table-hover table-bordered">
+
+        <thead>
+            <tr>
+                <th>Included Services</th>
+                <th>Price</th>
+                <th>Extra Bed</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                @php
+                $facilities = explode(',', $booking->facilities);
+                @endphp
+                <td>
+                    <ul>
+                @foreach ($facilities as $facility)
+
+                <li>{{$facility}}</li>
+                
+                @endforeach
+                </ul>
+                </td>
+
+                @foreach ($booking->roomPrices as $roomPrice)
+                    <td>{{ $roomPrice->price }}</td>
+                @endforeach
+               <td>
+                <button class="btn btn-sm btn-secondary">add extra bed</button>
+               </td>
+               <td>
+                <form action="/bookingform" method="post">
+                    @csrf
+                    <input type="hidden" value="{{$booking->id}}" name="roomType_id">
+                    <button class="btn btn-sm btn-primary">Book Now</button>
+                </form>
+               </td>
+            </tr>
+        </tbody>
+            
+        </table>
+
+        </div>
+
+        </div>
+            
     </div>
 
-    <div class="col-md-4">
-      <h3>{{$rooms->category->name}}</h3>
-      <h4>{{$rooms->name}}</h4>
-      <p>{{$rooms->description}}</p>
-    </div>
-    <input type="hidden" name="roomType_id" value="{{$rooms->id}}">
-
-    <div class="col-md-4 position-relative">
-      
-      <div class="position-absolute " style="bottom: 10px; right: 10px">
-      <p>Price : 100$</p><br>
-    <button type="submit" class="btn btn-primary">Book Now</button>
-      </div>
-
-    </div>
-
-  </div>
-</div>
-</div>
-</form>
-
-@endforeach
   
 </body>
 <script src="https://kit.fontawesome.com/a67197b46d.js" crossorigin="anonymous"></script>

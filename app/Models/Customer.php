@@ -25,4 +25,9 @@ class Customer extends Authenticatable
         'password',
         
     ];
+
+    public function bookings(){
+        return $this->hasMany(Booking::class);
+    }
+    
 }

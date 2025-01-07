@@ -43,6 +43,9 @@ Route::group(['namespace'=>'App\Http\Controllers'],function(){
 
     Route::get('/promotion',[UIController::class,'promotion']);
     Route::post('/search',[UIController::class,'search']);
+    Route::post('/booking',[UIController::class,'booking']);
+    Route::post('/bookingform',[UIController::class,'bookingform']);
+    Route::post('/storebooking',[UIController::class,'storebooking']);
 
 
 
