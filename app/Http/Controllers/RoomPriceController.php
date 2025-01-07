@@ -45,11 +45,12 @@ class RoomPriceController extends Controller
         $request->validate([
             'room_type_id' => 'required|exists:room_types,id',
             'price_type_id' => 'required|exists:price_types,id',
-            'price' => 'required'
+            'price' => 'required|decimal:0,2'
         ],[
             'room_type_id.required' => "You must be select Room Type",
             'price_type_id.required' => "You must be select Price Type",
             'price.required' => "Enter price for this room type",
+            'price.decimal' => "Price must be only two decimal",
         ]);
 
         // Check price for this price type and room type have been already exit in database
@@ -57,7 +58,7 @@ class RoomPriceController extends Controller
         foreach($room_prices as $room_price)
         {
             if($room_price->price_type_id == $request->price_type_id){
-                return redirect()->route('room-prices.create')->with('fail','Price is already exit for this room type and price type.');
+                return redirect()->route('room-prices.create')->with('unsuccess','Price is already exit for this room type and price type.');
             }
         }
         RoomPrice::create($request->except('_token'));
@@ -102,12 +103,13 @@ class RoomPriceController extends Controller
         $request->validate([
             'room_type_id' => 'required|exists:room_types,id',
             'price_type_id' => 'required|exists:price_types,id',
-            'price' => 'required'
+            'price' => 'required|decimal:0,2'
 
         ],[
             'room_type_id.required' => "You must be select Room Type",
             'price_type_id.required' => "You must be select Price Type",
             'price.required' => "Enter price for this room type",
+            'price.decimal' => "Price must be only two decimal",
         ]);
 
         $roomPrice = RoomPrice::find($id);
@@ -118,7 +120,7 @@ class RoomPriceController extends Controller
 
             foreach($room_prices as $room_price){
                 if($room_price->price_type_id == $request->price_type_id){
-                    return redirect()->route('room-prices.edit', $roomPrice)->with('fail','Price is already exit for this room type and price type.');
+                    return redirect()->route('room-prices.edit', $roomPrice)->with('unsuccess','Price is already exit for this room type and price type.');
                 }
             }
         }
@@ -144,10 +146,10 @@ class RoomPriceController extends Controller
         $room_price = RoomPrice::find($id);
         try{
             $room_price->delete();
+            return redirect()->route('room-prices.index')->with(["success"=>"Room Price is successfully deleted."]);
         }
         catch(QueryException $e){
-            return redirect()->route('room-prices.index')->with(["fail"=>"Room Price can't be deleted ."]);
+            return redirect()->route('room-prices.index')->with(["unsuccess"=>"Room Price can't be deleted ."]);
         }
-        return redirect()->route('room-prices.index')->with(["success"=>"Room Price is successfully deleted."]);
     }
 }

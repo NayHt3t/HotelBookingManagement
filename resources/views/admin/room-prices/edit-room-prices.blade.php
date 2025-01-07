@@ -1,16 +1,10 @@
-@extends('layouts.auth-master')
+@extends('layouts.user_type.auth')
 @section('content')
-
 <div id="content">
     <div class="container">
-        <div class="row mt-5">
+        <div class="row">
             <div class="col-md-8 offset-md-2">
-                <h2>Edit Room Price</h2>
-                <div class="mt-2 mb-3">
-                    @if($message = Session::get('fail'))
-                    <span class="text-warning">{{ $message }}</span>
-                    @endif
-                </div>
+                <h3 class="text-center">Edit Room Price</h3>
                 <form
                     action="{{route('room-prices.update', $room_price->id) }}"
                     method="POST"
@@ -43,7 +37,7 @@
                                     value="{{ $price_type->id }}"
                                     {{ $room_price->price_type_id == $price_type->id ? 'selected' : '' }}
                                 >
-                                    {{ $price_type->name }}
+                                    {{ Str::ucfirst($price_type->name) }}
                                 </option>
                             @endforeach
                         </select>
@@ -60,6 +54,7 @@
                             id="price"
                             class="form-control"
                             value="{{ old('price', $room_price->price) }}"
+                            step="any"
                         >
                         @error('price')
                             <span class="text-danger">{{ $message }}</span>
@@ -67,8 +62,8 @@
                     </div>
 
                     <div class="form-group mt-4 ">
+                        <button type="submit" class="btn btn-primary btn-md active ms-3 text-white">Update</button>
                         <a href="{{ route('room-prices.index') }}" class="btn btn-secondary">Cancel</a>
-                        <button type="submit" class="btn btn-success">Update</button>
                     </div>
                 </form>
             </div>

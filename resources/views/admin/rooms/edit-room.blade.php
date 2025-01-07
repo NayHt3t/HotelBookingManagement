@@ -3,9 +3,9 @@
 
 <div id="content">
     <div class="container">
-        <div class="row mt-5">
+        <div class="row">
             <div class="col-md-8 offset-md-2">
-                <h2>Edit Room</h2>
+                <h3 class="text-center">Edit Room</h3>
 
                 <!-- Edit Room Form -->
                 <form action="{{ route('rooms.update', $room->id) }}" method="POST">
@@ -80,7 +80,7 @@
                     <!-- Submit and Cancel buttons -->
                     <div class="form-group mt-4 d-flex justify-content-end" >
                     <a href="{{ route('rooms.index') }}" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-success ms-3">Update Room</button>
+                    <button type="submit" class="btn btn-primary btn-md active ms-3 text-white">Update Room</button>
                     </div>
                 </form>
             </div>

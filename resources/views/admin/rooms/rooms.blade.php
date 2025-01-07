@@ -2,20 +2,9 @@
 @section('content')
     <div id="content">
         <div class="container">
-            <div class="row mt-5">
+            <div class="row">
                 <div class="col-md-12">
-                    <h2>Rooms</h2>
-
-                    <div class="text-center">
-
-                        @if ($message = Session::get('success'))
-                            <span class="text-success">{{ $message }}</span>
-                        @endif
-                        @if ($message = Session::get('unsuccess'))
-                            <span class="text-danger">{{ $message }}</span>
-                        @endif
-                    </div>
-
+                    <h3 class="text-center">Rooms</h3>
                     <!-- Button to add a new room -->
                     <a href="{{ route('rooms.create') }}" class="btn btn-primary btn-md active px-3 text-white">Add New Room</a>
 
@@ -49,7 +38,7 @@
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
 
-                                
+
 
                                         <button type="button" class="btn btn-outline-danger rounded-pill"
                                             data-bs-toggle="modal" data-bs-target="#deleteModal{{ $room->id }}">

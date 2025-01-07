@@ -29,26 +29,26 @@
         <x-demo-metas></x-demo-metas>
     @endif
 
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{asset('assets/img/apple-icon.png')}}">
+    <link rel="icon" type="image/png" href="{{asset('assets/img/favicon.png')}}">
     <title>
         Hotel Booking Management
     </title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
-    <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="{{asset('assets/css/nucleo-icons.css')}}" rel="stylesheet" />
+    <link href="{{asset('assets/css/nucleo-svg.css')}}" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="{{asset('assets/css/nucleo-svg.css')}}" rel="stylesheet" />
     <!-- CSS Files -->
-    <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css?v=1.0.3" rel="stylesheet" />
+    <link id="pagestyle" href="{{asset('assets/css/soft-ui-dashboard.css?v=1.0.3')}}" rel="stylesheet" />
 
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/signin.css">
+    <link rel="stylesheet" href="{{asset('css/signin.css')}}">
 
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
@@ -68,18 +68,23 @@
     @endguest
 
     @if (session()->has('success'))
-        <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 4000)" x-show="show"
-            class="position-fixed bg-success rounded right-3 text-sm py-2 px-4">
+        <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 1000)" x-show="show"
+            class="position-absolute bg-success rounded text-white top-10 end-0 text-sm py-2 px-4">
             <p class="m-0">{{ session('success') }}</p>
+        </div>
+    @elseif(session()->has('unsuccess'))
+        <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 1000)" x-show="show"
+            class="position-absolute bg-danger rounded text-white top-10 end-0 text-sm py-2 px-4">
+            <p class="m-0">{{ session('unsuccess') }}</p>
         </div>
     @endif
     <!--   Core JS Files   -->
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script>
-    <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-    <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-    <script src="../assets/js/plugins/fullcalendar.min.js"></script>
-    <script src="../assets/js/plugins/chartjs.min.js"></script>
+    <script src="{{asset('assets/js/core/popper.min.js')}}"></script>
+    <script src="{{asset('assets/js/core/bootstrap.min.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/fullcalendar.min.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/chartjs.min.js')}}"></script>
     @stack('rtl')
     @stack('dashboard')
     <script>
@@ -95,7 +100,7 @@
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.3"></script>
+    <script src="{{asset('assets/js/soft-ui-dashboard.min.js?v=1.0.3')}}"></script>
 </body>
 
 </html>

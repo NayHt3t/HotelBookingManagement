@@ -65,22 +65,22 @@ class RoomTypeController extends Controller
             // Custom error messages for `gallery`
             'gallery.required' => 'Please upload at least one gallery image.',
             'gallery.array' => 'The gallery must be an array of images.',
-        
+
             // Custom error messages for individual gallery images
             'gallery.*.image' => 'Each file in the gallery must be a valid image.',
             'gallery.*.mimes' => 'Each gallery image must be a file of type: jpeg, png, jpg.',
             'gallery.*.max' => 'Each gallery image must not exceed 2MB in size.',
         ]
-       
+
     );
 
-       
-    
+
+
         // Handle the featured image
         $featuredImage = $request->file('featured_image');
         $featuredImageName = uniqid() . '.' . $featuredImage->getClientOriginalExtension();
         $featuredImage->storeAs('public/featured_images', $featuredImageName);
-    
+
         // Handle gallery images
         $galleryImages = [];
         foreach ($request->file('gallery') as $galleryImage) {
@@ -88,7 +88,7 @@ class RoomTypeController extends Controller
             $galleryImage->storeAs('public/gallery', $galleryImageName);
             $galleryImages[] = $galleryImageName;
         }
-    
+
         // Create the room
         RoomType::create([
             'category_id' => $request->category_id,
@@ -101,11 +101,11 @@ class RoomTypeController extends Controller
             'gallery' => implode(',', $galleryImages), // Save as comma-separated values
             'status' => $request->status,
         ]);
-    
+
         // Return to the previous page with a success message
         return redirect()->route('room-types.index')->with('success', 'Room created successfully.');
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -130,7 +130,7 @@ class RoomTypeController extends Controller
      */
     public function edit(RoomType $roomType)
     {
-        
+
         $categories = Category::all();
         return view('admin.room-types.edit-room-type',['roomType'=>$roomType,'categories'=>$categories]);
 
@@ -139,10 +139,10 @@ class RoomTypeController extends Controller
     public function removeGallery($id ,$image){
          // Assuming the image exists in the gallery folder
     $imagePath = public_path('storage/gallery/' . $image);
-    
+
     if (file_exists($imagePath)) {
         unlink($imagePath); // Delete the image file
-        
+
         // Update the room type's gallery field by removing the image from the list
         $roomType = RoomType::findOrFail($id); // Use the appropriate method to find the roomType
         $gallery = explode(',', $roomType->gallery);
@@ -150,7 +150,7 @@ class RoomTypeController extends Controller
         $roomType->gallery = implode(',', $gallery);
         $roomType->save();
     }
-    
+
     return back()->with('success', 'Image deleted successfully.');
     }
 
@@ -163,7 +163,7 @@ class RoomTypeController extends Controller
      */
     public function update(Request $request, $id)
 {
-   
+
    // dd($request);
     $request->validate([
         'category_id' => 'required|exists:categories,id',
@@ -184,7 +184,7 @@ class RoomTypeController extends Controller
             $roomType->extrabed_status=$request->input('extrabed_status');
             $roomType->status=$request->input('status');
             $roomType->save();
-    
+
     // Redirect back to the room types index page with a success message
     return redirect()->route('room-types.index')->with('success', 'Room Type updated successfully.');
 }
@@ -199,16 +199,18 @@ class RoomTypeController extends Controller
     {
         // Find the RoomType
         $roomType = RoomType::find($id);
-    
+
         if (!$roomType) {
             return redirect()->route('room-types.index')->with(['unsuccess' => 'Room Type not found.']);
         }
-    
+
         // Check if the RoomType has associated Rooms
-        if ($roomType->rooms()->exists()) {
+        if ($roomType->rooms()->exists())  {
             return redirect()->route('room-types.index')->with(['unsuccess' => "Room Type can't be deleted because it has associated Rooms."]);
+        }else if( $roomType->roomPrices()->exists()){
+            return redirect()->route('room-types.index')->with(['unsuccess' => "Room Type can't be deleted because it has associated Room Price."]);
         }
-    
+
         try {
             // Delete the RoomType
             $roomType->delete();
@@ -217,7 +219,7 @@ class RoomTypeController extends Controller
             return redirect()->route('room-types.index')->with(['unsuccess' => 'An error occurred while deleting the Room Type.']);
         }
     }
-    
+
 
 public function updateFeaturedImage(Request $request, $id)
 {
@@ -274,7 +276,7 @@ public function addGallery(Request $request, $roomTypeId)
         if ($image->isValid()) {
             // Generate a unique file name
             $imageName = uniqid('gallery_', true) . '.' . $image->getClientOriginalExtension();
-            
+
             // Store the image in the 'public/gallery' directory and get the file path
             $image->storeAs('public/gallery', $imageName);
 

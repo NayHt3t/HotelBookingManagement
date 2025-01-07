@@ -3,12 +3,13 @@
 
 <div id="content">
     <div class="container">
-        <div class="row mt-5">
+        <div class="row">
+            <h3 class="text-center">Categories</h3>
             <div class="col-md-3">
-                <!-- 
+                <!--
                 <a href="{{route('categories.create')}}" class="btn btn-primary">Add New Category</a>
  -->
-                <button class="btn btn-primary" data-bs-toggle="modal"
+                <button class="btn btn-primary btn-md active px-3 text-white" data-bs-toggle="modal"
                     data-bs-target="#addCategoryModal">Add New Category</button>
 
                 <!-- Add Category Modal -->
@@ -26,7 +27,7 @@
                                     <input type="text" name="name" id="" class="form-control" value="{{ old('name') }}" placeholder="Enter Category Name">
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary btn-md active px-3 text-white">Submit</button>
                                     </div>
 
                                 </form>
@@ -34,35 +35,10 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
-
         </div>
-
-        <div class="row mt-1">
-            <di class="col-md-12">
-                <div class="row">
-
-
-                    <div class="mt-2 mb-3 text-center">
-
-                        @error('name')
-                        <span class="text-danger">{{$message}}</span>
-                        @enderror
-                        @if($message = Session::get('success'))
-                        <span class="text-success">{{ $message }}</span>
-                        @endif
-                        @if($message = Session::get('unsuccess'))
-                        <span class="text-danger">{{ $message }}</span>
-                        @endif
-
-                    </div>
-
-
-
-                </div>
-
+        <div class="row">
+            <div class="col-md-12">
                 <table id="user_table" class="table table-hover table-bordered" style="width:100%">
                     <thead>
                         <tr>
@@ -111,7 +87,7 @@
                                         <input type="text" name="name" id="" class="form-control" value="{{$category->name}}">
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                <button type="submit" class="btn btn-primary">Update</button>
+                                                <button type="submit" class="btn btn-primary btn-md active px-3 text-white">Update</button>
                                             </div>
 
                                         </form>
@@ -119,8 +95,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        
 
                         <!-- Delete Confirmation Modal -->
                         <div class="modal fade" id="deleteModal{{ $category->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $category->id }}" aria-hidden="true">

@@ -29,7 +29,6 @@ class PriceTypeController extends Controller
      */
     public function create()
     {
-        return view('admin.price-types.create-price-type');
     }
 
     /**
@@ -51,7 +50,7 @@ class PriceTypeController extends Controller
         // Check price type is already exit or not.
         foreach($priceTypes as $priceType){
             if($priceType->name == $updateName){
-                return redirect()->route('price-types.create')->with('fail','Price Type is already exit.');
+                return redirect()->route('price-types.index')->with('unsuccess','Price Type is already exit.');
             }
         }
         PriceType::create(['name'=>$updateName]);
@@ -95,7 +94,7 @@ class PriceTypeController extends Controller
         ],[
             'name.required' => 'Price Type is required'
         ]);
-        
+
         //character change to lowercase and remove all extra blank space
         $updateName = str(Str::lower($request->name))->squish();
 
@@ -107,7 +106,7 @@ class PriceTypeController extends Controller
         // Check price type is already exit or not.
         foreach($priceTypes as $price_type){
             if($price_type->name == $updateName){
-                return redirect()->route('price-types.edit', $priceType)->with('fail','Price Type is already exit.');
+                return redirect()->route('price-types.index', $priceType)->with('unsuccess','Price Type is already exit.');
             }
         }
         }
@@ -125,13 +124,17 @@ class PriceTypeController extends Controller
     public function destroy($id)
     {
         $priceType = PriceType::find($id);
+
         try{
-            $priceType->delete();
+            if($priceType->roomPrices()->exists()){
+                return redirect()->route('price-types.index')->with(["unsuccess"=>"Price Type can't be deleted because it has associated Room Price."]);
+            }else{
+             $priceType->delete();
+            return redirect()->route('price-types.index')->with(["success"=>"Price Type is successfully deleted."]);
+            }
         }
         catch(QueryException $e){
-            return redirect()->route('price-types.index')->with(["fail"=>"Price Type can't be deleted ."]);
+            return redirect()->route('price-types.index')->with(["unsuccess"=>"Price Type can't be deleted ."]);
         }
-        return redirect()->route('price-types.index')->with(["success"=>"Price Type is successfully deleted."]);
-
     }
 }

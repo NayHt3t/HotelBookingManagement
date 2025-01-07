@@ -1,25 +1,48 @@
-@extends('layouts.auth-master')
+@extends('layouts.user_type.auth')
 @section('content')
 <div id="content">
     <div class="container">
-        <div class="row mt-5">
+        <div class="row">
+            <h3 class="text-center">Price Types</h3>
             <div class="col-md-3">
-                <a href="{{ route('price-types.create') }}" class="btn btn-primary">Add New Price Type</a>
-            </div>
-        </div>
+                <!-- Add Button modal -->
+                <button type="button" class="btn btn-primary btn-md active px-3 text-white" data-bs-toggle="modal" data-bs-target="#addPriceType">
+                    Add New Price Type
+                </button>
+                 <!--Create Price Type Modal -->
+                <div class="modal fade" id="addPriceType" tabindex="-1" aria-labelledby="addPriceTypeLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addPriceTypeLabel">Add New Price Type</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ route('price-types.store') }}" method="POST">
+                                @csrf
 
-        <div class="row mt-1">
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="mt-2 mb-3">
-                        @if($message = Session::get('success'))
-                        <span class="text-success">{{ $message }}</span>
-                        @elseif ($message = Session::get('fail'))
-                        <span class="text-danger">{{ $message }}</span>
-                        @endif
+                                <label for="name">Price Type Name</label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        id="name"
+                                        class="form-control"
+                                        value="{{old('name')}}"
+                                        placeholder="Enter price type"
+                                    >
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary btn-md active px-3 text-white">Add</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
@@ -35,18 +58,69 @@
                             <td>{{ ++$i }}</td>
                             <td>{{Str::ucfirst($price_type->name)}}</td>
                             <td>
-                                <a href="{{ route('price-types.edit', $price_type) }}" class="btn btn-outline-success mr-2 rounded-pill">
+                                <!-- Edit Button modal -->
+                                <button type="submit" class="btn btn-outline-success rounded-pill" data-bs-toggle="modal" data-bs-target="#editPriceType{{$price_type->id}}">
                                     <i class="fa-solid fa-pen-to-square"></i>
-                                </a>
-                                <form action="{{ route('price-types.destroy', $price_type->id) }}" class="d-inline" method="post">
-                                    @method('delete')
-                                    @csrf
-                                    <button class="btn btn-outline-danger ml-2 rounded-pill btn-delete">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </form>
+                                </button>
+                                <!-- Delete Button modal -->
+                                <button type="submit" class="btn btn-outline-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#deletePriceType{{$price_type->id}}">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
+                         <!--Edit Price Type Modal -->
+                        <div class="modal fade" id="editPriceType{{$price_type->id}}" tabindex="-1" aria-labelledby="editPriceTypeLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editPriceTypeLabel">Edit Price Type</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="p-4  justify-content-center">
+                                        <form
+                                            action="{{route('price-types.update', $price_type->id) }}"
+                                            method="POST"
+                                        >
+                                        @csrf
+                                        @method('PUT')
+                                            <input
+                                                type="text"
+                                                name="name"
+                                                id="name"
+                                                class="form-control"
+                                                value="{{ Str::ucfirst(old('name', $price_type->name)) }}"
+                                            >
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary btn-md active px-3 text-white">Edit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <!--Delete Price Type Modal -->
+                        <div class="modal fade" id="deletePriceType{{$price_type->id}}" tabindex="-1" aria-labelledby="deletePriceTypeLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deletePriceTypeLabel{{ $price_type->id }}">Confirm Deletion</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure to delete This Price Type <strong>{{ Str::ucfirst($price_type->name) }}</strong>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <form action="{{ route('price-types.destroy', $price_type->id) }}" method="POST">
+                                            @method('delete')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         @empty
                         <tr>
                             <td colspan="9">

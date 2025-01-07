@@ -3,7 +3,7 @@
 
 
 <div class="container">
-    <h1 class="text-center"> Room Type</h1>
+    <h3 class="text-center"> Room Types</h3>
     <div class="row ">
         <div class="col-md-3">
             <a href="{{ route('room-types.create') }}" class="btn btn-primary btn-md active px-3 text-white">Add New Room Types</a>
@@ -12,17 +12,6 @@
 
     <div class="row mt-1">
         <div class="col-md-12">
-
-                <div class="text-center">
-
-                    @if($message = Session::get('success'))
-                    <span class="text-success">{{ $message }}</span>
-                    @endif
-                    @if($message = Session::get('unsuccess'))
-                    <span class="text-danger">{{ $message }}</span>
-                    @endif
-                </div>
-
             <!-- DataTable Integration -->
             <table id="user_table" class="table table-hover table-bordered" style="width:100%">
                 <thead>

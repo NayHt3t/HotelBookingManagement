@@ -39,12 +39,14 @@ class FacilityController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'price' => 'required',
-            'compensation' => 'required'
+            'price' => 'required|decimal:0,2',
+            'compensation' => 'required|decimal:0,2'
         ],[
             'name.required' => "Please enter name for facility",
             'price.required' => 'Please enter price for faciltity',
-            'compensation.required' => 'Please enter compensation'
+            'compensation.required' => 'Please enter compensation',
+            'price.decimal' => "Price must be only two decimal",
+            'compensation.decimal' => 'Compensation must be only two decimal'
         ]);
         Facility::create($request->except('_token'));
         return redirect()->route('facilities.index')->with('success','Facility is successfully created');
@@ -83,12 +85,13 @@ class FacilityController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'price' => 'required',
-            'compensation' => 'required'
+            'price' => 'required|decimal:0,2',
+            'compensation' => 'required|decimal:0,2'
         ],[
             'name.required' => "Please enter name for facility",
             'price.required' => 'Please enter price for faciltity',
-            'compensation.required' => 'Please enter compensation'
+            'compensation.required' => 'Please enter compensation','price.decimal' => "Price must be only two decimal",
+            'compensation.decimal' => 'Compensation must be only two decimal'
         ]);
         $facility = Facility::find($id);
         $facility->name = $request->name;
@@ -112,7 +115,7 @@ class FacilityController extends Controller
             $facility->delete();
         }
         catch(QueryException $e){
-            return redirect()->route('facilities.index')->with(["fail"=>"Facility can't be deleted ."]);
+            return redirect()->route('facilities.index')->with(["unsuccess"=>"Facility can't be deleted ."]);
         }
         return redirect()->route('facilities.index')->with(["success"=>"Facility is successfully deleted."]);
 

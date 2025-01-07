@@ -1,7 +1,7 @@
 @extends('layouts.user_type.auth')
 @section('content')
 <div class="container">
-    <h1 class="text-center mb-1">Create Room Type</h1>
+    <h3 class="text-center">Create Room Type</h3>
     <a href="{{ route('room-types.index') }}" class="btn btn-outline-success"><i class="fas fa-arrow-left"></i></a>
     <div class="card shadow-lg">
         <div class="card-body" style="max-height: 70vh; overflow-y: auto;">

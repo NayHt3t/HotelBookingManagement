@@ -90,8 +90,6 @@ Route::group(['middleware' => 'auth'], function () {
 	})->name('sign-up');
 });
 
-
-
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', [RegisterController::class, 'create']);
     Route::post('/register', [RegisterController::class, 'store']);

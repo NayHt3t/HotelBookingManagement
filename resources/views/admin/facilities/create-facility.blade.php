@@ -1,16 +1,11 @@
-@extends('layouts.auth-master')
+@extends('layouts.user_type.auth')
 @section('content')
 
 <div id="content">
     <div class="container">
-        <div class="row mt-5">
+        <div class="row">
             <div class="col-md-8 offset-md-2">
-                <h2>Add New Facility</h2>
-                <div class="mt-2 mb-3">
-                    @if($message = Session::get('fail'))
-                    <span class="text-warning">{{ $message }}</span>
-                    @endif
-                </div>
+                <h3 class="text-center">Add New Facility</h3>
                 <form
                     action="{{ route('facilities.store') }}"
                     method="POST"
@@ -38,7 +33,8 @@
                             id="price"
                             class="form-control"
                             value="{{old('price')}}"
-                            placeholder="Enter price"
+                            placeholder="Enter room price"
+                            step="any"
                         >
                         @error('price')
                         <span class="text-danger">{{$message}}</span>
@@ -53,13 +49,14 @@
                             class="form-control"
                             value="{{old('compensation')}}"
                             placeholder="Enter compensation"
+                            step="any"
                         >
                         @error('compensation')
                         <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="form-group mt-4">
-                        <button type="submit" class="btn btn-success"> submit
+                        <button type="submit" class="btn btn-primary btn-md active ms-3 text-white">Submit
                         </button>
                         <a href="{{ route('facilities.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>

@@ -1,9 +1,9 @@
-@extends('layouts.user_type.auth') 
+@extends('layouts.user_type.auth')
 @section('content')
 <div class="container">
     <div class="card shadow-lg">
         <div class="card-header bg-primary text-white text-center">
-            <h4>{{ $roomType->name }} - Room Type Details</h4> 
+            <h4>{{ $roomType->name }} - Room Type Details</h4>
         </div>
 
         <div class="card-body">
