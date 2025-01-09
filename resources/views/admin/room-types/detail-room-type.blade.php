@@ -12,6 +12,7 @@
                 <div class="col-md-6">
                     <p><strong>Category:</strong> {{ $roomType->category->name }}</p>
                     <p><strong>Number of Rooms:</strong> {{ $roomType->num_rooms }}</p>
+                    <p><strong>Available Rooms:</strong> {{ $roomType->available_rooms }}</p>
                     <p><strong>People per Room:</strong> {{ $roomType->num_people }}</p>
                     <p><strong>Extra Bed Available:</strong> {{ $roomType->extrabed_status ? 'Yes' : 'No' }}</p>
                     <p><strong>Status:</strong>

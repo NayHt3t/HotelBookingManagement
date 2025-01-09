@@ -61,7 +61,12 @@ class RoomController extends Controller
 
         // Count the current number of rooms for the given room type
         $currentRoomCount = Room::where('room_type_id', $currentRoomTypeId)->count();
+        $availableRoomCount = Room::where('room_type_id', $currentRoomTypeId)
+                        ->where('status', 1)
+                        ->count();
+
         $roomType->num_rooms = $currentRoomCount;
+        $roomType->available_rooms = $availableRoomCount;
         $roomType->save();
 
 

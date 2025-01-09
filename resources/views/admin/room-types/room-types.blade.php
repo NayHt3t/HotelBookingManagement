@@ -19,9 +19,11 @@
                         <th>No</th>
                         <th>Name</th>
                         <th>Category</th>
-                        <th>Rooms</th>
                         <th>People</th>
                         <th>Extra Bed</th>
+                        <th>Rooms</th>
+                        <th>Available</th>
+                        <th>unAvailable</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -33,9 +35,11 @@
                         <td>{{ ++$i }}</td>
                         <td>{{ $roomType->name }}</td>
                         <td>{{ $roomType->category->name }}</td> <!-- Assuming category relationship -->
-                        <td>{{ $roomType->num_rooms }}</td>
                         <td>{{ $roomType->num_people }}</td>
                         <td>{{ $roomType->extrabed_status ? 'Yes' : 'No' }}</td>
+                        <td>{{ $roomType->num_rooms }}</td>
+                        <td>{{ $roomType->available_rooms }}</td>
+                        <td>{{ $roomType->num_rooms - $roomType->available_rooms}}</td>
                         <td>{{ $roomType->status == 1 ? 'Available' : ($roomType->status == 2 ? 'Booking' : 'Unavailable') }}</td>
                         <td>
                             <!-- View Details Button -->
