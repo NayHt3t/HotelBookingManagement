@@ -57,5 +57,23 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="{{asset('js/main.js')}}"></script>
 
     <script src="https://kit.fontawesome.com/a67197b46d.js" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        
+    const currentPath =window.location.pathname;
+    const navLinks = document.querySelectorAll(".nav-link");
+    console.log("This is navLinks "+navLinks);
+    console.log("This is currentPath "+currentPath);
+
+    navLinks.forEach(link => {
+        if (link.getAttribute("href") === currentPath) {
+            link.classList.add("active"); // Add active class to matching link
+        } else {
+            link.classList.remove("active"); // Ensure others are not active
+        }
+    });
+});
+
+    </script>
   </body>
 </html>

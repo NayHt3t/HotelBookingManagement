@@ -21,7 +21,14 @@ class UIController extends Controller
     {
         //dd($request->all());
         $rooms = $request->category;
-        $data = RoomType::where('category_id', '=', $rooms)->get();
+        $roomtype = RoomType::where('category_id', '=', $rooms)->get();
+       //dd($roomtype->pluck('id'));
+
+        $booking = Booking::whereIn('room_type_id',  $roomtype->pluck('id'))
+        ->where('check_in', '!=', $request->checkIn)
+        ->where('check_out', '!=', $request->checkOut)->get();
+//dd($booking);
+        $data = RoomType::whereIn('id',  $booking->pluck('room_type_id'))->get();
         //dd($data);
         return view('search.searchrooms',['data'=>$data]);
     }
@@ -45,7 +52,7 @@ class UIController extends Controller
     public function storebooking(Request $request){
         // dd($request->all());
         $booking = Booking::create([
-            'customer_id' => 3,
+            'customer_id' => $request->customerId,
             'room_type_id' => $request->roomType_id,
             'qty' => $request->qty,
             "check_in" => $request->checkIn,
