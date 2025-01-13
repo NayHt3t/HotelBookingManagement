@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\RoomType;
+use App\Models\Booking;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class RoomTypeController extends Controller
 {
@@ -18,9 +20,12 @@ class RoomTypeController extends Controller
     public function index()
     {
         //
-
         $roomTypes = RoomType::all();
-        return view('admin.room-types.room-types', ['roomTypes'=>$roomTypes]);
+        // Count the current number of booking for the given room type
+        $bookings = Booking::select('room_type_id',DB::raw('SUM(qty) as total_qty'))
+                    ->groupBy('room_type_id')
+                    ->get();
+        return view('admin.room-types.room-types', ['roomTypes'=>$roomTypes,'bookings'=> $bookings]);
 
     }
 

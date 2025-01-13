@@ -1,10 +1,10 @@
 @extends('layouts.user_type.auth')
 @section('content')
     <div class="container">
-        <h3 class="text-center"> Room Types</h3>
+        <h3 class="text-center">Bookings</h3>
         <div class="row ">
             <div class="col-md-3">
-                <a href="{{ route('room-types.create') }}" class="btn btn-primary btn-md active px-3 text-white">Add New Room
+                <a href="{{ route('bookings.create') }}" class="btn btn-primary btn-md active px-3 text-white">Add New Room
                     Types</a>
             </div>
         </div>
@@ -16,71 +16,65 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>People</th>
-                            <th>Extra Bed</th>
-                            <th>Rooms</th>
-                            <th>Available</th>
-                            <th>Booking</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th>User Name</th>
+                            <th>Room Type</th>
+                            <th>Qty</th>
+                            <th>Adult</th>
+                            <th>Child</th>
+                            <th>Action</th>>
+                            
                         </tr>
                     </thead>
                     <tbody>
                         @php $i = 0; @endphp
-                        @forelse($roomTypes as $index=>$roomType)
+                        @forelse($bookings as $booking)
                             <tr>
                                 <td>{{ ++$i }}</td>
-                                <td>{{ $roomType->name }}</td>
-                                <td>{{ $roomType->category->name }}</td> <!-- Assuming category relationship -->
-                                <td>{{ $roomType->num_people }}</td>
-                                <td>{{ $roomType->extrabed_status ? 'Yes' : 'No' }}</td>
-                                <td>{{ $roomType->num_rooms }}</td>
-                                <td>{{ $roomType->available_rooms }}</td>
-                                <td>{{ $bookings[$index]->room_type_id == $roomType->id ? $bookings[$index]->total_qty : 0 }}</td>
-                                <td>{{ $roomType->status == 1 ? 'Available' : ($roomType->status == 2 ? 'Booking' : 'Unavailable') }}
-                                </td>
+                                <td>{{ $booking->customer->name }}</td>
+                                <td>{{ $booking->roomType->name }}</td>
+                                <td>{{ $booking->qty }}</td>
+                                <td>{{ $booking->adult }}</td>
+                                <td>{{ $booking->child }}</td>
                                 <td>
                                     <!-- View Details Button -->
-                                    <a href="{{ route('room-types.show', $roomType) }}"
+                                    <a href="{{ route('bookings.show', $booking) }}"
                                         class="btn btn-outline-info mr-2 rounded-pill">
                                         <i class="fa-solid fa-eye"></i> View
                                     </a>
 
                                     <!-- Edit Button -->
-                                    <a href="{{ route('room-types.edit', $roomType) }}"
+                                    <a href="#"
                                         class="btn btn-outline-success mr-2 rounded-pill">
-                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        Confirm
                                     </a>
 
                                     <!-- Delete Button (Opens the Modal) -->
                                     <button type="button" class="btn btn-outline-danger rounded-pill"
-                                        data-bs-toggle="modal" data-bs-target="#deleteModal{{ $roomType->id }}">
+                                        data-bs-toggle="modal" data-bs-target="#deleteModal{{ $booking->id }}">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </td>
                             </tr>
 
                             <!-- Delete Confirmation Modal -->
-                            <div class="modal fade" id="deleteModal{{ $roomType->id }}" tabindex="-1"
-                                aria-labelledby="deleteModalLabel{{ $roomType->id }}" aria-hidden="true">
+                            <div class="modal fade" id="deleteModal{{ $booking->id }}" tabindex="-1"
+                                aria-labelledby="deleteModalLabel{{ $booking->id }}" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteModalLabel{{ $roomType->id }}">Confirm
+                                            <h5 class="modal-title" id="deleteModalLabel{{ $booking->id }}">Confirm
                                                 Deletion</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            Are you sure you want to delete the Room Type
-                                            <strong>{{ $roomType->name }}</strong>?
+                                            Are you sure you want to delete this booking
+                                            <strong>{{ $booking->name }}</strong>?
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Cancel</button>
-                                            <form action="{{ route('room-types.destroy', $roomType->id) }}" method="POST">
+                                            <form action="{{ route('bookings.destroy', $booking->id) }}" method="POST">
                                                 @method('delete')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -93,7 +87,7 @@
                         @empty
                             <tr>
                                 <td colspan="8">
-                                    <span class="text-danger">*No Room Type data available. Empty List.</span>
+                                    <span class="text-danger">*No Booking data available. Empty List.</span>
                                 </td>
                             </tr>
                         @endforelse

@@ -126,11 +126,22 @@ class RoomController extends Controller
         );
 
         $room = Room::find($id);
+        // Update available_room in roomType table
+        $roomType = RoomType::findOrFail($request->input('room_type_id'));
+        if($room->status != $request->input('status')){
+            if($request->input('status') == 1){
+                $update_status = $roomType->available_rooms + 1;
+            }else if($request->input('status') == 0 || $request->input('status') == 2 ){
+                $update_status = $roomType->available_rooms - 1;
+            }
+            $roomType->available_rooms = $update_status;
+            $roomType->save();
+        }
         $room->room_type_id = $request->input('room_type_id');
         $room->room_number = $request->input('room_number');
         $room->status = $request->input('status');
         $room->save();
-
+        
         return redirect()->route('rooms.index')->with('success', 'Room  updated successfully.');
     }
 

@@ -10,7 +10,8 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\PriceTypeController;
 use App\Http\Controllers\RoomPriceController;
 use App\Http\Controllers\RoomTypeController;
-use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\BookingController;
+// use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\SessionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -48,7 +49,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('/price-types', PriceTypeController::class);
     Route::resource('/room-prices', RoomPriceController::class);
-    Route::resource('/facilities', FacilityController::class);
+    // Route::resource('/facilities', FacilityController::class);
+
+    Route::resource('/bookings', BookingController::class);
 
 	Route::get('billing', function () {
 		return view('billing');
