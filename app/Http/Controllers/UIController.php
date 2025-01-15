@@ -7,7 +7,7 @@ use App\Models\Booking;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Promotion;
-use App\Models\RoomType;
+// use App\Models\RoomType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -25,7 +25,7 @@ class UIController extends Controller
 
     public function search(Request $request)
     {
-       
+
 
         //dd($request->all());
         $rooms = $request->category;
@@ -50,10 +50,10 @@ class UIController extends Controller
     ->get();
 
         //dd($booking);
-        
+
    $data = RoomType::whereIn('id',  $booking->pluck('room_type_id'))->get();
 
-   
+
         //dd($data);
      // Fetch room types that do not have conflicting bookings and have available rooms
     //  $data = RoomType::where('category_id', $rooms)
@@ -72,7 +72,7 @@ class UIController extends Controller
     //          })->exists();
     //          return !$hasBookingConflict || $room->available_rooms > 0;
     //         });
-        
+
         return view('search.searchrooms',['data'=>$data]);
     }
 
@@ -193,7 +193,7 @@ class UIController extends Controller
 
 
 
-        
+
 
     }
 

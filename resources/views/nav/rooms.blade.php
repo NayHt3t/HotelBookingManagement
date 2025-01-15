@@ -25,18 +25,16 @@
       <div class="container">
         <div class="row">
 
-        @foreach ($rooms as $room)
-
-       
+        @forelse ($rooms as $room)
 
         <div class="col-md-4 mb-4">
             <div class="media d-block room mb-0">
               <figure>
-               
+
                 <img src="{{$room->featured_image}}" alt="Generic placeholder image" class="img-fluid">
                 <div class="overlap-text">
                   <span>
-                    {{$room->category->name}}
+                    Featured Room
                     <span class="ion-ios-star"></span>
                     <span class="ion-ios-star"></span>
                     <span class="ion-ios-star"></span>
@@ -61,18 +59,24 @@
               </div>
             </div>
           </div>
-        
-        @endforeach
-          
-  
+
+          @empty
+
+          <div class="col-md-12 heading-wrap text-center">
+            <h2 class="heading text-black-50">There is no rooms available now......</h2>
+        </div>
+
+        @endforelse
+
+
         </div>
       </div>
       <div class="d-flex justify-content-center">{{$rooms->links('pagination::bootstrap-4')}}</div>
     </section>
 
-    
-   
-   
+
+
+
 
 
     <section class="section-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/img_5.jpg);">
@@ -87,7 +91,6 @@
       </div>
     </section>
     <!-- END section -->
-    
+
     @endsection
-   
- 
+
