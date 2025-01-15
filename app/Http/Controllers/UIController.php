@@ -6,7 +6,6 @@ use App\Models\Guest;
 use App\Models\Booking;
 use App\Models\Category;
 use App\Models\Customer;
-use App\Models\RoomType;
 use App\Models\Promotion;
 use App\Models\RoomType;
 use Carbon\Carbon;
@@ -14,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class UIController extends Controller
 {
@@ -37,9 +37,18 @@ class UIController extends Controller
         ->get();
        //dd($roomtype->pluck('id'));
 
-        $booking = Booking::whereIn('room_type_id',  $roomtype->pluck('id'))
-        ->whereBetween('check_in', [$checkin, $checkout])
-        ->get();
+        // $booking = Booking::whereIn('room_type_id',  $roomtype->pluck('id'))
+        // ->whereBetween('check_in', [$checkin, $checkout])
+        // ->orWhereBetween('check_out', [$checkin, $checkout])
+        // ->groupBy('room_type_id')->get();
+
+        $booking = Booking::select('room_type_id', DB::raw('COUNT(*) AS booking_count'))
+    ->whereIn('room_type_id',  $roomtype->pluck('id'))
+    ->whereBetween(DB::raw("check_in"), [$checkin, $checkout])
+    ->whereBetween(DB::raw("check_out"), values: [$checkin, $checkout])
+    ->groupBy('room_type_id')
+    ->get();
+
         //dd($booking);
         
    $data = RoomType::whereIn('id',  $booking->pluck('room_type_id'))->get();
@@ -69,13 +78,14 @@ class UIController extends Controller
 
     public function booking(Request $request)
     {
-        // dd($request->all());
+         //dd($request->all());
         $id = $request->roomType_id;
         $booking = RoomType::find($id);
         // dd($booking);
         // $booking = RoomType::where()
         return view('search.booking',['booking'=>$booking]);
     }
+
 
     public function bookingform(Request $request){
         $id = $request->roomType_id;

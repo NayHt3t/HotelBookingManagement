@@ -20,12 +20,14 @@
     </section>
     <!-- END section -->
 
-
+   
     <section class="site-section">
       <div class="container">
         <div class="row">
 
         @foreach ($rooms as $room)
+
+       
 
         <div class="col-md-4 mb-4">
             <div class="media d-block room mb-0">
@@ -34,7 +36,7 @@
                 <img src="{{$room->featured_image}}" alt="Generic placeholder image" class="img-fluid">
                 <div class="overlap-text">
                   <span>
-                    Featured Room 
+                    {{$room->category->name}}
                     <span class="ion-ios-star"></span>
                     <span class="ion-ios-star"></span>
                     <span class="ion-ios-star"></span>
@@ -42,28 +44,35 @@
                 </div>
               </figure>
               <div class="media-body">
-                <h3 class="mt-0"><a href="#">Presidential Room</a></h3>
-                <ul class="room-specs">
-                  <li><span class="ion-ios-people-outline"></span> 2 Guests</li>
-                  <li><span class="ion-ios-crop"></span> 22 ft <sup>2</sup></li>
-                </ul>
-                <p>Nulla vel metus scelerisque ante sollicitudin. Fusce condimentum nunc ac nisi vulputate fringilla. </p>
-                <p><a href="#" class="btn btn-primary btn-sm">Book Now From $20</a></p>
+                <h3 class="mt-0"><a href="#">{{$room->name}}</a></h3>
+                
+                @foreach ($room->roomPrices as $roomPrice)
+                <h5>Room Price : {{$roomPrice->price}}</h5>
+                
+                @endforeach
+
+                <p>{{$room->description}}</p>
+                <form action="/booking" method="post">
+                @csrf
+                <input type="hidden" name="roomType_id" value="{{$room->id}}">
+     
+                <button type="submit"  class="btn btn-primary btn-sm">Book Now</button>
+                </form>
               </div>
             </div>
           </div>
         
         @endforeach
           
-
+  
         </div>
       </div>
       <div class="d-flex justify-content-center">{{$rooms->links('pagination::bootstrap-4')}}</div>
     </section>
 
+    
    
    
-
 
 
     <section class="section-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/img_5.jpg);">
