@@ -97,9 +97,12 @@ class AuthController extends Controller
     {
 
         $request->validate([
-
-
-            'otp' => 'required|numeric'
+            'input1' => 'required|numeric|digits:1',
+            'input2' => 'required|numeric|digits:1',
+            'input3' => 'required|numeric|digits:1',
+            'input4' => 'required|numeric|digits:1',
+            'input5' => 'required|numeric|digits:1',
+            'input6' => 'required|numeric|digits:1',
         ]);
 
         $request->merge([
@@ -109,11 +112,19 @@ class AuthController extends Controller
             'status' => session('status')
         ]);
 
+        $otp = $request->input('input1') .
+               $request->input('input2') .
+               $request->input('input3') .
+               $request->input('input4') .
+               $request->input('input5') .
+               $request->input('input6');
+
+
         //dd($request->all());
 
         $cachedOtp = Cache::get('otp_'.$request->email);
 
-        if($cachedOtp != $request->otp)
+        if($cachedOtp != $otp)
         {
             return response()->json(['message' => 'Invalid or Expired OTP'],401);
             // $token = $user->createToken('auth_token')->plainTextToken;

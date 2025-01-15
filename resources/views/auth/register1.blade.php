@@ -5,6 +5,8 @@
       <meta charset="utf-8">
       <title>Register</title>
       <link rel="stylesheet" href="{{asset('css/login.css')}}">
+      
+
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
    </head>
    <body>
@@ -36,6 +38,7 @@
                
             </div>
 
+
             <div class="input-field otp-field" style="display: none;">
                <input type="text" id="otp" name="otp" placeholder="Enter OTP">
                <span id="otpError" class="error"></span>
@@ -66,6 +69,19 @@
                   @endif
               
             </div>
+
+            <div style="width: 100px; height: 30px;" >
+               <input type="file" name="profile"  placeholder="Choose Cover Photo"  >
+                @if ($errors->has('profile'))
+
+                <span class="error">
+                    {{$errors->first('profile')}}
+                </span>
+            
+            @endif
+               
+            </div>
+
             <div class="button" style="padding-top: 5px;">
                <div class="inner"></div>
                <button type="submit">REGISTER NOW</button>
