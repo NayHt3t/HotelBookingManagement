@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guest;
 use App\Models\Booking;
 use App\Models\Category;
-use App\Models\Guest;
+use App\Models\Customer;
+use App\Models\RoomType;
 use App\Models\Promotion;
 use App\Models\RoomType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Cache;
 
 class UIController extends Controller
 {
     public function promotion()
     {
         $promoions = Promotion::all();
-        
+
     }
 
     public function search(Request $request)
@@ -105,6 +110,154 @@ class UIController extends Controller
         ]);
 
 
+    }
+
+    public function history($id){
+       $user = Customer::findOrFail($id);
+       $booking_history = Booking::where('customer_id','=',$id)->get();
+       return view('nav.history',['user'=>$user,'booking_history'=>$booking_history]);
+    }
+
+    public function viewprofile($id){
+
+        $user = Customer::findOrFail($id);
+        return view('nav.viewprofile',['user' => $user]);
+    }
+
+    public function editprofile($id){
+        $user = Customer::findOrFail($id);
+        return view('nav.editprofile',['user'=>$user]);
+    }
+
+    public function updateprofile(Request $request){
+        // dd($id);
+        // dd($request->all());
+        $request->validate(
+            [
+                "name"=>"required",
+                "email" =>"required",
+                "password" => "required"
+            ]);
+        $user = Customer::findOrFail($request->id);
+
+        if(!Hash::check($request->password,$user->password)){
+            return back()->withErrors(['password' => 'The current password is incorrect!!']);
+        }
+
+        Session([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'status' => 1,
+        ]);
+
+        if($request->email != $user->email){
+            $otp = rand(100000,999999);
+
+        //Cache the otp for 5 minutes
+        Cache::put('otp_' . $request->email, $otp, now()->addMinutes(5));
+        //dd($otp);
+        Mail::raw("Your OTP is : $otp",function ($message) use ($request)
+        {
+
+            $message->to($request->email)->subject("Your OTP For Login");
+        });
+
+       // return response()->json(['message' => 'OTP Code Send To Your Email.Please Check!']);
+
+
+
+        return view('nav.updateotp',['id'=>$request->id]);
+
+        }else{
+
+            $user = Customer::findOrFail($request->id);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
+            return view('nav.viewprofile',['user'=>$user])->with('success','Profile Update Successful!');
+
+        }
+
+
+
+        
+
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        // dd($request->all());
+
+
+        $request->validate([
+
+
+            'otp' => 'required|numeric'
+        ]);
+
+        $request->merge([
+            'name' => session('name'),
+            'email' => session('email'),
+            'password' => session('password'),
+            'status' => session('status')
+        ]);
+
+        //dd($request->all());
+
+        $cachedOtp = Cache::get('otp_'.$request->email);
+
+        if($cachedOtp != $request->otp)
+        {
+            return response()->json(['message' => 'Invalid or Expired OTP'],401);
+            // $token = $user->createToken('auth_token')->plainTextToken;
+
+            // return response()->json([
+            //     'message' => 'Login Successful',
+            //     'token' => $token
+            // ]);
+        }
+
+        $customer = Customer::findOrFail($request->id);
+        $customer->name = $request->name;
+        $customer->email = $request->email;
+        $customer->save();
+
+        $user = Customer::findOrFail($request->id);
+
+        //$user = User::where('email',$request->email)->first();
+        auth()->login($customer);
+        Cache::forget('otp_'.$request->email);
+        //return response()->json(['message' => 'Registration Successful']);
+
+        return view('nav.viewprofile',['user'=>$user])->with('success','Profile Update Successful!');
+
+    }
+
+    public function changepassword($id){
+        $user = Customer::findOrFail($id);
+        return view('nav.changepassword',['user' => $user]);
+    }
+
+    public function updatepassword(Request $request){
+        $request->validate(
+            [
+                "currentPw" => "required",
+                "newPw" => "required|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/"
+            ]);
+        $user = Customer::findOrFail($request->id);
+
+        if(!Hash::check($request->currentPw,$user->password)){
+            return back()->withErrors(['currentPw' => 'The current password is incorrect!!']);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->newPw)
+        ]);
+
+        return view('nav.viewprofile',['user'=>$user])->with('success','Profile Update Successful!');
     }
 
 
