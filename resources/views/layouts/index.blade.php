@@ -17,7 +17,7 @@
 
 
 
-          <div class="col-md-12 text-center">
+          <div class="col-md-12  text-center">
 
             <div class="mb-5 element-animate">
               <h1>Welcome To Our Luxury Rooms</h1>
@@ -162,76 +162,90 @@
               <h2 class="heading">Featured Rooms</h2>
           </div>
         </div>
+        @php
+        $rooms = \App\Models\RoomType::where('available_rooms','>',0)->inRandomOrder()->take(3)->get();
+
+        @endphp
+
+
+
+
+
+
         <div class="row ">
-          <div class="col-md-7">
-            <div class="media d-block room mb-0">
-          <figure>
+            <div class="col-md-7">
+              <div class="media d-block room mb-0">
+            <figure>
 
 
 
 
-          <img src="https://assets.simpleviewinc.com/simpleview/image/upload/c_limit,h_1200,q_75,w_1200/v1/clients/milwaukee/VM_Hilton_Plaza_Suite_King_Room_9b5d673a-95c6-445e-ad6b-5ae85e260f18.jpg" alt="Generic placeholder image" class="img-fluid">
+            <img src="{{$rooms[0]->featured_image}}" alt="Generic placeholder image" class="img-fluid">
 
 
 
 
 
-                <div class="overlap-text">
-                  <span>
-                    Featured Room
-                    <span class="ion-ios-star"></span>
-                    <span class="ion-ios-star"></span>
-                    <span class="ion-ios-star"></span>
-                  </span>
+                  <div class="overlap-text">
+                    <span>
+
+                      <span class="ion-ios-star"></span>
+                      <span class="ion-ios-star"></span>
+                      <span class="ion-ios-star"></span>
+                    </span>
+                  </div>
+                </figure>
+
+                <div class="media-body">
+                  <h3 class="mt-0">{{$rooms[0]->name}}</h3>
+                  {{-- <ul class="room-specs">
+                    <li><span class="ion-ios-people-outline"></span> 2 Guests</li>
+                    <li><span class="ion-ios-crop"></span> 22 ft <sup>2</sup></li>
+                  </ul> --}}
+                  <p>{{$rooms[0]->description}} </p>
+                  <p><a href="#" class="btn btn-primary btn-sm active">Start from $500</a></p>
                 </div>
-              </figure>
-              <div class="media-body">
-                <h3 class="mt-0"><a href="#">Presidential Room</a></h3>
-                <ul class="room-specs">
-                  <li><span class="ion-ios-people-outline"></span> 2 Guests</li>
-                  <li><span class="ion-ios-crop"></span> 22 ft <sup>2</sup></li>
-                </ul>
-                <p>Nulla vel metus scelerisque ante sollicitudin. Fusce condimentum nunc ac nisi vulputate fringilla. </p>
-                <p><a href="#" class="btn btn-primary btn-sm">Book Now From $20</a></p>
               </div>
             </div>
-          </div>
-          <div class="col-md-5 room-thumbnail-absolute">
-            <a href="#" class="media d-block room bg first-room"
-             style="background-image: url(images/img_2.jpg); ">
-              <!-- <figure> -->
-                <div class="overlap-text">
-                  <span>
-                    Hotel Room
-                    <span class="ion-ios-star"></span>
-                    <span class="ion-ios-star"></span>
-                    <span class="ion-ios-star"></span>
-                  </span>
-                  <span class="pricing-from">
-                    from $22
-                  </span>
-                </div>
-              <!-- </figure> -->
-            </a>
+            <div class="col-md-5 room-thumbnail-absolute">
+                <img src="{{$rooms[1]->featured_image}}" alt="Generic placeholder image" class="img-fluid">
 
-            <a href="#" class="media d-block room bg second-room" style="background-image: url(images/img_4.jpg); ">
-              <!-- <figure> -->
-                <div class="overlap-text">
-                  <span>
-                    Hotel Room
-                    <span class="ion-ios-star"></span>
-                    <span class="ion-ios-star"></span>
-                    <span class="ion-ios-star"></span>
-                  </span>
-                  <span class="pricing-from">
-                    from $22
-                  </span>
-                </div>
-              <!-- </figure> -->
-            </a>
+                <!-- <figure> -->
+                  <div class="overlap-text">
+                    <span>
+                      <h3>{{$rooms[2]->name}}</h3>
+                      <span class="ion-ios-star"></span>
+                      <span class="ion-ios-star"></span>
+                      <span class="ion-ios-star"></span>
+                    </span>
+                    <span class="pricing-from">
+                        <p><a href="#" class="btn btn-primary btn-sm active">Start from $500</a></p>
+                    </span>
+                  </div>
+                <!-- </figure> -->
+              </a>
 
+              <img src="{{$rooms[2]->featured_image}}" alt="Generic placeholder image" class="img-fluid">
+              <!-- <figure> -->
+                  <div class="overlap-text">
+                    <span>
+                        <h3>{{$rooms[2]->name}}</h3>
+                      <span class="ion-ios-star"></span>
+                      <span class="ion-ios-star"></span>
+                      <span class="ion-ios-star"></span>
+                    </span>
+                    <span class="pricing-from">
+                        <p><a href="#" class="btn btn-primary btn-sm active">Start from $500</a></p>
+                    </span>
+                  </div>
+                <!-- </figure> -->
+              </a>
+
+            </div>
           </div>
-        </div>
+
+
+
       </div>
     </section>
 

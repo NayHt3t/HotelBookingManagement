@@ -8,7 +8,6 @@ use App\Models\Category;
 use App\Models\Customer;
 use App\Models\RoomType;
 use App\Models\Promotion;
-use App\Models\RoomType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -25,26 +24,29 @@ class UIController extends Controller
 
     public function search(Request $request)
     {
-       
 
-        //dd($request->all());
+
+        // dd($request->all());
         $rooms = $request->category;
         $checkin = Carbon::parse($request->checkin)->toDateString();
         $checkout = Carbon::parse($request->checkout)->toDateString();
        //dd($checkin,$checkout);
+
         $roomtype = RoomType::where('category_id', '=', $rooms)
         ->where('available_rooms','>',0)
         ->get();
-       //dd($roomtype->pluck('id'));
+       dd($roomtype->pluck('id'));
 
-        $booking = Booking::whereIn('room_type_id',  $roomtype->pluck('id'))
+        $booking = Booking::whereNotIn('room_type_id',  $roomtype->pluck('id'))
         ->whereBetween('check_in', [$checkin, $checkout])
         ->get();
-        //dd($booking);
-        
+        // dd($booking);
+
+
+
    $data = RoomType::whereIn('id',  $booking->pluck('room_type_id'))->get();
 
-   
+
         //dd($data);
      // Fetch room types that do not have conflicting bookings and have available rooms
     //  $data = RoomType::where('category_id', $rooms)
@@ -63,7 +65,7 @@ class UIController extends Controller
     //          })->exists();
     //          return !$hasBookingConflict || $room->available_rooms > 0;
     //         });
-        
+
         return view('search.searchrooms',['data'=>$data]);
     }
 
@@ -183,7 +185,7 @@ class UIController extends Controller
 
 
 
-        
+
 
     }
 
