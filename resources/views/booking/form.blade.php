@@ -47,25 +47,46 @@
           <a class="nav-link" href="/contact">Contact</a>
         </li>
         @guest
-               <li class="nav-item cta">
-                <a class="nav-link" href="/register"><span>register</span></a>
-              </li>
-              <li class="nav-item cta">
-                <a class="nav-link" href="/login"><span>Login</span></a>
-              </li>
-              @endguest
+        <li class="nav-item cta">
+         <a class="nav-link" href="/register"><span>register</span></a>
+       </li>
+       <li class="nav-item cta">
+         <a class="nav-link" href="/login"><span>Login</span></a>
+       </li>
+       @endguest
 
-              @auth
+       @auth
 
-              <li class="nav-item pt-1 pl-3">
-                <a class="nav-link fa fa-user pr-1" ></a><span class="text-dark" style="font-size:15px">{{auth()->user()->name}}</span>
-              </li>
+       {{-- <li class="nav-item pt-2 pl-3">
+         <a class="nav-link fa fa-user pr-1" ></a><span class="text-white" style="font-size:15px">{{auth()->user()->name}}</span>
+       </li>
 
-              <li class="nav-item cta">
-                <a class="nav-link" href="/logout"><span>Logout</span></a>
-              </li>
 
-              @endauth
+       <li class="nav-item cta">
+         <a class="nav-link" href="/logout"><span>Logout</span></a>
+       </li> --}}
+
+       <li class="nav-item d-flex align-items-center">
+         <div class="dropdown ">
+             <a class="" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 {{-- <li class="nav-item pt-2 pl-3 profile" onclick="menuToogle()"> --}}
+                     <a class="nav-link fa fa-user pr-1"></a><span class="" style="font-size:15px">{{auth()->user()->name}}</span>
+                   {{-- </li> --}}
+             </a>
+             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+               {{-- <a class="dropdown-item" href="#"><i class="fa-regular fa-user fa-xs pr-1"></i>My Profile</a> --}}
+               <a class="dropdown-item" href="/viewprofile/{{auth()->user()->id}}"><i class="fa-regular fa-pen-to-square fa-xs pr-1"></i>Profile</a>
+               <a class="dropdown-item" href="/history/{{auth()->user()->id}}"><i class="fa fa-history fa-xs pr-1"></i>History</a>
+               <a class="dropdown-item " href="/logout"><i class="fa-solid fa-reply fa-xs pr-1"></i>Logout</a>
+             </div>
+           </div>
+       </li>
+
+
+
+
+
+       @endauth
       </ul>
     </div>
   </div>
@@ -176,5 +197,17 @@
 
 
 </body>
+<script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
+    <script src="{{asset('js/jquery-migrate-3.0.0.js')}}"></script>
+    <script src="{{asset('js/popper.min.js')}}"></script>
+    <script src="{{asset('js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('js/owl.carousel.min.js')}}"></script>
+    <script src="{{asset('js/jquery.waypoints.min.js')}}"></script>
+    <script src="{{asset('js/jquery.stellar.min.js')}}"></script>
+
+    <script src="{{asset('js/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{asset('js/magnific-popup-options.js')}}"></script>
+
+    <script src="{{asset('js/main.js')}}"></script>
 <script src="https://kit.fontawesome.com/a67197b46d.js" crossorigin="anonymous"></script>
 </html>
