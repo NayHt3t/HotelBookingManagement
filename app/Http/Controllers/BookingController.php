@@ -14,8 +14,15 @@ class BookingController extends Controller
      */
     public function index()
     {
-         $bookings = Booking::all();
-         return view('admin.bookings.bookings', ['bookings'=>$bookings]);
+
+        // Update the 'noti' status of all bookings to true
+        Booking::query()->update(['noti' => true]);
+
+        // Retrieve all bookings after updating
+        $bookings = Booking::all();
+        $bookings = Booking::all();
+
+        return view('admin.bookings.bookings', ['bookings' => $bookings]);
     }
 
     /**

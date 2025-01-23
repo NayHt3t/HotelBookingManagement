@@ -22,7 +22,6 @@
                             <th>Extra Bed</th>
                             <th>Rooms</th>
                             <th>Available</th>
-                            <th>Booking</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -38,7 +37,6 @@
                                 <td>{{ $roomType->extrabed_status ? 'Yes' : 'No' }}</td>
                                 <td>{{ $roomType->num_rooms }}</td>
                                 <td>{{ $roomType->available_rooms }}</td>
-                                <td>{{ $bookings[$index]->room_type_id == $roomType->id ? $bookings[$index]->total_qty : 0 }}</td>
                                 <td>{{ $roomType->status == 1 ? 'Available' : ($roomType->status == 2 ? 'Booking' : 'Unavailable') }}
                                 </td>
                                 <td>
