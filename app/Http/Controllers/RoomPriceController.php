@@ -145,8 +145,12 @@ class RoomPriceController extends Controller
     {
         $room_price = RoomPrice::find($id);
         try{
-            $room_price->delete();
-            return redirect()->route('room-prices.index')->with(["success"=>"Room Price is successfully deleted."]);
+            if($priceType->promotions()->exists()){
+                return redirect()->route('room-prices.index')->with(["unsuccess"=>"Room Price can't be deleted because it has associated Promotion."]);
+            }else{
+                $room_price->delete();
+                return redirect()->route('room-prices.index')->with(["success"=>"Room Price is successfully deleted."]);
+            }
         }
         catch(QueryException $e){
             return redirect()->route('room-prices.index')->with(["unsuccess"=>"Room Price can't be deleted ."]);

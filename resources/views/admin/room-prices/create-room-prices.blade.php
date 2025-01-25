@@ -25,8 +25,8 @@
                             @endforeach
                         </select>
                         @error('room_type_id')
-                    <span class="text-danger">{{$message}}</span>
-                    @enderror
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="form-group mt-3">
                         <label for="price_type_id">Price Type</label>
