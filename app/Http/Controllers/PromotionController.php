@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Promotion;
+use Illuminate\Database\QueryException;
 use App\Models\RoomPrice;
 class PromotionController extends Controller
 {

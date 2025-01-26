@@ -145,7 +145,7 @@ class RoomPriceController extends Controller
     {
         $room_price = RoomPrice::find($id);
         try{
-            if($priceType->promotions()->exists()){
+            if($room_price->promotions()->exists()){
                 return redirect()->route('room-prices.index')->with(["unsuccess"=>"Room Price can't be deleted because it has associated Promotion."]);
             }else{
                 $room_price->delete();
