@@ -4,10 +4,10 @@
 <div id="content">
     <div class="container">
         <div class="row">
-            <h3 class="text-center">Categories</h3>
+            <h3 class="text-center">Payment Methods</h3>
             <div class="text-center">
                 @if($message=Session::get('unsuccess'))
-                <span class="text-success">{{$message}}</span>
+                <span class="text-danger">{{$message}}</span>
                 @endif
 
                 @if ($errors->any())
@@ -22,26 +22,24 @@
                 </div>
                 @endif
             </div>
+
             <div class="col-md-3">
-                <!--
-                <a href="{{route('categories.create')}}" class="btn btn-primary">Add New Category</a>
- -->
                 <button class="btn btn-primary btn-md active px-3 text-white" data-bs-toggle="modal"
-                    data-bs-target="#addCategoryModal">Add New Category</button>
+                    data-bs-target="#addPaymentTypeModal">Add New Payment Method</button>
 
                 <!-- Add Category Modal -->
-                <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategryModal" aria-hidden="true">
+                <div class="modal fade" id="addPaymentTypeModal" tabindex="-1" aria-labelledby="addPaymentTypeModal" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="">Add Category</h5>
+                                <h5 class="modal-title" id="">Add Payment Method</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
                             <div class="p-3 d-flex justify-content-center">
-                                <form action="{{route('categories.store')}}" method="post" class="w-90">
+                                <form action="{{route('payment-types.store')}}" method="post" class="w-90">
                                     @csrf
-                                    <input type="text" name="name" id="" class="form-control" value="{{ old('name') }}" placeholder="Enter Category Name">
+                                    <input type="text" name="method" id="" class="form-control" value="{{ old('method') }}" placeholder="Enter Payment Method">
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                         <button type="submit" class="btn btn-primary btn-md active px-3 text-white">Submit</button>
@@ -60,48 +58,45 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Category</th>
+                            <th>Method</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php $i = 0; @endphp
-                        @forelse($categories as $category)
+                        @forelse($paymentTypes as $paymentType)
                         <tr>
                             <td>{{++ $i }}</td>
-                            <td>{{ $category->name }}</td>
+                            <td>{{ $paymentType->method }}</td>
                             <td>
-                                <!-- <a href="{{ route('categories.edit', $category) }}" class="btn btn-outline-success mr-2 rounded-pill">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </a> -->
 
                                 <a class="btn btn-outline-success mr-2 rounded-pill" data-bs-toggle="modal"
-                                    data-bs-target="#editCategoryModal"> <i class="fa-solid fa-pen-to-square"></i> </a>
+                                    data-bs-target="#editPaymentTypeModal"> <i class="fa-solid fa-pen-to-square"></i> </a>
 
                                 <!-- Delete Button (Opens the Modal) -->
                                 <button type="button" class="btn btn-outline-danger rounded-pill"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal{{ $category->id }}">
+                                    data-bs-target="#deleteModal{{ $paymentType->id }}">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
                         </tr>
 
                         <!-- Edit Category Modal -->
-                        <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategryModal" aria-hidden="true">
+                        <div class="modal fade" id="editPaymentTypeModal" tabindex="-1" aria-labelledby="editPaymentTypeModal" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="">Edit Category</h5>
+                                        <h5 class="modal-title" id="">Edit Method</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
 
                                     <div class="p-3  justify-content-center">
-                                        <form action="{{route('categories.update',$category->id)}}" method="post" class="w-90">
-                                        @method("put")
-                                        @csrf
+                                        <form action="{{route('payment-types.update',$paymentType->id)}}" method="post" class="w-90">
+                                            @method("put")
+                                            @csrf
 
-                                        <input type="text" name="name" id="" class="form-control" value="{{$category->name}}">
+                                            <input type="text" name="method" id="" class="form-control" value="{{$paymentType->method}}">
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                                 <button type="submit" class="btn btn-primary btn-md active px-3 text-white">Update</button>
@@ -114,19 +109,19 @@
                         </div>
 
                         <!-- Delete Confirmation Modal -->
-                        <div class="modal fade" id="deleteModal{{ $category->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $category->id }}" aria-hidden="true">
+                        <div class="modal fade" id="deleteModal{{ $paymentType->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $paymentType->id }}" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel{{ $category->id }}">Confirm Deletion</h5>
+                                        <h5 class="modal-title" id="deleteModalLabel{{ $paymentType->id }}">Confirm Deletion</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Are you sure you want to delete the category <strong>{{ $category->name }}</strong>?
+                                        Are you sure you want to delete these Payment Method ?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
+                                        <form action="{{ route('payment-types.destroy', $paymentType->id) }}" method="POST">
                                             @method('delete')
                                             @csrf
                                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -135,14 +130,11 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                         @empty
                         <tr>
 
                             <td colspan="4">
-                                <span class="text-danger">*Not available Category data. Empty List.</span>
+                                <span class="text-danger">*Not available Payment Method data. Empty List.</span>
                             </td>
                         </tr>
                         @endforelse

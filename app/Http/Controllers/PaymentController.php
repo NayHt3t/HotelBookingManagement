@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Room;
+use App\Models\Payment;
 use Illuminate\Http\Request;
-use App\Models\Booking;
-use App\Models\Stay;
-use Carbon\Carbon;
+use Illuminate\View\ViewServiceProvider;
 
-class BookingController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,16 +15,11 @@ class BookingController extends Controller
      */
     public function index()
     {
+        //
+        $payments = Payment::all();
+        
+        return view('admin.payment.payment',compact('payments'));
 
-        // Update the 'noti' status of all bookings to true
-        Booking::query()->update(['noti' => true]);
-
-        // Retrieve all bookings after updating
-        $bookings = Booking::all();
-
-        // $bookings = Booking::latest()->get();
-
-        return view('admin.bookings.bookings', ['bookings' => $bookings]);
     }
 
     /**
@@ -93,32 +86,5 @@ class BookingController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-
-    //cancel
-    public function cancel($id)
-    {
-        $booking = Booking::findOrFail($id);
-        $booking->status = config('booking.status.cancel');
-        $booking->save();
-
-        // Redirect to the bookings page
-        return redirect('/bookings')->with('success', 'Booking has been canceled successfully.');
-    }
-
-    public function check($id)
-    {
-        // Retrieve the booking with the given ID and its associated guests
-        $booking = Booking::findOrFail($id);
-        $guests = $booking->guests;  // Assuming the relation method is 'guests()'
-        // Retrieve all stay data
-        $stayInfos = Stay::whereIn('guest_id', $guests->pluck('id'))->get();
-        $rooms = Room::where('room_type_id', $booking->room_type_id)
-            ->where('status', 1)
-            ->get();
-        $days = $booking->check_out->diffInDays($booking->check_in);
-
-        return view('admin.bookings.check_booking', compact('guests', 'stayInfos', 'rooms', 'days', 'booking'));
     }
 }

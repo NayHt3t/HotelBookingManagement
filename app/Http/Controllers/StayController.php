@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Room;
-use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Stay;
 use Carbon\Carbon;
+use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
 
-class BookingController extends Controller
+class StayController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,16 +17,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-
-        // Update the 'noti' status of all bookings to true
-        Booking::query()->update(['noti' => true]);
-
-        // Retrieve all bookings after updating
-        $bookings = Booking::all();
-
-        // $bookings = Booking::latest()->get();
-
-        return view('admin.bookings.bookings', ['bookings' => $bookings]);
+        //
     }
 
     /**
@@ -47,7 +38,34 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+     // Validate the incoming request
+    $request->validate([
+        'guest_id' => [
+            'required',
+            'exists:guests,id', // Ensures guest_id exists in the guests table
+            Rule::unique('stays', 'guest_id'), // Ensures guest_id is unique in the stays table
+        ],
+        'room_id' => 'required|exists:rooms,id',  // Ensures room_id exists in the rooms table
+        'days' => 'required|integer|min:1',      // Number of days must be at least 1
+    ], [
+        // Custom error message
+        'guest_id.unique' => 'This guest already has a stay record.',
+    ]);
+
+    // Create a new Stay record
+    $stay = Stay::create([
+        'guest_id' => $request->guest_id,       // ID of the guest
+        'room_id' => $request->room_id,         // ID of the room
+        'days' => $request->days,               // Number of days for the stay
+        'start_date' => Carbon::now()->toDateString(), // Current date (start date)
+    ]);
+
+    $booking = Booking::findOrFail($request->booking_id);
+    $booking->status = config('booking.status.staying');
+    $booking->save();
+
+    // Redirect or respond with success message
+    return redirect()->back()->with('success', 'Stay record created successfully.');
     }
 
     /**
@@ -93,32 +111,5 @@ class BookingController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-
-    //cancel
-    public function cancel($id)
-    {
-        $booking = Booking::findOrFail($id);
-        $booking->status = config('booking.status.cancel');
-        $booking->save();
-
-        // Redirect to the bookings page
-        return redirect('/bookings')->with('success', 'Booking has been canceled successfully.');
-    }
-
-    public function check($id)
-    {
-        // Retrieve the booking with the given ID and its associated guests
-        $booking = Booking::findOrFail($id);
-        $guests = $booking->guests;  // Assuming the relation method is 'guests()'
-        // Retrieve all stay data
-        $stayInfos = Stay::whereIn('guest_id', $guests->pluck('id'))->get();
-        $rooms = Room::where('room_type_id', $booking->room_type_id)
-            ->where('status', 1)
-            ->get();
-        $days = $booking->check_out->diffInDays($booking->check_in);
-
-        return view('admin.bookings.check_booking', compact('guests', 'stayInfos', 'rooms', 'days', 'booking'));
     }
 }

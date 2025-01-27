@@ -1,0 +1,10 @@
+INSERT INTO `stays` (`id`, `room_id`, `guest_id`, `start_date`, `days`, `created_at`, `updated_at`, `deleted_at`) 
+VALUES (NULL, '1', '5', '2025-01-26', 4, NULL, NULL, NULL), (NULL, '1', '5', '2025-01-26', '4', NULL, NULL, NULL);
+
+INSERT INTO guests (name, booking_id, nrc_or_passport, email, phone, address, city, country) 
+VALUES 
+('John Doe', 5, '12/ABC(N)', 'john.doe@example.com', '123456789', '123 Street Name', 'Yangon', 'Myanmar'),
+('Jane Smith', 5, '13/XYZ(A)', 'jane.smith@example.com', '987654321', '456 Another St', 'Mandalay', 'Myanmar'),
+('Robert Brown', 5, '14/PQR(B)', 'robert.brown@example.com', '555444333', '789 Downtown Blvd', 'Naypyidaw', 'Myanmar'),
+('Emily Johnson', 5, '15/DEF(C)', 'emily.johnson@example.com', '444555666', '101 Uptown Ave', 'Yangon', 'Myanmar'),
+('Michael Lee', 5, '16/GHI(D)', 'michael.lee@example.com', '777888999', '202 Suburban Dr', 'Mawlamyine', 'Myanmar');

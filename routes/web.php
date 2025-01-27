@@ -11,8 +11,14 @@ use App\Http\Controllers\PriceTypeController;
 use App\Http\Controllers\RoomPriceController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\GuestController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentTypeController;
 // use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\StayController;
+use App\Models\Booking;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +58,28 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::resource('/facilities', FacilityController::class);
 
     Route::resource('/bookings', BookingController::class);
+
+	//bookings
+	Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
+	Route::get('/bookings/{id}/check', [BookingController::class, 'check'])->name('bookings.check');
+
+
+	//Guests
+	Route::resource('/guests', GuestController::class);
+
+
+	//stay
+	Route::resource('stayinfo', StayController::class);
+
+
+	//payment-types
+	Route::resource('payment-types',PaymentTypeController::class);
+
+	//payment
+	Route::resource('payments',PaymentController::class);
+
+	
+
 
 	Route::get('billing', function () {
 		return view('billing');
