@@ -4,6 +4,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentTypeController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\RoomController;
@@ -12,8 +15,6 @@ use App\Http\Controllers\RoomPriceController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GuestController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PaymentTypeController;
 // use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\StayController;
@@ -56,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/price-types', PriceTypeController::class);
     Route::resource('/room-prices', RoomPriceController::class);
     // Route::resource('/facilities', FacilityController::class);
+    Route::resource('/promotions', PromotionController::class);
 
     Route::resource('/bookings', BookingController::class);
 
