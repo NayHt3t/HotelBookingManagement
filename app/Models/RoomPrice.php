@@ -21,7 +21,7 @@ class RoomPrice extends Model
 
     public function priceType()
     {
-        return $this->belongsTo(Pricetype::class, 'price_type_id');
+        return $this->belongsTo(PriceType::class, 'price_type_id');
     }
 
     public function promotions()

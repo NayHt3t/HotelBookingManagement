@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -17,8 +18,8 @@ return new class extends Migration
             $table->id(); // Auto-incrementing primary key
             $table->unsignedBigInteger('room_id'); // Foreign key to rooms table
             $table->unsignedBigInteger('guest_id'); // Foreign key to guests table
-            $table->date('start_date'); // Start date of the stay
-            $table->integer('days'); // Number of days for the stay
+            $table->timestamp('check_in');
+            $table->timestamp('check_out');
             $table->timestamps(); // Adds created_at and updated_at columns
             $table->softDeletes(); // Adds deleted_at column for soft deletes
 

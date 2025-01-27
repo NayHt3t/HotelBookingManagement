@@ -6,18 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class Booking extends Model
 {
     use HasFactory;
 
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['user_id', 'room_type_id', 'qty', 'check_in', 'check_out', 'adult', 'child', 'status'];
+    protected $casts = [
+        'check_in' => 'date',
+        'check_out' => 'date',
+    ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    protected $fillable = ['user_id', 'room_type_id', 'qty', 'check_in', 'check_out', 'adult', 'child', 'status'];
 
     public function roomType()
     {
@@ -28,4 +29,15 @@ class Booking extends Model
     {
         return $this->hasMany(Guest::class);
     }
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+
 }
