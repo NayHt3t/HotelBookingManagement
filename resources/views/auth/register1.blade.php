@@ -70,16 +70,15 @@
               
             </div>
 
-            <div style="width: 100px; height: 30px;" >
-               <input type="file" name="profile"  placeholder="Choose Cover Photo"  >
-                @if ($errors->has('profile'))
-
-                <span class="error">
-                    {{$errors->first('profile')}}
-                </span>
-            
-            @endif
-               
+            <div >
+            <label for="profile" class="file-label"  >Choose Profile Photo</label>
+            <input type="file" id="profile" name="profile" style="display: none;" >
+                
+                      @if ($errors->has('profile'))
+                         <span class="error">
+                        {{$errors->first('profile')}}
+                     </span>
+                     @endif
             </div>
 
             <div class="button" style="padding-top: 5px;">
@@ -98,6 +97,25 @@
          var shows = document.querySelectorAll('.show');
          //var show1 = document.querySelector('.show1');
 
+      
+         input.forEach((InputField,index) => {
+            const show = shows[index];
+
+            if(InputField.value === "")
+         {
+            show.style.visibility = "hidden";
+         }
+        
+         InputField.addEventListener('input', () => {
+        if (InputField.value === '') {
+            show.style.visibility = 'hidden';
+        } else {
+            show.style.visibility = 'visible';
+        }
+    });
+
+         });
+         
          shows.forEach((show,index) => {
 
             show.addEventListener('click',() =>{
@@ -120,8 +138,20 @@
             
          });
          
+      const fileInput = document.getElementById('profile');
+      const fileLabel = document.querySelector('label[for="profile"]');
+
+      fileInput.addEventListener('change', function () {
+         if (fileInput.files.length > 0) {
+            fileLabel.textContent = fileInput.files[0].name;
+         } else {
+            fileLabel.textContent = "Choose Profile Photo";
+         }
+      });
 
          
       </script>
+
+
    </body>
 </html>

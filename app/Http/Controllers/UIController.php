@@ -7,7 +7,7 @@ use App\Models\Booking;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Promotion;
-// use App\Models\RoomType;
+ use App\Models\RoomType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
