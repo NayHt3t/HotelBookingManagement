@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Guest;
 use App\Models\Booking;
 use App\Models\Category;
 use App\Models\Customer;
+<<<<<<< HEAD
 use App\Models\Promotion;
  use App\Models\RoomType;
 use Carbon\Carbon;
+=======
+// use App\Models\RoomType;
+use App\Models\RoomType;
+use App\Models\Promotion;
+>>>>>>> d1b61aa4c532a365bce3e52e31ff7c83d6bad128
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class UIController extends Controller
 {
@@ -27,15 +34,16 @@ class UIController extends Controller
     {
 
 
-        //dd($request->all());
+        // dd($request->all());
         $rooms = $request->category;
         $checkin = Carbon::parse($request->checkin)->toDateString();
         $checkout = Carbon::parse($request->checkout)->toDateString();
        //dd($checkin,$checkout);
+
         $roomtype = RoomType::where('category_id', '=', $rooms)
         ->where('available_rooms','>',0)
         ->get();
-       //dd($roomtype->pluck('id'));
+    //    dd($roomtype->pluck('id'));
 
         // $booking = Booking::whereIn('room_type_id',  $roomtype->pluck('id'))
         // ->whereBetween('check_in', [$checkin, $checkout])
