@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Guest;
 use App\Models\Booking;
+use App\Models\Payment;
 use App\Models\Category;
 use App\Models\Customer;
 // use App\Models\RoomType;
 use App\Models\RoomType;
 use App\Models\Promotion;
+use App\Models\PaymentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
@@ -80,25 +83,35 @@ class UIController extends Controller
 
     public function booking(Request $request)
     {
-         //dd($request->all());
+
+        if (Auth::check()) {
+            // dd($request->all());
         $id = $request->roomType_id;
         $booking = RoomType::find($id);
         // dd($booking);
         // $booking = RoomType::where()
         return view('search.booking',['booking'=>$booking]);
+        } elseif (Auth::guest()) {
+            return view('auth.login1');
+        }
+
+
     }
 
 
     public function bookingform(Request $request){
+        // dd($request->all());
         $id = $request->roomType_id;
         $roomType = RoomType::find($id);
-        return view('booking.form',['roomType'=>$roomType]);
+        $paymentType = PaymentType::all();
+        return view('booking.form',['roomType'=>$roomType,'paymentType'=>$paymentType]);
     }
 
     public function storebooking(Request $request){
-         dd($request->all());
+        //  dd($request->all());
+        // dd(auth()->user()->id);
         $booking = Booking::create([
-            'customer_id' => $request->customerId,
+            'customer_id' => auth()->user()->id,
             'room_type_id' => $request->roomType_id,
             'qty' => $request->qty,
             "check_in" => $request->checkIn,
@@ -120,6 +133,16 @@ class UIController extends Controller
             "address" => $request->address,
             "country" => $request->country
         ]);
+
+        $payment = Payment::create([
+            "booking_id" => $booking->id,
+            "payment_type_id" => $request->paymentType,
+            "amount" => $request->amount
+        ]);
+
+        
+
+
 
 
     }
