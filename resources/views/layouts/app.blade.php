@@ -85,6 +85,15 @@
     <script src="{{asset('assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/fullcalendar.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/chartjs.min.js')}}"></script>
+    
+    <!-- Add DataTables Scripts -->
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
     @stack('rtl')
     @stack('dashboard')
     <script>
@@ -95,7 +104,41 @@
             }
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
+        // For DataTable
+        $(document).ready(function() {
+        $('#data_table').DataTable(); // Initialize DataTable
+        });
+
+        //For hide and see password
+        const tooglePassword = document.getElementById("tooglePassword");
+        const toogleConPassword = document.getElementById("toogleConPassword");
+        const password = document.getElementById('password');
+        const confirm_password = document.getElementById('confirm_password');
+
+        tooglePassword.addEventListener('click', () =>{
+            if(password.type === "password"){
+                password.type = "text";
+                tooglePassword.classList.remove("fa-eye");
+                tooglePassword.classList.add("fa-eye-slash");
+            }else{
+                password.type = "password";
+                tooglePassword.classList.remove("fa-eye-slash");
+                tooglePassword.classList.add("fa-eye");
+            }
+        });
+        toogleConPassword.addEventListener('click', () =>{
+            if(confirm_password.type === "password"){
+                confirm_password.type = "text";
+                toogleConPassword.classList.remove("fa-eye");
+                toogleConPassword.classList.add("fa-eye-slash");
+            }else{
+                confirm_password.type = "password";
+                toogleConPassword.classList.remove("fa-eye-slash");
+                toogleConPassword.classList.add("fa-eye");
+            }
+        })
     </script>
+
 
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

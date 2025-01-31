@@ -15,11 +15,10 @@ use App\Http\Controllers\RoomPriceController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GuestController;
-// use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\StayController;
-use App\Models\Booking;
-use App\Models\Payment;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -56,12 +55,16 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('/price-types', PriceTypeController::class);
     Route::resource('/room-prices', RoomPriceController::class);
-    // Route::resource('/facilities', FacilityController::class);
+    Route::resource('/customers', CustomerController::class);
     Route::resource('/promotions', PromotionController::class);
+    Route::resource('/users', UserController::class);
 
-    Route::resource('/bookings', BookingController::class);
+	//admin change password
+    Route::get('/users/{id}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
+    Route::patch('/users/{id}/change-password', [UserController::class, 'changePassword'])->name('users.changePassword');
 
 	//bookings
+    Route::resource('/bookings', BookingController::class);
 	Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
 	Route::get('/bookings/{id}/check', [BookingController::class, 'check'])->name('bookings.check');
 

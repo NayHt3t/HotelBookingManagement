@@ -9,7 +9,7 @@
                     <a href="{{ route('rooms.create') }}" class="btn btn-primary btn-md active px-3 text-white">Add New Room</a>
 
                     <!-- Displaying Rooms -->
-                    <table id="user_table" class="table table-hover table-bordered" style="width:100%">
+                    <table id="data_table" class="table table-hover table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -86,19 +86,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Add DataTables Scripts -->
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#user_table').DataTable(); // Initialize DataTable
-        });
-    </script>
 @endsection

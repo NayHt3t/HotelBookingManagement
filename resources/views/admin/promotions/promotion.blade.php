@@ -11,7 +11,7 @@
 
         <div class="row mt-1">
             <div class="col-md-12">
-                <table class="table table-hover table-bordered">
+                <table id="data_table" class="table table-hover table-bordered">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -83,4 +83,5 @@
         </div>
     </div>
 </div>
+
 @endsection
