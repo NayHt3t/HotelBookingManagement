@@ -8,10 +8,15 @@ use App\Models\Booking;
 use App\Models\Payment;
 use App\Models\Category;
 use App\Models\Customer;
+<<<<<<< HEAD
+use App\Models\Promotion;
+ use App\Models\RoomType;
+use Carbon\Carbon;
+=======
 // use App\Models\RoomType;
 use App\Models\RoomType;
 use App\Models\Promotion;
-use App\Models\PaymentType;
+>>>>>>> d1b61aa4c532a365bce3e52e31ff7c83d6bad128
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -133,16 +138,6 @@ class UIController extends Controller
             "address" => $request->address,
             "country" => $request->country
         ]);
-
-        $payment = Payment::create([
-            "booking_id" => $booking->id,
-            "payment_type_id" => $request->paymentType,
-            "amount" => $request->amount
-        ]);
-
-        
-
-
 
 
     }
