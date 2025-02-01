@@ -54,6 +54,26 @@ header{
   transition: .4s;
   background: #f7ece1;
 }
+
+.forgot-password {
+  text-align: left; /* Aligns text to the right */
+  margin-top: -10px; /* Adjust spacing */
+  margin-bottom: 20px; /* Adds some space below */
+}
+
+.forgot-password a {
+  font-size: 16px;
+  color: #0041C2;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+  color: #1DA1F2; /* Changes color on hover */
+}
+
+
 input:focus{
   border: 1px solid #1DA1F2;
 }

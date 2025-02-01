@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap");
 
 html {
-  background-color: deepskyblue;
+  background-image: url(big_image_1.jpg);
   display: flex;
   justify-content: center;
   align-items: center;

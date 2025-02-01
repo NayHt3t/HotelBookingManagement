@@ -16,11 +16,19 @@
                <input type="text"  name="email" required >
                <label>Enter Email</label>
             </div>
+
             <div class="input-field">
                <input class="pswrd" type="password" name="password" required>
                <span class="show">SHOW</span>
                <label>Enter Password</label>
             </div>
+
+            <div class="forgot-password">
+
+            <a href=""  >Forget Password?</a>
+
+            </div>
+
             <div class="button">
                <div class="inner"></div>
                <button type="submit">LOGIN</button>

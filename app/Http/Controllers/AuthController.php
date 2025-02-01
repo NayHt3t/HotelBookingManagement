@@ -33,29 +33,34 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'profile' => $request->profile,
             'status' => 1,
         ]);
-
-
+        
 
         $otp = rand(100000,999999);
 
         //Cache the otp for 5 minutes
         Cache::put('otp_' . $request->email, $otp, now()->addMinutes(5));
         //dd($otp);
-        Mail::raw("Your OTP is : $otp",function ($message) use ($request)
-        {
+        // Mail::raw("Your OTP is : $otp",function ($message) use ($request)
+        // {
 
+        //     $message->to($request->email)->subject("Your OTP For Login");
+        //     //dd($message);
+            
+
+        // });
+
+        Mail::send('auth.EmailOtp', ['otp' => $otp], function ($message) use ($request)
+         {
             $message->to($request->email)->subject("Your OTP For Login");
-            //dd($message);
-
-
-        });
-
+         });
+        
        // return response()->json(['message' => 'OTP Code Send To Your Email.Please Check!']);
 
-
-
+       
+        
         return view('auth.otp');
 
         //return redirect('/');
@@ -95,36 +100,27 @@ class AuthController extends Controller
 
     public function verifyOtp(Request $request)
     {
-
+        
         $request->validate([
-            'input1' => 'required|numeric|digits:1',
-            'input2' => 'required|numeric|digits:1',
-            'input3' => 'required|numeric|digits:1',
-            'input4' => 'required|numeric|digits:1',
-            'input5' => 'required|numeric|digits:1',
-            'input6' => 'required|numeric|digits:1',
+
+            
+            'otp' => 'required|numeric'
         ]);
 
         $request->merge([
             'name' => session('name'),
             'email' => session('email'),
             'password' => session('password'),
+            'profile' => session('profile'),
             'status' => session('status')
+            
         ]);
-
-        $otp = $request->input('input1') .
-               $request->input('input2') .
-               $request->input('input3') .
-               $request->input('input4') .
-               $request->input('input5') .
-               $request->input('input6');
-
 
         //dd($request->all());
 
         $cachedOtp = Cache::get('otp_'.$request->email);
 
-        if($cachedOtp != $otp)
+        if($cachedOtp != $request->otp)
         {
             return response()->json(['message' => 'Invalid or Expired OTP'],401);
             // $token = $user->createToken('auth_token')->plainTextToken;
@@ -140,7 +136,8 @@ class AuthController extends Controller
             "name" => session('name'),
             "email" => session('email'),
             "password" => session('password'),
-            'status' => session('status')
+            "profile" => session('profile'),
+            "status" => session('status')
 
         ]);
 
@@ -150,6 +147,6 @@ class AuthController extends Controller
         //return response()->json(['message' => 'Registration Successful']);
 
         return redirect()->route('home')->with('success','Registration Successful');
-
+        
     }
 }

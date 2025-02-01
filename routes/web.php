@@ -34,6 +34,8 @@ Route::group(['namespace'=>'App\Http\Controllers'],function(){
     Route::get('/rooms','HomeController@rooms');
     Route::get('/register','AuthController@registerForm');
     Route::post('/registration','AuthController@registration');
+    //Route::post('/registration', [AuthController::class, 'registration'])->name('register.submit');
+
     Route::get('/login','AuthController@loginForm');
     Route::post('/login','AuthController@login');
     Route::get('/logout','AuthController@logout');
@@ -41,19 +43,6 @@ Route::group(['namespace'=>'App\Http\Controllers'],function(){
 
 
 
-    Route::get('/promotion',[UIController::class,'promotion']);
-    Route::post('/search',[UIController::class,'search']);
-    Route::post('/booking',[UIController::class,'booking']);
-    Route::post('/bookingform',[UIController::class,'bookingform']);
-    Route::post('/storebooking',[UIController::class,'storebooking']);
-    Route::get('/history/{id}',[UIController::class,'history']);
-    Route::get('/viewprofile/{id}',[UIController::class,'viewprofile']);
-    Route::post('/updateprofile',[UIController::class,'updateprofile']);
-    Route::get('/editprofile/{id}',[UIController::class,'editprofile']);
-    Route::get('/updateprofile',[UIController::class,'updateprofile']);
-    Route::post('/verifyotp',[UIController::class,'verifyOtp']);
-    Route::get('/changepassword/{id}',[UIController::class,'changepassword']);
-    Route::post('/updatepassword',[UIController::class,'updatepassword']);
-
+  
 
 });

@@ -15,7 +15,7 @@
          <form action="/registration" method="post">
             @csrf
          <div class="input-field">
-               <input type="text" name="name" placeholder="Enter User Name" >
+               <input type="text" name="name" value="{{old('name')}}" placeholder="Enter User Name" >
                
                @if ($errors->has('name'))
 
@@ -27,7 +27,7 @@
 
             </div>
             <div class="input-field">
-               <input type="text" name="email" placeholder="Enter Email">
+               <input type="text" name="email" value="{{old('email')}}" placeholder="Enter Email">
                 @if ($errors->has('email'))
 
                 <span class="error">
@@ -72,7 +72,7 @@
 
             <div >
             <label for="profile" class="file-label"  >Choose Profile Photo</label>
-            <input type="file" id="profile" name="profile" style="display: none;" >
+            <input type="file" id="profile" value="{{old('profile')}}" name="profile" style="display: none;" >
                 
                       @if ($errors->has('profile'))
                          <span class="error">
