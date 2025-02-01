@@ -95,7 +95,7 @@
     <div class="container mt-3">
 
         <div class="row my-3 justify-content-center">
-            <div class="col-md-12">
+            <div class="col-md-12 ">
                 <form action="/storebooking" method="post">
                     @csrf
                     <div class="row my-3 justify-content-center">
@@ -156,15 +156,17 @@
 
                             <div class="">
                                 <label for="">Number of Rooms</label>
-                                <select name="qty" class=" form-control" id="">
+                                <select name="qty" class=" form-control" id="roomCount" >
                                     <option value=""></option>
-                                    @for ($i=1; $i<=$roomType->num_rooms;$i++)
+                                    @for ($i=1; $i<=$roomType->available_rooms;$i++)
                                         <option value="{{$i}}">{{$i}}</option>
                                     @endfor
                                 </select>
                             </div>
 
-                            <div class="row">
+                            
+
+                            <div class="row mb-5">
                                 <div class="col-md-6">
                                 <label class=" form-label" for="">Adult</label>
                                 <input type="number" name="adult" id="" class="form-control">
@@ -176,8 +178,58 @@
                             </div>
                             <input type="hidden" name="roomType_id" value="{{$roomType->id}}" id="">
 
+                            
+
+                            <div class="row mb-2">
+                                <div class="col-md-6">Total Amount : </div>
+                                <div class="col-md-6">
+                                    @foreach ($roomType->roomPrices as $room)
+                                    <input type="text" class="form-control"  name="amount" id="totalAmount" value="{{$room->price}}">
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-md-6">Choose Payment Method : </div>
+                                <div class="col-md-6">
+                                    <select name="paymentType" class=" form-control" id="">
+
+                                        @foreach ($paymentType as $type)
+                                        <option value="{{$type->id}}">{{$type->method}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-5">
+                                <div class="col-md-6">Payment Photo : </div>
+                                <div class="col-md-6"><input type="file" class="form-control"></div>
+                            </div>
+
+                            <div class="row mt-3">
+                                
+                                    <h5 class="col-md-12  text-center">Scan To Pay</h5>
+                             
+                            </div>
+
+                            <div class="row" >
+                            
+                                    
+                                    @foreach ($paymentType as $type)
+                                    <div class="card col-md-3 border-0 " >
+                                        <img class="card-img-top" src="{{asset('images/scan.png')}}" alt="Card image cap">
+                                        <div class="card-body">
+                                          <p class="card-title text-center">{{$type->method}}</p>
+                                        </div>
+                                      </div>
+                                    @endforeach
+                                
+                            </div>
+
                         </div>
                     </div>
+
+
 
 
                         <div class="row my-3 justify-content-center">
@@ -210,4 +262,15 @@
 
     <script src="{{asset('js/main.js')}}"></script>
 <script src="https://kit.fontawesome.com/a67197b46d.js" crossorigin="anonymous"></script>
+
+<script>
+const price = @json($room->price);
+document.getElementById('roomCount').addEventListener('change',function () {
+  const numberOfRoom = parseInt(this.value);
+  const totalAmount = price * numberOfRoom;
+  document.getElementById('totalAmount').value = totalAmount.toFixed(2);
+});
+
+</script>
+
 </html>
