@@ -6,8 +6,23 @@
       <title>Login</title>
       <link rel="stylesheet" href="{{asset('css/login.css')}}">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    </head>
    <body>
+
+   @if(session('success'))
+   <script>
+      document.addEventListener("DOMContentLoaded", function() {
+         Swal.fire({
+            title: "Success",
+            text: "{{ session('success') }}",
+            icon: "success",
+            confirmButtonText: "OK"
+         });
+      });
+   </script>
+   @endif
+
       <div class="container">
          <header>Login Form</header>
          <form action="/login" method="post">
@@ -64,6 +79,8 @@
             Not a member? <a href="/register">Signup now</a>
          </div>
       </div>
+
+
       <script>
          var input = document.querySelector('.pswrd');
          var show = document.querySelector('.show');
@@ -80,5 +97,6 @@
            }
          }
       </script>
+
    </body>
 </html>

@@ -34,7 +34,7 @@ Route::group(['namespace'=>'App\Http\Controllers'],function(){
     Route::get('/rooms','HomeController@rooms');
     Route::get('/register','AuthController@registerForm');
     Route::post('/registration','AuthController@registration');
-    Route::get('/login','AuthController@loginForm');
+    Route::get('/login','AuthController@loginForm')->name('login');
     Route::post('/login','AuthController@login');
     Route::get('/logout','AuthController@logout');
     Route::get('/forgot-password','AuthController@ForgotPasswordOtpForm')->name('forgot.password');
