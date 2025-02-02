@@ -34,12 +34,13 @@ Route::group(['namespace'=>'App\Http\Controllers'],function(){
     Route::get('/rooms','HomeController@rooms');
     Route::get('/register','AuthController@registerForm');
     Route::post('/registration','AuthController@registration');
-    //Route::post('/registration', [AuthController::class, 'registration'])->name('register.submit');
-
     Route::get('/login','AuthController@loginForm');
     Route::post('/login','AuthController@login');
     Route::get('/logout','AuthController@logout');
+    Route::get('/forgot-password','AuthController@ForgotPasswordOtpForm')->name('forgot.password');
+    Route::post('/forgot-password-Otp',[AuthController::class,'ForgotPasswordOtp'])->name('ForgotOtp.password');
     Route::post('/verify-otp',[AuthController::class,'verifyOtp']);
+    Route::post('/verify-forgot-otp',[AuthController::class,'verifyForgotOtp'])->name('verifyforgot.otp');
 
 
 

@@ -13,19 +13,34 @@
          <form action="/login" method="post">
             @csrf
             <div class="input-field">
-               <input type="text"  name="email" required >
-               <label>Enter Email</label>
+            <input type="email" name="email" value="{{old('email')}}" placeholder="Enter Email" >
+               
+               @if ($errors->has('email'))
+
+                  <span class="error">
+                   {{$errors->first('email')}}
+                     </span>
+
+               @endif
             </div>
 
+            
+
             <div class="input-field">
-               <input class="pswrd" type="password" name="password" required>
+               <input class="pswrd" type="password" name="password" placeholder="Enter Password" >
                <span class="show">SHOW</span>
-               <label>Enter Password</label>
+               @if ($errors->has('password'))
+
+                  <span class="error">
+                  {{$errors->first('password')}}
+                  </span>
+
+                  @endif
             </div>
 
             <div class="forgot-password">
 
-            <a href=""  >Forget Password?</a>
+            <a href="{{route('forgot.password')}}">Forget Password?</a>
 
             </div>
 

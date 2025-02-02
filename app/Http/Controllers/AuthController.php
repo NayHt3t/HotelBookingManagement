@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -147,6 +146,91 @@ class AuthController extends Controller
         //return response()->json(['message' => 'Registration Successful']);
 
         return redirect()->route('home')->with('success','Registration Successful');
+        
+    }
+
+    public function ForgotPasswordOtpForm()
+    {
+
+        return view('auth.ForgotOtpForm');
+    }
+
+    public function ForgotPasswordOtp(Request $request)
+    {
+        //dd('reach here');
+        $request->validate([
+
+            "email" => "required|unique:users,email",
+            "password" => "required|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/",
+            
+        ]);
+
+        session([
+            'email' => $request->email,
+            'password' => $request->password
+        ]);
+
+        $otp = rand(100000,999999);
+
+        //Cache the otp for 5 minutes
+        Cache::put('otp_' . $request->email, $otp, now()->addMinutes(5));
+        //dd($otp);
+
+        Mail::send('auth.ForgotMail', ['otp' => $otp], function ($message) use ($request)
+         {
+            $message->to($request->email)->subject("Your OTP For Reset Password");
+         });
+
+       return view('auth.ForgotOtp');
+    }
+
+    public function verifyForgotOtp(Request $request)
+    {
+        //dd('reach here2');
+        $request->validate([
+
+            
+            'otp' => 'required|numeric'
+        ]);
+
+        $request->merge([
+            
+            'email' => session('email'),
+            'password' => session('password')
+            
+            
+        ]);
+
+        //dd($request->all());
+
+        $cachedOtp = Cache::get('otp_'.session('email'));
+
+       // dd($cachedOtp. "enter". $request->otp);
+
+        if($cachedOtp != $request->otp)
+        {
+            return response()->json(['message' => 'Invalid or Expired OTP'],401);
+            
+        }
+
+        $data = Customer::where('email',session('email'));
+
+        if(!$data)
+        {
+            return back()->withErrors(['email' => 'Email Not Found']);
+        }
+
+        $data->update([
+
+            "password" => Hash::make(session('password'))
+        ]);
+
+        //$user = User::where('email',$request->email)->first();
+        
+        Cache::forget('otp_'.session('email'));
+        //return response()->json(['message' => 'Registration Successful']);
+
+        return redirect()->route('login')->with('success', 'Password Reset Successful');
         
     }
 }
