@@ -17,6 +17,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\ShowDashboardController;
 use App\Http\Controllers\StayController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -37,9 +38,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [HomeController::class, 'home']);
-	Route::get('dashboard', function () {
-		return view('dashboard');
-	})->name('dashboard');
+	Route::get('dashboard',[ShowDashboardController::class, 'index'])->name('dashboard');
 
 	Route::resource('categories', CategoryController::class);
 	Route::resource('room-types', RoomTypeController::class);

@@ -115,18 +115,21 @@
         const password = document.getElementById('password');
         const confirm_password = document.getElementById('confirm_password');
 
-        tooglePassword.addEventListener('click', () =>{
-            if(password.type === "password"){
-                password.type = "text";
-                tooglePassword.classList.remove("fa-eye");
-                tooglePassword.classList.add("fa-eye-slash");
-            }else{
-                password.type = "password";
-                tooglePassword.classList.remove("fa-eye-slash");
-                tooglePassword.classList.add("fa-eye");
-            }
-        });
-        toogleConPassword.addEventListener('click', () =>{
+        if(tooglePassword){
+            tooglePassword.addEventListener('click', () =>{
+                if(password.type === "password"){
+                    password.type = "text";
+                    tooglePassword.classList.remove("fa-eye");
+                    tooglePassword.classList.add("fa-eye-slash");
+                }else{
+                    password.type = "password";
+                    tooglePassword.classList.remove("fa-eye-slash");
+                    tooglePassword.classList.add("fa-eye");
+                }
+            });
+        }
+        if(toogleConPassword){
+            toogleConPassword.addEventListener('click', () =>{
             if(confirm_password.type === "password"){
                 confirm_password.type = "text";
                 toogleConPassword.classList.remove("fa-eye");
@@ -136,7 +139,8 @@
                 toogleConPassword.classList.remove("fa-eye-slash");
                 toogleConPassword.classList.add("fa-eye");
             }
-        })
+            });
+        }
     </script>
 
 
