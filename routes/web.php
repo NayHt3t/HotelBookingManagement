@@ -42,19 +42,23 @@ Route::group(['namespace'=>'App\Http\Controllers'],function(){
     Route::post('/verify-otp',[AuthController::class,'verifyOtp']);
     Route::post('/verify-forgot-otp',[AuthController::class,'verifyForgotOtp'])->name('verifyforgot.otp');
 
-    Route::get('/promotion',[UIController::class,'promotion']);
-    Route::post('/search',[UIController::class,'search']);
-    Route::post('/booking',[UIController::class,'booking']);
-    Route::post('/bookingform',[UIController::class,'bookingform']);
-    Route::post('/storebooking',[UIController::class,'storebooking']);
-    Route::get('/history/{id}',[UIController::class,'history']);
-    Route::get('/viewprofile/{id}',[UIController::class,'viewprofile']);
-    Route::post('/updateprofile',[UIController::class,'updateprofile']);
-    Route::get('/editprofile/{id}',[UIController::class,'editprofile']);
-    Route::get('/updateprofile',[UIController::class,'updateprofile']);
-    Route::post('/verifyotp',[UIController::class,'verifyOtp']);
-    Route::get('/changepassword/{id}',[UIController::class,'changepassword']);
-    Route::post('/updatepassword',[UIController::class,'updatepassword']);
 
+
+    Route::controller(UIController::class)->group(function(){
+
+    Route::post('/booking','booking');
+    Route::post('/search','search');
+    Route::post('/bookingform','bookingform');
+    Route::post('/storebooking','storebooking');
+    Route::get('/history/{id}','history');
+    Route::get('/viewprofile/{id}','viewprofile');
+    Route::post('/updateprofile','updateprofile');
+    Route::get('/editprofile/{id}','editprofile');
+    Route::get('/updateprofile','updateprofile');
+    Route::post('/verifyotp','verifyOtp');
+    Route::get('/changepassword/{id}','changepassword');
+    Route::post('/updatepassword','updatepassword');
+
+    });
 
 });
