@@ -148,6 +148,8 @@ class UIController extends Controller
             "payment_type_id" => $request->paymentType,
             "amount" => $request->amount
         ]);
+
+        return view('booking.success')->with('msg',"Your booking is pending. We will inform you later.");
     }
 
     public function history($id)
