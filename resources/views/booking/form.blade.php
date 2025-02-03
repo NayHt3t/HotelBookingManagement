@@ -195,6 +195,7 @@
                                 <div class="col-md-6">
                                     @foreach ($roomType->roomPrices as $room)
                                     <input type="text" class="form-control"  name="amount" id="totalAmount" value="{{$room->price}}" readonly>
+                                    <span>{{ $msg }}</span>
                                     @endforeach
                                 </div>
                             </div>
