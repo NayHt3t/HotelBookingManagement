@@ -98,7 +98,17 @@
             <div class="col-md-12 ">
                 <form action="/storebooking" method="post">
                     @csrf
+
+                    <div class="row my-2 justify-content-center">
+                        <div class="col-md-6 text-center">
+                            <h3>Please fill your information</h3>
+                        </div>
+                    </div>
+
                     <div class="row my-3 justify-content-center">
+
+
+
                      <div class="col-md-6">
 
                         <div class="row">
@@ -164,7 +174,7 @@
                                 </select>
                             </div>
 
-                            
+
 
                             <div class="row mb-5">
                                 <div class="col-md-6">
@@ -178,13 +188,13 @@
                             </div>
                             <input type="hidden" name="roomType_id" value="{{$roomType->id}}" id="">
 
-                            
+
 
                             <div class="row mb-2">
                                 <div class="col-md-6">Total Amount : </div>
                                 <div class="col-md-6">
                                     @foreach ($roomType->roomPrices as $room)
-                                    <input type="text" class="form-control"  name="amount" id="totalAmount" value="{{$room->price}}">
+                                    <input type="text" class="form-control"  name="amount" id="totalAmount" value="{{$room->price}}" readonly>
                                     @endforeach
                                 </div>
                             </div>
@@ -207,14 +217,14 @@
                             </div>
 
                             <div class="row mt-3">
-                                
+
                                     <h5 class="col-md-12  text-center">Scan To Pay</h5>
-                             
+
                             </div>
 
                             <div class="row" >
-                            
-                                    
+
+
                                     @foreach ($paymentType as $type)
                                     <div class="card col-md-3 border-0 " >
                                         <img class="card-img-top" src="{{asset('images/scan.png')}}" alt="Card image cap">
@@ -223,7 +233,7 @@
                                         </div>
                                       </div>
                                     @endforeach
-                                
+
                             </div>
 
                         </div>
