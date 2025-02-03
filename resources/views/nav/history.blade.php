@@ -21,9 +21,9 @@
   </head>
 
   <body>
-<div class="container mb-5">
-    <h3>{{$user->name}}'s Booking History</h3>
-    <table class="table table-striped">
+<div class="container my-3 py-5">
+    <h3 class="">{{$user->name}}'s Booking History</h3>
+    <table class="table table-striped mt-3">
         <thead>
             <tr>
             <td>Booking ID</td>

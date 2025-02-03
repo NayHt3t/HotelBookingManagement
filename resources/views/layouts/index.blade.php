@@ -203,7 +203,7 @@
                     <li><span class="ion-ios-crop"></span> 22 ft <sup>2</sup></li>
                   </ul> --}}
                   <p>{{$rooms[0]->description}} </p>
-                  <p><a href="#" class="btn btn-primary btn-sm active">Start from $500</a></p>
+                  <p><a href="/rooms" class="btn btn-primary btn-sm active">Start from $500</a></p>
                 </div>
               </div>
             </div>
