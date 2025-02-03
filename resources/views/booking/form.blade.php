@@ -96,7 +96,7 @@
 
         <div class="row my-3 justify-content-center">
             <div class="col-md-12 ">
-                <form action="/storebooking" method="post">
+                <form action="/storebooking" method="POST">
                     @csrf
                     <div class="row my-3 justify-content-center">
                      <div class="col-md-6">
@@ -133,7 +133,7 @@
                             </div>
                             <div class="">
                             <label class=" form-label" for="">Country</label>
-                            <input type="text" name="name" id="" class="form-control">
+                            <input type="text" name="country" id="" class="form-control">
                             </div>
 
                      </div>
@@ -164,7 +164,7 @@
                                 </select>
                             </div>
 
-                            
+
 
                             <div class="row mb-5">
                                 <div class="col-md-6">
@@ -178,7 +178,7 @@
                             </div>
                             <input type="hidden" name="roomType_id" value="{{$roomType->id}}" id="">
 
-                            
+
 
                             <div class="row mb-2">
                                 <div class="col-md-6">Total Amount : </div>
@@ -207,14 +207,14 @@
                             </div>
 
                             <div class="row mt-3">
-                                
+
                                     <h5 class="col-md-12  text-center">Scan To Pay</h5>
-                             
+
                             </div>
 
                             <div class="row" >
-                            
-                                    
+
+
                                     @foreach ($paymentType as $type)
                                     <div class="card col-md-3 border-0 " >
                                         <img class="card-img-top" src="{{asset('images/scan.png')}}" alt="Card image cap">
@@ -223,7 +223,7 @@
                                         </div>
                                       </div>
                                     @endforeach
-                                
+
                             </div>
 
                         </div>
