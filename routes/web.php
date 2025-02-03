@@ -44,6 +44,21 @@ Route::group(['namespace'=>'App\Http\Controllers'],function(){
 
 
 
-  
+    Route::controller(UIController::class)->group(function(){
+
+    Route::post('/booking','booking');
+    Route::post('/search','search');
+    Route::post('/bookingform','bookingform');
+    Route::post('/storebooking','storebooking');
+    Route::get('/history/{id}','history');
+    Route::get('/viewprofile/{id}','viewprofile');
+    Route::post('/updateprofile','updateprofile');
+    Route::get('/editprofile/{id}','editprofile');
+    Route::get('/updateprofile','updateprofile');
+    Route::post('/verifyotp','verifyOtp');
+    Route::get('/changepassword/{id}','changepassword');
+    Route::post('/updatepassword','updatepassword');
+
+    });
 
 });

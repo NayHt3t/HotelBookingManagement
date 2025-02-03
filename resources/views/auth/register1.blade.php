@@ -5,7 +5,7 @@
       <meta charset="utf-8">
       <title>Register</title>
       <link rel="stylesheet" href="{{asset('css/login.css')}}">
-      
+
 
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
    </head>
@@ -16,13 +16,13 @@
             @csrf
          <div class="input-field">
                <input type="text" name="name" value="{{old('name')}}" placeholder="Enter User Name" >
-               
+
                @if ($errors->has('name'))
 
                 <span  class="error">
                     {{$errors->first('name')}}
                 </span>
-            
+
             @endif
 
             </div>
@@ -33,13 +33,13 @@
                 <span class="error">
                     {{$errors->first('email')}}
                 </span>
-            
+
             @endif
-               
+
             </div>
 
 
-            
+
 
             <div class="input-field">
                <input class="pswrd" type="password" name="password" placeholder="Enter Password" >
@@ -64,13 +64,13 @@
                   </span>
 
                   @endif
-              
+
             </div>
 
             <div >
             <label for="profile" class="file-label"  >Choose Profile Photo</label>
             <input type="file" id="profile" value="{{old('profile')}}" name="profile" style="display: none;" >
-                
+
                       @if ($errors->has('profile'))
                          <span class="error">
                         {{$errors->first('profile')}}
@@ -83,7 +83,7 @@
                <button type="submit">REGISTER NOW</button>
             </div>
          </form>
-         
+
          <div class="signup">
             Already have an account? <a href="/login">Login Now</a>
          </div>
@@ -94,7 +94,7 @@
          var shows = document.querySelectorAll('.show');
          //var show1 = document.querySelector('.show1');
 
-      
+
          input.forEach((InputField,index) => {
             const show = shows[index];
 
@@ -102,7 +102,7 @@
          {
             show.style.visibility = "hidden";
          }
-        
+
          InputField.addEventListener('input', () => {
         if (InputField.value === '') {
             show.style.visibility = 'hidden';
@@ -112,7 +112,7 @@
     });
 
          });
-         
+
          shows.forEach((show,index) => {
 
             show.addEventListener('click',() =>{
@@ -129,12 +129,12 @@
            }
 
             });
-        
-           
-         
-            
+
+
+
+
          });
-         
+
       const fileInput = document.getElementById('profile');
       const fileLabel = document.querySelector('label[for="profile"]');
 
@@ -146,7 +146,7 @@
          }
       });
 
-         
+
       </script>
 
 

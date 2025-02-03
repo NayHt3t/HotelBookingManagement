@@ -203,7 +203,7 @@
                     <li><span class="ion-ios-crop"></span> 22 ft <sup>2</sup></li>
                   </ul> --}}
                   <p>{{$rooms[0]->description}} </p>
-                  <p><a href="#" class="btn btn-primary btn-sm active">Start from $500</a></p>
+                  <p><a href="/rooms" class="btn btn-primary btn-sm active">check rooms</a></p>
                 </div>
               </div>
             </div>
@@ -219,7 +219,7 @@
                       <span class="ion-ios-star"></span>
                     </span>
                     <span class="pricing-from">
-                        <p><a href="#" class="btn btn-primary btn-sm active">Start from $500</a></p>
+                        <p><a href="/rooms" class="btn btn-primary btn-sm active">check rooms</a></p>
                     </span>
                   </div>
                 <!-- </figure> -->
@@ -235,7 +235,7 @@
                       <span class="ion-ios-star"></span>
                     </span>
                     <span class="pricing-from">
-                        <p><a href="#" class="btn btn-primary btn-sm active">Start from $500</a></p>
+                        <p><a href="/rooms" class="btn btn-primary btn-sm active">check rooms</a></p>
                     </span>
                   </div>
                 <!-- </figure> -->
@@ -258,7 +258,7 @@
           <div class="col-md-9 text-center element-animate">
             <h2>Relax and Enjoy your Holiday</h2>
             <p class="lead mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto quidem tempore expedita facere facilis, dolores!</p>
-            <div class="btn-play-wrap"><a href="https://vimeo.com/channels/staffpicks/93951774" class="btn-play popup-vimeo "><span class="ion-ios-play"></span></a></div>
+            {{-- <div class="btn-play-wrap"><a href="https://vimeo.com/channels/staffpicks/93951774" class="btn-play popup-vimeo "><span class="ion-ios-play"></span></a></div> --}}
           </div>
         </div>
       </div>

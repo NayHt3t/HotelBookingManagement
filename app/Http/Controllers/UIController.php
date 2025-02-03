@@ -24,7 +24,6 @@ class UIController extends Controller
     public function promotion()
     {
         $promoions = Promotion::all();
-
     }
 
     public function search(Request $request)
@@ -35,12 +34,12 @@ class UIController extends Controller
         $rooms = $request->category;
         $checkin = Carbon::parse($request->checkin)->toDateString();
         $checkout = Carbon::parse($request->checkout)->toDateString();
-       //dd($checkin,$checkout);
+        //dd($checkin,$checkout);
 
         $roomtype = RoomType::where('category_id', '=', $rooms)
-        ->where('available_rooms','>',0)
-        ->get();
-    //    dd($roomtype->pluck('id'));
+            ->where('available_rooms', '>', 0)
+            ->get();
+        //    dd($roomtype->pluck('id'));
 
         // $booking = Booking::whereIn('room_type_id',  $roomtype->pluck('id'))
         // ->whereBetween('check_in', [$checkin, $checkout])
@@ -48,37 +47,37 @@ class UIController extends Controller
         // ->groupBy('room_type_id')->get();
 
         $booking = Booking::select('room_type_id', DB::raw('COUNT(*) AS booking_count'))
-    ->whereIn('room_type_id',  $roomtype->pluck('id'))
-    ->whereBetween(DB::raw("check_in"), [$checkin, $checkout])
-    ->whereBetween(DB::raw("check_out"), values: [$checkin, $checkout])
-    ->groupBy('room_type_id')
-    ->get();
+            ->whereIn('room_type_id',  $roomtype->pluck('id'))
+            ->whereBetween(DB::raw("check_in"), [$checkin, $checkout])
+            ->whereBetween(DB::raw("check_out"), values: [$checkin, $checkout])
+            ->groupBy('room_type_id')
+            ->get();
 
         //dd($booking);
 
-   $data = RoomType::whereIn('id',  $booking->pluck('room_type_id'))->get();
+        $data = RoomType::whereIn('id',  $booking->pluck('room_type_id'))->get();
 
 
         //dd($data);
-     // Fetch room types that do not have conflicting bookings and have available rooms
-    //  $data = RoomType::where('category_id', $rooms)
-    //  ->where('available_rooms', '>', 0) // Ensure rooms with availability
-    //  ->get()
-    //  ->filter(function ($room) use ($checkin, $checkout) {
-    //       //Check if room has bookings that overlap the given date range
-    //      $hasBookingConflict = Booking::where('room_type_id', $room->id)
-    //          ->where(function ($query) use ($checkin, $checkout) {
-    //              $query->whereBetween('check_in', [$checkin, $checkout])
-    //                    ->orWhereBetween('check_out', [$checkin, $checkout])
-    //                    ->orWhere(function ($q) use ($checkin, $checkout) {
-    //                        $q->where('check_in', '<=', $checkin)
-    //                          ->where('check_out', '>=', $checkout);
-    //                    });
-    //          })->exists();
-    //          return !$hasBookingConflict || $room->available_rooms > 0;
-    //         });
+        // Fetch room types that do not have conflicting bookings and have available rooms
+        //  $data = RoomType::where('category_id', $rooms)
+        //  ->where('available_rooms', '>', 0) // Ensure rooms with availability
+        //  ->get()
+        //  ->filter(function ($room) use ($checkin, $checkout) {
+        //       //Check if room has bookings that overlap the given date range
+        //      $hasBookingConflict = Booking::where('room_type_id', $room->id)
+        //          ->where(function ($query) use ($checkin, $checkout) {
+        //              $query->whereBetween('check_in', [$checkin, $checkout])
+        //                    ->orWhereBetween('check_out', [$checkin, $checkout])
+        //                    ->orWhere(function ($q) use ($checkin, $checkout) {
+        //                        $q->where('check_in', '<=', $checkin)
+        //                          ->where('check_out', '>=', $checkout);
+        //                    });
+        //          })->exists();
+        //          return !$hasBookingConflict || $room->available_rooms > 0;
+        //         });
 
-        return view('search.searchrooms',['data'=>$data]);
+        return view('search.searchrooms', ['data' => $data]);
     }
 
     public function booking(Request $request)
@@ -86,30 +85,40 @@ class UIController extends Controller
 
         if (Auth::check()) {
             // dd($request->all());
-        $id = $request->roomType_id;
-        $booking = RoomType::find($id);
-        // dd($booking);
-        // $booking = RoomType::where()
-        return view('search.booking',['booking'=>$booking]);
+            $id = $request->roomType_id;
+            $booking = RoomType::find($id);
+            // dd($booking);
+            // $booking = RoomType::where()
+            return view('search.booking', ['booking' => $booking]);
         } elseif (Auth::guest()) {
             return view('auth.login1');
         }
-
-
     }
 
 
-    public function bookingform(Request $request){
+    public function bookingform(Request $request)
+    {
         // dd($request->all());
         $id = $request->roomType_id;
+        $extra_bed = $request->extra_bed;
+
+        $msg = '';
+        if ($extra_bed == 1) {
+            $msg = "included extra bed";
+        } else {
+            $msg = 'not included extra bed';
+        }
         $roomType = RoomType::find($id);
         $paymentType = PaymentType::all();
-        return view('booking.form',['roomType'=>$roomType,'paymentType'=>$paymentType]);
+        return view('booking.form', ['roomType' => $roomType, 'paymentType' => $paymentType])->with('msg', $msg);
     }
 
-    public function storebooking(Request $request){
+    public function storebooking(Request $request)
+    {
         //  dd($request->all());
         // dd(auth()->user()->id);
+
+
         $booking = Booking::create([
             'customer_id' => auth()->user()->id,
             'room_type_id' => $request->roomType_id,
@@ -139,43 +148,42 @@ class UIController extends Controller
             "payment_type_id" => $request->paymentType,
             "amount" => $request->amount
         ]);
-
-
-
-
-
-
     }
 
-    public function history($id){
-       $user = Customer::findOrFail($id);
-       $booking_history = Booking::where('customer_id','=',$id)->get();
-       return view('nav.history',['user'=>$user,'booking_history'=>$booking_history]);
+    public function history($id)
+    {
+        $user = Customer::findOrFail($id);
+        $booking_history = Booking::where('customer_id', '=', $id)->get();
+        return view('nav.history', ['user' => $user, 'booking_history' => $booking_history]);
     }
 
-    public function viewprofile($id){
+    public function viewprofile($id)
+    {
 
         $user = Customer::findOrFail($id);
-        return view('nav.viewprofile',['user' => $user]);
+        return view('nav.viewprofile', ['user' => $user]);
     }
 
-    public function editprofile($id){
+    public function editprofile($id)
+    {
         $user = Customer::findOrFail($id);
-        return view('nav.editprofile',['user'=>$user]);
+        return view('nav.editprofile', ['user' => $user]);
     }
 
-    public function updateprofile(Request $request){
+    public function updateprofile(Request $request)
+    {
         // dd($id);
         // dd($request->all());
         $request->validate(
             [
-                "name"=>"required",
-                "email" =>"required",
+                "name" => "required",
+                "email" => "required",
                 "password" => "required"
-            ]);
+            ]
+        );
         $user = Customer::findOrFail($request->id);
 
-        if(!Hash::check($request->password,$user->password)){
+        if (!Hash::check($request->password, $user->password)) {
             return back()->withErrors(['password' => 'The current password is incorrect!!']);
         }
 
@@ -186,40 +194,32 @@ class UIController extends Controller
             'status' => 1,
         ]);
 
-        if($request->email != $user->email){
-            $otp = rand(100000,999999);
+        if ($request->email != $user->email) {
+            $otp = rand(100000, 999999);
 
-        //Cache the otp for 5 minutes
-        Cache::put('otp_' . $request->email, $otp, now()->addMinutes(5));
-        //dd($otp);
-        Mail::raw("Your OTP is : $otp",function ($message) use ($request)
-        {
+            //Cache the otp for 5 minutes
+            Cache::put('otp_' . $request->email, $otp, now()->addMinutes(5));
+            //dd($otp);
+            Mail::raw("Your OTP is : $otp", function ($message) use ($request) {
 
-            $message->to($request->email)->subject("Your OTP For Login");
-        });
+                $message->to($request->email)->subject("Your OTP For Login");
+            });
 
-       // return response()->json(['message' => 'OTP Code Send To Your Email.Please Check!']);
-
+            // return response()->json(['message' => 'OTP Code Send To Your Email.Please Check!']);
 
 
-        return view('nav.updateotp',['id'=>$request->id]);
 
-        }else{
+            return view('nav.updateotp', ['id' => $request->id]);
+        } else {
 
             $user = Customer::findOrFail($request->id);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->save();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->save();
 
-            return view('nav.viewprofile',['user'=>$user])->with('success','Profile Update Successful!');
-
+            return view('nav.viewprofile', ['user' => $user])->with('success', 'Profile Update Successful!');
         }
-
-
-
-
-
     }
 
     public function verifyOtp(Request $request)
@@ -242,11 +242,10 @@ class UIController extends Controller
 
         //dd($request->all());
 
-        $cachedOtp = Cache::get('otp_'.$request->email);
+        $cachedOtp = Cache::get('otp_' . $request->email);
 
-        if($cachedOtp != $request->otp)
-        {
-            return response()->json(['message' => 'Invalid or Expired OTP'],401);
+        if ($cachedOtp != $request->otp) {
+            return response()->json(['message' => 'Invalid or Expired OTP'], 401);
             // $token = $user->createToken('auth_token')->plainTextToken;
 
             // return response()->json([
@@ -264,27 +263,29 @@ class UIController extends Controller
 
         //$user = User::where('email',$request->email)->first();
         auth()->login($customer);
-        Cache::forget('otp_'.$request->email);
+        Cache::forget('otp_' . $request->email);
         //return response()->json(['message' => 'Registration Successful']);
 
-        return view('nav.viewprofile',['user'=>$user])->with('success','Profile Update Successful!');
-
+        return view('nav.viewprofile', ['user' => $user])->with('success', 'Profile Update Successful!');
     }
 
-    public function changepassword($id){
+    public function changepassword($id)
+    {
         $user = Customer::findOrFail($id);
-        return view('nav.changepassword',['user' => $user]);
+        return view('nav.changepassword', ['user' => $user]);
     }
 
-    public function updatepassword(Request $request){
+    public function updatepassword(Request $request)
+    {
         $request->validate(
             [
                 "currentPw" => "required",
                 "newPw" => "required|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/"
-            ]);
+            ]
+        );
         $user = Customer::findOrFail($request->id);
 
-        if(!Hash::check($request->currentPw,$user->password)){
+        if (!Hash::check($request->currentPw, $user->password)) {
             return back()->withErrors(['currentPw' => 'The current password is incorrect!!']);
         }
 
@@ -292,8 +293,6 @@ class UIController extends Controller
             'password' => Hash::make($request->newPw)
         ]);
 
-        return view('nav.viewprofile',['user'=>$user])->with('success','Profile Update Successful!');
+        return view('nav.viewprofile', ['user' => $user])->with('success', 'Profile Update Successful!');
     }
-
-
 }

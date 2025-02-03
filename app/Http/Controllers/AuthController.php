@@ -35,7 +35,7 @@ class AuthController extends Controller
             'profile' => $request->profile,
             'status' => 1,
         ]);
-        
+
 
         $otp = rand(100000,999999);
 
@@ -47,7 +47,7 @@ class AuthController extends Controller
 
         //     $message->to($request->email)->subject("Your OTP For Login");
         //     //dd($message);
-            
+
 
         // });
 
@@ -55,11 +55,11 @@ class AuthController extends Controller
          {
             $message->to($request->email)->subject("Your OTP For Login");
          });
-        
+
        // return response()->json(['message' => 'OTP Code Send To Your Email.Please Check!']);
 
-       
-        
+
+
         return view('auth.otp');
 
         //return redirect('/');
@@ -99,10 +99,10 @@ class AuthController extends Controller
 
     public function verifyOtp(Request $request)
     {
-        
+
         $request->validate([
 
-            
+
             'otp' => 'required|numeric'
         ]);
 
@@ -112,7 +112,7 @@ class AuthController extends Controller
             'password' => session('password'),
             'profile' => session('profile'),
             'status' => session('status')
-            
+
         ]);
 
         //dd($request->all());
@@ -146,7 +146,7 @@ class AuthController extends Controller
         //return response()->json(['message' => 'Registration Successful']);
 
         return redirect()->route('home')->with('success','Registration Successful');
-        
+
     }
 
     public function ForgotPasswordOtpForm()
@@ -162,7 +162,7 @@ class AuthController extends Controller
 
             "email" => "required|unique:users,email",
             "password" => "required|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/",
-            
+
         ]);
 
         session([
@@ -189,16 +189,16 @@ class AuthController extends Controller
         //dd('reach here2');
         $request->validate([
 
-            
+
             'otp' => 'required|numeric'
         ]);
 
         $request->merge([
-            
+
             'email' => session('email'),
             'password' => session('password')
-            
-            
+
+
         ]);
 
         //dd($request->all());
@@ -210,7 +210,7 @@ class AuthController extends Controller
         if($cachedOtp != $request->otp)
         {
             return response()->json(['message' => 'Invalid or Expired OTP'],401);
-            
+
         }
 
         $data = Customer::where('email',session('email'));
@@ -226,11 +226,11 @@ class AuthController extends Controller
         ]);
 
         //$user = User::where('email',$request->email)->first();
-        
+
         Cache::forget('otp_'.session('email'));
         //return response()->json(['message' => 'Registration Successful']);
 
         return redirect()->route('login')->with('success', 'Password Reset Successful');
-        
+
     }
 }

@@ -24,7 +24,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container d-flex ">
 
-      <a class="navbar-brand" href="#">Luxury Hotel</a>
+      <a class="navbar-brand" href="/">Luxury Hotel</a>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,9 +96,19 @@
 
         <div class="row my-3 justify-content-center">
             <div class="col-md-12 ">
-                <form action="/storebooking" method="post">
+                <form action="/storebooking" method="POST">
                     @csrf
+
+                    <div class="row my-2 justify-content-center">
+                        <div class="col-md-6 text-center">
+                            <h3>Please fill your information</h3>
+                        </div>
+                    </div>
+
                     <div class="row my-3 justify-content-center">
+
+
+
                      <div class="col-md-6">
 
                         <div class="row">
@@ -133,7 +143,7 @@
                             </div>
                             <div class="">
                             <label class=" form-label" for="">Country</label>
-                            <input type="text" name="name" id="" class="form-control">
+                            <input type="text" name="country" id="" class="form-control">
                             </div>
 
                      </div>
@@ -164,7 +174,7 @@
                                 </select>
                             </div>
 
-                            
+
 
                             <div class="row mb-5">
                                 <div class="col-md-6">
@@ -178,13 +188,14 @@
                             </div>
                             <input type="hidden" name="roomType_id" value="{{$roomType->id}}" id="">
 
-                            
+
 
                             <div class="row mb-2">
                                 <div class="col-md-6">Total Amount : </div>
                                 <div class="col-md-6">
                                     @foreach ($roomType->roomPrices as $room)
-                                    <input type="text" class="form-control"  name="amount" id="totalAmount" value="{{$room->price}}">
+                                    <input type="text" class="form-control"  name="amount" id="totalAmount" value="{{$room->price}}" readonly>
+                                    <span>{{ $msg }}</span>
                                     @endforeach
                                 </div>
                             </div>
@@ -207,14 +218,14 @@
                             </div>
 
                             <div class="row mt-3">
-                                
+
                                     <h5 class="col-md-12  text-center">Scan To Pay</h5>
-                             
+
                             </div>
 
                             <div class="row" >
-                            
-                                    
+
+
                                     @foreach ($paymentType as $type)
                                     <div class="card col-md-3 border-0 " >
                                         <img class="card-img-top" src="{{asset('images/scan.png')}}" alt="Card image cap">
@@ -223,7 +234,7 @@
                                         </div>
                                       </div>
                                     @endforeach
-                                
+
                             </div>
 
                         </div>
