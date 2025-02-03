@@ -20,7 +20,7 @@
     </section>
     <!-- END section -->
 
-   
+
     <section class="site-section">
       <div class="container">
         <div class="row">
@@ -43,17 +43,17 @@
               </figure>
               <div class="media-body">
                 <h3 class="mt-0"><a href="#">{{$room->name}}</a></h3>
-                
+
                 @foreach ($room->roomPrices as $roomPrice)
                 <h5>Room Price : {{$roomPrice->price}}</h5>
-                
+
                 @endforeach
 
                 <p>{{$room->description}}</p>
                 <form action="/booking" method="post">
                 @csrf
                 <input type="hidden" name="roomType_id" value="{{$room->id}}">
-     
+
                 <button type="submit"  class="btn btn-primary btn-sm">Book Now</button>
                 </form>
               </div>
@@ -85,7 +85,7 @@
           <div class="col-md-9 text-center element-animate">
             <h2>Relax and Enjoy your Holiday</h2>
             <p class="lead mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto quidem tempore expedita facere facilis, dolores!</p>
-            <div class="btn-play-wrap"><a href="https://vimeo.com/channels/staffpicks/93951774" class="btn-play popup-vimeo "><span class="ion-ios-play"></span></a></div>
+            {{-- <div class="btn-play-wrap"><a href="https://vimeo.com/channels/staffpicks/93951774" class="btn-play popup-vimeo "><span class="ion-ios-play"></span></a></div> --}}
           </div>
         </div>
       </div>
