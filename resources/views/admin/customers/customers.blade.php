@@ -81,8 +81,8 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                                 <form action="{{ route('customers.update', $customer->id) }}" method="POST">
-                                                    @method('put')
                                                     @csrf
+                                                    @method('PATCH')
                                                     <button type="submit" class="btn bg-gradient-primary">Yes</button>
                                                 </form>
                                             </div>

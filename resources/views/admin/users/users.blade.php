@@ -99,8 +99,8 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                                 <form action="{{ route('users.destroy', $user->id) }}" method="POST">
-                                                    @method('delete')
                                                     @csrf
+                                                    @method('delete')
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
                                             </div>

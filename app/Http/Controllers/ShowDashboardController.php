@@ -33,13 +33,22 @@ class ShowDashboardController extends Controller
         // Get Room Type By Booking
         $roomType = RoomType::withCount('bookings')->get();
         //Today Guest
-
+        $guests = Stay::whereDate('check_in', '<=', $today)
+                        ->whereDate('check_out', '>=', $today)
+                        ->with('guest')
+                        ->count();
+        //This Week Guest
+        $weeklyGuest = Stay::whereDate('check_in', '<=', $endOfWeek)
+                        ->whereDate('check_out', '>=', $startOfWeek)
+                        ->with('guest')
+                        ->count();
         $bookings = $this->selectByToday($booking); // Today Booking
         $clients = $this->selectByToday($customer); //Today New Client
         $weeklyBooking = $this->selectByWeekly($booking);// This week booking
         $weeklyClient = $this->selectByWeekly($customer);  //This week client
         $incomePer = $this->calculatePercentage($incomes,$weeklyIncome); //Income percentage
         $bookingPer =$this->calculatePercentage($bookings,$weeklyBooking);//Booking percentage
+        $guestPer =$this->calculatePercentage($guests,$weeklyGuest);//Guest percentage
         $clientPer = $this->calculatePercentage($clients,$weeklyClient); //Client percentage
         $bookingByYearly = $this->selectByYearly($booking); //get all booking by monthly
         $guestByYearly = $this->selectByYearly($guest); //get all guest by monthly
@@ -57,7 +66,7 @@ class ShowDashboardController extends Controller
             $totalGuest[]= $guestByYearly->firstWhere('month',$i)->total ?? 0;
             $totalIncome[]= $incomeByYealy->firstWhere('month',$i)->total ?? 0;
         }
-        return view('admin.dashboard',compact('months','totalBooking','totalGuest','totalIncome','roomType','incomes','incomePer','bookings','bookingPer','clients','clientPer'));
+        return view('admin.dashboard',compact('months','totalBooking','totalGuest','totalIncome','roomType','incomes','incomePer','guests','guestPer','bookings','bookingPer','clients','clientPer'));
     }
     // calculate percentage
     public function calculatePercentage($part,$total){

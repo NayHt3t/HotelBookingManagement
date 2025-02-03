@@ -15,8 +15,9 @@
             </div>
             <div class="card-body pt-4 p-3">
                 <form action="{{route('users.update', $user->id)}}" method="POST" role="form text-left">
-                    @method("put")   
+                   
                     @csrf
+                    @method("PATCH")  
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">

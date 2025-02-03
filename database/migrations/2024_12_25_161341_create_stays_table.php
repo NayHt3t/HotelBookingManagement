@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('room_id'); // Foreign key to rooms table
             $table->unsignedBigInteger('guest_id'); // Foreign key to guests table
             $table->timestamp('check_in');
-            $table->timestamp('check_out');
+            $table->dateTime('check_out');
             $table->timestamps(); // Adds created_at and updated_at columns
             $table->softDeletes(); // Adds deleted_at column for soft deletes
 

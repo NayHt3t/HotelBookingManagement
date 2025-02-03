@@ -43,23 +43,25 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="password" class="form-control-label">Password</label>
-                                <div>
+                                <div class="position-relative">
                                     <input class="form-control" type="password"  id="password" name="password">
-                                        @error('password')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
+                                    <i class="fa fa-eye position-absolute bottom-0 translate-middle end-0 cursor-pointer" id="tooglePassword"></i>
                                 </div>
+                                    @error('password')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="confirm_password" class="form-control-label">Confirm Password</label>
-                                <div>
+                                <div class="position-relative">
                                     <input class="form-control" type="password" id="confirm_password" name="confirm_password">
-                                        @error('confirm_password')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
+                                    <i class="fa fa-eye position-absolute bottom-0 translate-middle end-0 cursor-pointer" id="toogleConPassword"></i>
                                 </div>
+                                    @error('confirm_password')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
                             </div>
                         </div>
                         <div class="col-md-6">

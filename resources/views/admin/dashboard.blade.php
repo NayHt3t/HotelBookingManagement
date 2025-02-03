@@ -33,7 +33,7 @@
               <div class="numbers">
                 <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Booking</p>
                 <h5 class="font-weight-bolder mb-0">
-                 {{$bookings}}
+                 +{{$bookings}}
                   <span class="text-success text-sm font-weight-bolder">+{{$bookingPer}}%</span>
                 </h5>
               </div>
@@ -55,8 +55,8 @@
               <div class="numbers">
                 <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Guests</p>
                 <h5 class="font-weight-bolder mb-0">
-                  2,300
-                  <span class="text-success text-sm font-weight-bolder">+3%</span>
+                  +{{$guests}}
+                  <span class="text-success text-sm font-weight-bolder">+{{$guestPer}}%</span>
                 </h5>
               </div>
             </div>
@@ -314,7 +314,7 @@
                   size: 11,
                   family: "Open Sans",
                   style: 'normal',
-                  lineHeight: 8
+                  lineHeight: 12
                 },
               }
             },
@@ -394,7 +394,7 @@
         data: {
           labels: months,
           datasets: [{
-              label: "Bookings",
+              label: "Income",
               tension: 0.4,
               borderWidth: 0,
               pointRadius: 0,

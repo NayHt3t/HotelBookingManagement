@@ -24,10 +24,10 @@
                                 <div class="position-relative">
                                     <input class="form-control" type="password" id="password" name="password">
                                     <i class="fa fa-eye position-absolute bottom-0 translate-middle end-0 cursor-pointer" id="tooglePassword"></i>
-                                    @error('password')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
                                 </div>
+                                    @error('password')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -36,10 +36,10 @@
                                 <div class="position-relative">
                                     <input class="form-control" type="password" id="confirm_password" name="confirm_password">
                                     <i class="fa fa-eye position-absolute bottom-0 translate-middle end-0 cursor-pointer" id="toogleConPassword"></i>
-                                    @error('confirm_password')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
                                 </div>
+                                    @error('confirm_password')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
                             </div>
                         </div>
                         <div class="col-md-6">
