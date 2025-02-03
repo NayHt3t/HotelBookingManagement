@@ -117,6 +117,8 @@ class UIController extends Controller
     {
         //  dd($request->all());
         // dd(auth()->user()->id);
+
+
         $booking = Booking::create([
             'customer_id' => auth()->user()->id,
             'room_type_id' => $request->roomType_id,

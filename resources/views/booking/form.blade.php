@@ -96,7 +96,7 @@
 
         <div class="row my-3 justify-content-center">
             <div class="col-md-12 ">
-                <form action="/storebooking" method="post">
+                <form action="/storebooking" method="POST">
                     @csrf
 
                     <div class="row my-2 justify-content-center">
@@ -143,7 +143,7 @@
                             </div>
                             <div class="">
                             <label class=" form-label" for="">Country</label>
-                            <input type="text" name="name" id="" class="form-control">
+                            <input type="text" name="country" id="" class="form-control">
                             </div>
 
                      </div>
