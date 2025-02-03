@@ -175,19 +175,25 @@
                         @endforeach
 
 
-                    <td>
-                      <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Extra Bed</label>
-                      </div>
-                    </td>
-                    <td>
-                        <form action="/bookingform" method="post">
-                            @csrf
-                            <input type="hidden" value="{{$booking->id}}" name="roomType_id">
-                            <button class="btn btn-sm btn-primary">Book Now</button>
+
+
+                            <form action="/bookingform" method="post">
+                                @csrf
+
+                            <td>
+                                <div class="form-check">
+                                  <input type="checkbox" class="form-check-input" id="exampleCheck1" name="extra_bed" value="1">
+                                  <label class="form-check-label" for="exampleCheck1">Extra Bed</label>
+                                </div>
+                              </td>
+                              <td>
+                                  <input type="hidden" value="{{$booking->id}}" name="roomType_id">
+                                  <button class="btn btn-sm btn-primary">Book Now</button>
+
+                              </td>
+
                         </form>
-                    </td>
+                    
                     </tr>
                 </tbody>
                 </table>

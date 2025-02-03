@@ -24,7 +24,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container d-flex ">
 
-      <a class="navbar-brand" href="#">Luxury Hotel</a>
+      <a class="navbar-brand" href="/">Luxury Hotel</a>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,7 +98,17 @@
             <div class="col-md-12 ">
                 <form action="/storebooking" method="POST">
                     @csrf
+
+                    <div class="row my-2 justify-content-center">
+                        <div class="col-md-6 text-center">
+                            <h3>Please fill your information</h3>
+                        </div>
+                    </div>
+
                     <div class="row my-3 justify-content-center">
+
+
+
                      <div class="col-md-6">
 
                         <div class="row">
@@ -184,7 +194,8 @@
                                 <div class="col-md-6">Total Amount : </div>
                                 <div class="col-md-6">
                                     @foreach ($roomType->roomPrices as $room)
-                                    <input type="text" class="form-control"  name="amount" id="totalAmount" value="{{$room->price}}">
+                                    <input type="text" class="form-control"  name="amount" id="totalAmount" value="{{$room->price}}" readonly>
+                                    <span>{{ $msg }}</span>
                                     @endforeach
                                 </div>
                             </div>
