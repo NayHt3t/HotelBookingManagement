@@ -96,9 +96,12 @@
 
     <div class="container">
         <div class="row my-5 justify-content-center">
-            <div class="col-md-12">
-                <h3 class=" text-center">{{ $msg }}</h3>
-                <a href="/" class=" btn btn-primary">Go back to home</a>
+            <h3 class=" text-center">{{ $msg }}</h3>
+        </div>
+        <div class="row">
+            <div class="mx-auto">
+
+                <a href="/" class=" btn btn-primary d-inline-block">Go back to home</a>
             </div>
         </div>
     </div>
