@@ -208,8 +208,9 @@ class UIController extends Controller
         ->get();
 
         $totalamount = $request->amount;
+        $roomType = $booking->roomType->name;
 
-        Mail::send('booking.booking_comfirm', ['payment' => $payment,'totalamount'=>$totalamount,'booking' => $booking,'promotions'=>$promotions,'customer'=> auth()->user()], function ($message) use ($request)
+        Mail::send('booking.booking_comfirm', ['payment' => $payment,'totalamount'=>$totalamount,'booking' => $booking,'roomType'=>$roomType,'promotions'=>$promotions,'customer'=> auth()->user()], function ($message) use ($request)
         {
            $message->to(auth()->user()->email)->subject("Booking Information");
         });

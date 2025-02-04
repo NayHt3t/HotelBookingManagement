@@ -11,6 +11,7 @@
         <p style="font-size: 17px; font-weight: bold;">Your booking details are as follows:</p>
 
         <h5>Booking ID - {{$booking->id}}</h5>
+        <h5>Room Type - {{$roomType}}</h5>
         <h5>Check In - {{$booking->check_in}}</h5>
         <h5>Check Out - {{$booking->check_out}}</h5>
         @if ($promotions->isNotEmpty())
@@ -27,7 +28,7 @@
 
         <small>If you have any questions please don't hesitate to contact us.</small>
         <hr>
-        <p style="font-size: 14px; color: #888;">Thans, <br>LUXURYHOTEL</p>
+        <p style="font-size: 14px; color: #888;">Thanks, <br>LUXURYHOTEL</p>
     </div>
 </body>
 </html>
