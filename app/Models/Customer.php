@@ -18,6 +18,7 @@ class Customer extends Authenticatable
         'name',
         'email',
         'password',
+        'profile',
         'status'
     ];
 

@@ -46,17 +46,27 @@ class UIController extends Controller
         // ->orWhereBetween('check_out', [$checkin, $checkout])
         // ->groupBy('room_type_id')->get();
 
-        $booking = Booking::select('room_type_id', DB::raw('COUNT(*) AS booking_count'))
-            ->whereIn('room_type_id',  $roomtype->pluck('id'))
-            ->whereBetween(DB::raw("check_in"), [$checkin, $checkout])
-            ->whereBetween(DB::raw("check_out"), values: [$checkin, $checkout])
-            ->groupBy('room_type_id')
-            ->get();
+        // $booking = Booking::select('room_type_id', DB::raw('COUNT(*) AS booking_count'))
+        //     ->whereIn('room_type_id',  $roomtype->pluck('id'))
+        //     ->whereBetween(DB::raw("check_in"), [$checkin, $checkout])
+        //     ->whereBetween(DB::raw("check_out"), values: [$checkin, $checkout])
+        //     ->groupBy('room_type_id')
+        //     ->get();
 
-        //dd($booking);
+        // //dd($booking);
 
-        $data = RoomType::whereIn('id',  $booking->pluck('room_type_id'))->get();
+        // $data = RoomType::whereIn('id',  $booking->pluck('room_type_id'))->get();
 
+        $availableRooms = RoomType::select('room_types.id', 'room_types.name','room_types.featured_image', 
+        DB::raw('room_types.num_rooms - IFNULL(SUM(bookings.qty), 0) AS available_rooms'))
+    ->leftJoin('bookings', function ($join) use ($checkin, $checkout) {
+        $join->on('room_types.id', '=', 'bookings.room_type_id')
+             ->where('bookings.check_in', '<', $checkout)
+             ->where('bookings.check_out', '>', $checkin);
+    })
+    ->groupBy('room_types.id', 'room_types.name', 'room_types.num_rooms', 'room_types.featured_image')
+    ->havingRaw('available_rooms > 0')
+    ->get();
 
         //dd($data);
         // Fetch room types that do not have conflicting bookings and have available rooms
@@ -77,7 +87,7 @@ class UIController extends Controller
         //          return !$hasBookingConflict || $room->available_rooms > 0;
         //         });
 
-        return view('search.searchrooms', ['data' => $data]);
+        return view('search.searchrooms', ['data' => $availableRooms]);
     }
 
     public function booking(Request $request)

@@ -14,7 +14,7 @@ class RoomType extends Model
 
     protected $table = 'room_types';
 
-    protected $fillable = ['category_id', 'name', 'facilities', 'num_rooms', 'num_people', 'extrabed_status', 'status','featured_image'];
+    protected $fillable = ['category_id', 'name', 'facilities', 'num_rooms', 'num_people', 'extrabed_status', 'status','featured_image','avaliable_rooms'];
 
     public function category()
     {
