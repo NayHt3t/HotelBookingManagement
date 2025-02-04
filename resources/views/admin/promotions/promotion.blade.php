@@ -16,7 +16,8 @@
                         <tr>
                             <th>No</th>
                             <th>Room Type</th>
-                            <th>Room Price</th>
+                            <th>Price Type</th>
+                            <th>Price</th>
                             <th>Discount</th>
                             <th>Start Date</th>
                             <th>End Date</th>
@@ -29,8 +30,9 @@
                         <tr>
                             <td>{{ ++$i }}</td>
                             <td>{{ $promotion->roomPrice->roomType->name}}</td>
+                            <td>{{ $promotion->roomPrice->priceType->name}}</td>
                             <td>{{ $promotion->roomPrice->price}}</td>
-                            <td>{{ $promotion->discount}} % </td>
+                            <td>{{ ($promotion->discount) *100 }} % </td>
                             <td>{{ $promotion->start_date}}</td>
                             <td>{{ $promotion->end_date}}</td>
                             <td>

@@ -53,8 +53,8 @@
                         <label for="location">Location</label>
                         <input
                             type="text"
-                            name="room_number"
-                            id="room_number"
+                            name="location"
+                            id="location"
                             class="form-control"
                             value="{{ old('location', $room->location) }}"
                             placeholder="Enter room number"

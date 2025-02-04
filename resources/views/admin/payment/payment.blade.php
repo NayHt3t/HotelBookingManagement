@@ -14,6 +14,8 @@
                         <th>Payment Method</th>
                         <th>Amount (MMK)</th>
                         <th>Status</th>
+                        <th>Date</th>
+                        <th>Time</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,7 +33,9 @@
                             <span class="text-success">Complete</span>
                             @endif
                         </td>
-                        <td>{{ $payment->created_at }}</td>
+                        <td>{{ \Carbon\Carbon::parse($payment->created_at)->format('Y-m-d') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($payment->created_at)->format('h:i:s A') }}</td>
+
                     </tr>
 
                     @empty

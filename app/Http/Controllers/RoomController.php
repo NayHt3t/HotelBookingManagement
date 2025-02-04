@@ -47,7 +47,7 @@ class RoomController extends Controller
             'room_number' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'status' => 'required|in:0,1,2',
-        ], [
+        ], params: [
             'room_type_id.required' => 'Select Room Type',
             'room_number.required' => 'Enter Room number',
             'location.required' => 'Enter Room location',
@@ -67,6 +67,9 @@ class RoomController extends Controller
 
         $roomType->num_rooms = $currentRoomCount;
         $roomType->available_rooms = $availableRoomCount;
+        if($availableRoomCount == 0){
+            $roomType->status = config('roomType.status.unavailable');
+        }
         $roomType->save();
 
 
@@ -164,6 +167,15 @@ class RoomController extends Controller
             // Count the current number of rooms for the given room type
             $currentRoomCount = Room::where('room_type_id', $roomTypeId)->count();
             $roomType->num_rooms = $currentRoomCount;
+
+            $availableRoomCount = Room::where('room_type_id', $roomTypeId)
+                        ->where('status', 1)
+                        ->count();
+            $roomType->available_rooms = $availableRoomCount;
+            if($availableRoomCount == 0){
+                $roomType->status = config('roomType.status.unavailable');
+            }
+
             $roomType->save();
         } catch (QueryException $e) {
 

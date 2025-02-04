@@ -24,8 +24,7 @@
                         <span class="badge bg-secondary">Unavailable</span>
                         @endif
                     </p>
-                    <p><strong>Facilities:</strong> {{ $roomType->facilities }}</p>
-                    <p><strong>Description:</strong> {{ $roomType->description }}</p>
+                   
                 </div>
 
                 <!-- Right Column for Featured Image, Gallery -->
@@ -137,6 +136,9 @@
 
 
 
+                                    </div>
+
+{{--
                     <!-- Image Gallery -->
                     @if($roomType->gallery)
                     <h5 class="fw-bold mb-3">Gallery</h5>
@@ -176,11 +178,17 @@
                     </div>
                     @endif
 
-                </div>
+                    --}}
+
+
+                <p><strong>Facilities:</strong> {{ $roomType->facilities }}</p>
+                <p><strong>Description:</strong> {{ $roomType->description }}</p>
+
+
 
                 <!-- More Image Gallery -->
                 @if($roomType->gallery)
-                <h5 class="fw-bold mb-3">More Images</h5>
+                <h5 class="fw-bold mb-3">Gallery</h5>
                 <div class="row g-3">
                     @foreach(explode(',', $roomType->gallery) as $image)
                     <div class="col-md-4 position-relative">

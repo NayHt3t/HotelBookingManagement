@@ -40,7 +40,7 @@
                         </td>
                     </tr>
 
-                    <!-- Delete Confirmation Modal -->
+                    <!-- Modal -->
                     <div class="modal fade" id="checkModal{{ $guest->id }}" tabindex="-1"
                         aria-labelledby="checkModalLabel{{ $guest->id }}" aria-hidden="true">
                         <div class="modal-dialog">

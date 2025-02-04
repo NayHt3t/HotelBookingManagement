@@ -22,10 +22,10 @@ class RoomTypeController extends Controller
         //
         $roomTypes = RoomType::all();
         // Count the current number of booking for the given room type
-        $bookings = Booking::select('room_type_id',DB::raw('SUM(qty) as total_qty'))
-                    ->groupBy('room_type_id')
-                    ->get();
-        return view('admin.room-types.room-types', ['roomTypes'=>$roomTypes,'bookings'=> $bookings]);
+        // $bookings = Booking::select('room_type_id',DB::raw('SUM(qty) as total_qty'))
+        //             ->groupBy('room_type_id')
+        //             ->get();
+        return view('admin.room-types.room-types', ['roomTypes'=>$roomTypes]);
 
     }
 

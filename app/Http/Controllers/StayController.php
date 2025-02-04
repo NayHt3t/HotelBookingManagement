@@ -38,35 +38,43 @@ class StayController extends Controller
      */
     public function store(Request $request)
     {
-     // Validate the incoming request
-    $request->validate([
-        'guest_id' => [
-            'required',
-            'exists:guests,id', // Ensures guest_id exists in the guests table
-            Rule::unique('stays', 'guest_id'), // Ensures guest_id is unique in the stays table
-        ],
-        'room_id' => 'required|exists:rooms,id',  // Ensures room_id exists in the rooms table
-        'days' => 'required|integer|min:1',      // Number of days must be at least 1
-    ], [
-        // Custom error message
-        'guest_id.unique' => 'This guest already has a stay record.',
-    ]);
+       // dd($request);
+        $request->validate([
+            'guest_id' => [
+                'required',
+                'exists:guests,id', // Ensures guest_id exists in the guests table
+                Rule::unique('stays', 'guest_id'), // Ensures guest_id is unique in the stays table
+            ],
+            'room_id' => 'required|exists:rooms,id',  // Ensures room_id exists in the rooms table
+                  // Number of days must be at least 1
+        ], [
+            // Custom error message
+            'guest_id.unique' => 'This guest already has a stay record.',
+        ]);
 
-    // Create a new Stay record
-    $stay = Stay::create([
-        'guest_id' => $request->guest_id,       // ID of the guest
-        'room_id' => $request->room_id,         // ID of the room
-        'days' => $request->days,               // Number of days for the stay
-        'start_date' => Carbon::now()->toDateString(), // Current date (start date)
-    ]);
+        
 
-    $booking = Booking::findOrFail($request->booking_id);
-    $booking->status = config('booking.status.staying');
-    $booking->save();
+        // Create a new Stay record
+        $stay = Stay::create([
+            'guest_id' => $request->guest_id,       // ID of the guest
+            'room_id' => $request->room_id,         // ID of the room
+        ]);
 
-    // Redirect or respond with success message
-    return redirect()->back()->with('success', 'Stay record created successfully.');
+
+
+        // Redirect or respond with success message
+        return redirect()->back()->with('success', 'Stay record created successfully.');
     }
+
+    public function checkOut($id)
+    {
+        $stayInfo = Stay::findOrFail($id);
+        $stayInfo->check_out = now();  // Use lowercase 'now()'
+        $stayInfo->save();
+    
+        return redirect()->back()->with('success', 'Customer: ' . $stayInfo->guest->name . ' is checked out.');
+    }
+    
 
     /**
      * Display the specified resource.

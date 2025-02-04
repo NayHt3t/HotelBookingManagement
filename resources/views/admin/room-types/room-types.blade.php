@@ -1,7 +1,7 @@
 @extends('layouts.user_type.auth')
 @section('content')
     <div class="container">
-        <h3 class="text-center"> Room Types</h3>
+        <h4 class="text-center"> Room Types</h4>
         <div class="row ">
             <div class="col-md-3">
                 <a href="{{ route('room-types.create') }}" class="btn btn-primary btn-md active px-3 text-white">Add New Room

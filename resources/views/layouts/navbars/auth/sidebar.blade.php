@@ -103,7 +103,7 @@
               </g>
             </svg>
           </div>
-          <span class="nav-link-text ms-1">Room Type</span>
+          <span class="nav-link-text ms-1">Room Types</span>
         </a>
       </li>
       <li class="nav-item">
@@ -123,7 +123,7 @@
               </g>
             </svg>
           </div>
-          <span class="nav-link-text ms-1">Room</span>
+          <span class="nav-link-text ms-1">Rooms</span>
         </a>
       </li>
 
@@ -149,7 +149,7 @@
               </g>
             </svg>
           </div>
-          <span class="nav-link-text ms-1">Payment Type</span>
+          <span class="nav-link-text ms-1">Payment Types</span>
         </a>
       </li>
 

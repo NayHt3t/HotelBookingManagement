@@ -64,6 +64,13 @@ Route::group(['middleware' => 'auth'], function () {
 	//bookings
 	Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
 	Route::get('/bookings/{id}/check', [BookingController::class, 'check'])->name('bookings.check');
+	Route::post('/bookings/{id}/check_in', [BookingController::class, 'checkIn'])->name('bookings.check_in');
+	Route::post('/bookings/{id}/check_out', [BookingController::class, 'checkOut'])->name('bookings.check_out');
+
+
+	
+
+	
 
 
 	//Guests
@@ -72,6 +79,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 	//stay
 	Route::resource('stayinfo', StayController::class);
+	Route::post('/stayinfo/{id}/check_out', [StayController::class, 'checkOut'])->name('stayinfo.check_out');
+
 
 
 	//payment-types
@@ -79,6 +88,12 @@ Route::group(['middleware' => 'auth'], function () {
 
 	//payment
 	Route::resource('payments',PaymentController::class);
+
+	
+
+
+
+
 
 	
 
