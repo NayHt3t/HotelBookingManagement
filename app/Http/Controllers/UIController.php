@@ -64,7 +64,7 @@ class UIController extends Controller
 
         // $data = RoomType::whereIn('id',  $booking->pluck('room_type_id'))->get();
 
-        $availableRooms = RoomType::select('room_types.id', 'room_types.name','room_types.featured_image','room_types.description', 
+        $availableRooms = RoomType::select('room_types.id', 'room_types.name','room_types.featured_image','room_types.description',
         DB::raw('room_types.num_rooms - IFNULL(SUM(bookings.qty), 0) AS available_rooms'))
     ->leftJoin('bookings', function ($join) use ($checkin, $checkout) {
         $join->on('room_types.id', '=', 'bookings.room_type_id')
@@ -115,7 +115,7 @@ class UIController extends Controller
         }
     }
 
-    
+
     public function viewrooms(Request $request)
     {
        // dd($request->all());
@@ -144,6 +144,7 @@ class UIController extends Controller
         $roomType = RoomType::find($id);
         $paymentType = PaymentType::all();
 
+
         $promotions = DB::table('promotions')
         ->join('room_prices', 'promotions.room_price_id', '=', 'room_prices.id')
         ->join('room_types', 'room_prices.room_type_id', '=', 'room_types.id')
@@ -156,8 +157,11 @@ class UIController extends Controller
 
     public function storebooking(Request $request)
     {
+
+
         //  dd($request->all());
         // dd(auth()->user()->id);
+
 
         $request->merge([
             "check_in" => session('check_in'),
@@ -194,6 +198,20 @@ class UIController extends Controller
             "payment_type_id" => $request->paymentType,
             "amount" => $request->amount
         ]);
+
+        $promotions = DB::table('promotions')
+        ->join('room_prices', 'promotions.room_price_id', '=', 'room_prices.id')
+        ->join('room_types', 'room_prices.room_type_id', '=', 'room_types.id')
+        ->where('room_types.id', $request->roomType_id)
+        ->select('promotions.*')
+        ->get();
+
+        $totalamount = $request->amount;
+
+        Mail::send('booking.booking_comfirm', ['payment' => $payment,'totalamount'=>$totalamount,'booking' => $booking,'promotions'=>$promotions,'customer'=> auth()->user()], function ($message) use ($request)
+        {
+           $message->to(auth()->user()->email)->subject("Booking Information");
+        });
 
         return view('booking.success')->with('msg',"Your booking is pending. We will inform you later.");
     }
