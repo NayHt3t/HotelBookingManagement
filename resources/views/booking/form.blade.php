@@ -94,6 +94,7 @@
 
     <div class="container mt-3">
 
+
         <div class="row my-3 justify-content-center">
             <div class="col-md-12 ">
                 <form action="/storebooking" method="POST">
@@ -171,23 +172,23 @@
                                 <select name="qty" class=" form-control" id="roomCount" >
                                     <option value=""></option>
 
-                                    
+
                                @php
                                $availableRooms = session('availableRooms');
                                $i = 1;
                                @endphp
-                               
+
 
 @foreach ($availableRooms as $roomType)
-    
-    
+
+
     <option value="{{$i}}">{{$i++}}</option>
-    
-   
+
+
 @endforeach
 
 
-         
+
                                 </select>
                             </div>
 
@@ -209,11 +210,13 @@
                                 <div class="col-md-6">Promotion : </div>
                                 <div class="col-md-6">
 
-                                    @foreach ($promotions as $promotion)
-
-                                    <input type="text" class="form-control"  name="discount" id="" value="{{$promotion->discount}}%" readonly>
-
-                                    @endforeach
+                                   @if ($promotions->isNotEmpty())
+                                   @foreach ($promotions as $promotion)
+                                        <input type="text" class="form-control"  name="discount" id="" value="{{$promotion->discount}}%" readonly>
+                                        @endforeach
+                                   @else
+                                   <input type="text" class="form-control"  name="discount" id="" value="0" readonly>
+                                   @endif
 
                                 </div>
                             </div>
@@ -224,8 +227,12 @@
 
                                     @foreach ($roomType->roomPrices as $room)
                                     @php
-                                    $totalamount = $room->price - ($room->price)*$promotion->discount/100 ;
-                                @endphp
+                                        if($promotions->isNotEmpty()){
+                                            $totalamount = $room->price - ($room->price)*$promotion->discount/100 ;
+                                        }else{
+                                            $totalamount = $room->price;
+                                        }
+                                     @endphp
                                     <input type="text" class="form-control"  name="amount" id="totalAmount" value="{{$totalamount}}" readonly>
                                     <span>{{ $msg }}</span>
                                     @endforeach
