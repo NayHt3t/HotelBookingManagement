@@ -12,6 +12,7 @@ use App\Models\Customer;
 use App\Models\RoomType;
 use App\Models\Promotion;
 use App\Models\PaymentType;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,11 @@ class UIController extends Controller
         $checkout = Carbon::parse($request->checkout)->toDateString();
         //dd($checkin,$checkout);
 
+        Session([
+            'check_in' => $checkin,
+            'check_out' => $checkout
+        ]);
+
         $roomtype = RoomType::where('category_id', '=', $rooms)
             ->where('available_rooms', '>', 0)
             ->get();
@@ -58,17 +64,20 @@ class UIController extends Controller
 
         // $data = RoomType::whereIn('id',  $booking->pluck('room_type_id'))->get();
 
-        $availableRooms = RoomType::select('room_types.id', 'room_types.name','room_types.featured_image', 
+        $availableRooms = RoomType::select('room_types.id', 'room_types.name','room_types.featured_image','room_types.description', 
         DB::raw('room_types.num_rooms - IFNULL(SUM(bookings.qty), 0) AS available_rooms'))
     ->leftJoin('bookings', function ($join) use ($checkin, $checkout) {
         $join->on('room_types.id', '=', 'bookings.room_type_id')
              ->where('bookings.check_in', '<', $checkout)
              ->where('bookings.check_out', '>', $checkin);
     })
-    ->groupBy('room_types.id', 'room_types.name', 'room_types.num_rooms', 'room_types.featured_image')
+    ->groupBy('room_types.id', 'room_types.name', 'room_types.num_rooms', 'room_types.featured_image', 'room_types.description')
     ->havingRaw('available_rooms > 0')
     ->get();
-
+//dd($availableRooms);
+    session([
+        'availableRooms' => $availableRooms
+    ]);
         //dd($data);
         // Fetch room types that do not have conflicting bookings and have available rooms
         //  $data = RoomType::where('category_id', $rooms)
@@ -122,6 +131,10 @@ class UIController extends Controller
         $id = $request->roomType_id;
         $extra_bed = $request->extra_bed;
 
+        $availableRooms = session('availableRooms');
+
+        //dd("this is a ".$availableRooms);
+
         $msg = '';
         if ($extra_bed == 1) {
             $msg = "included extra bed";
@@ -138,13 +151,18 @@ class UIController extends Controller
         //  dd($request->all());
         // dd(auth()->user()->id);
 
+        $request->merge([
+            "check_in" => session('check_in'),
+            "check_out" => session('check_out')
+        ]);
+
 
         $booking = Booking::create([
             'customer_id' => auth()->user()->id,
             'room_type_id' => $request->roomType_id,
             'qty' => $request->qty,
-            "check_in" => $request->checkIn,
-            "check_out" => $request->checkOut,
+            "check_in" => session('check_in'),
+            "check_out" => session('check_out'),
             "adult" => $request->adult,
             "child" => $request->child,
         ]);

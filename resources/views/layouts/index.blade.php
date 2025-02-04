@@ -43,14 +43,16 @@
                   <label for="checkin_date" class="font-weight-bold text-black">Check In</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="date" name="checkin" id="checkin_date" class="form-control">
+                    <input type="date" name="checkin" id="checkin_date"
+                     value="{{\Carbon\Carbon::today()->toDateString()}}" class="form-control">
                   </div>
                 </div>
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                   <label for="checkout_date" class="font-weight-bold text-black">Check Out</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="date" name="checkout" id="checkout_date" class="form-control">
+                    <input type="date" name="checkout" id="checkout_date"
+                    value="{{\Carbon\Carbon::today()->toDateString()}}" class="form-control">
                   </div>
                 </div>
 
