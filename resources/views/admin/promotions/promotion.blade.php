@@ -4,14 +4,16 @@
     <div class="container">
         <div class="row">
             <h3 class="text-center">Promotions</h3>
+            @if (Gate::allows('isAdminOrManager'))
             <div class="col-md-3">
                 <a href="{{ route('promotions.create') }}" class="btn btn-primary btn-md active px-3 text-white">Add New Promotion</a>
             </div>
+            @endif
         </div>
 
         <div class="row mt-1">
             <div class="col-md-12">
-                <table class="table table-hover table-bordered">
+                <table id="data_table" class="table table-hover table-bordered">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -21,7 +23,9 @@
                             <th>Discount</th>
                             <th>Start Date</th>
                             <th>End Date</th>
+                            @if (Gate::allows('isAdminOrManager'))
                             <th>Action</th>
+                            @end
                         </tr>
                     </thead>
                     <tbody>
@@ -35,6 +39,7 @@
                             <td>{{ ($promotion->discount) *100 }} % </td>
                             <td>{{ $promotion->start_date}}</td>
                             <td>{{ $promotion->end_date}}</td>
+                            @if (Gate::allows('isAdminOrManager'))
                             <td>
                                 <a href="{{ route('promotions.edit', $promotion) }}" class="btn btn-outline-success mr-2 rounded-pill">
                                     <i class="fa-solid fa-pen-to-square"></i>
@@ -49,6 +54,7 @@
                                     </button>
                                 </form>
                             </td>
+                            @endif
                         </tr>
                         <!--Delete Price Type Modal -->
                         <div class="modal fade" id="deletePromotion{{$promotion->id}}" tabindex="-1" aria-labelledby="deletePromotionLabel" aria-hidden="true">
@@ -85,4 +91,5 @@
         </div>
     </div>
 </div>
+
 @endsection

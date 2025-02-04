@@ -4,23 +4,6 @@
     <div class="container">
         <div class="row">
             <h3 class="text-center">Price Types</h3>
-            <div class="text-center">
-                @if($message=Session::get('unsuccess'))
-                <span class="text-success">{{$message}}</span>
-                @endif
-
-                @if ($errors->any())
-                <div>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        
-                        <span class="text-danger">{{ $error }}</span>
-
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-            </div>
             <div class="col-md-3">
                 <!-- Add Button modal -->
                 <button type="button" class="btn btn-primary btn-md active px-3 text-white" data-bs-toggle="modal" data-bs-target="#addPriceType">
@@ -60,7 +43,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-hover table-bordered">
+                <table id="data_table" class="table table-hover table-bordered">
                     <thead>
                         <tr>
                             <th>No</th>

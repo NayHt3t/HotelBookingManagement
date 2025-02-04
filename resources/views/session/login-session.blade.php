@@ -24,12 +24,13 @@
                     @enderror
                   </div>
                   <label>Password</label>
-                  <div class="mb-3">
+                  <div class="mb-3 position-relative">
                     <input type="password" class="form-control" name="password" id="password" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
+                    <i class="fa fa-eye position-absolute bottom-0 translate-middle end-0 cursor-pointer" id="tooglePassword"></i>
+                  </div>
                     @error('password')
                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                     @enderror
-                  </div>
                   <!-- <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
                     <label class="form-check-label" for="rememberMe">Remember me</label>
@@ -51,18 +52,14 @@
             </div>
           </div>
           <div class="col-md-6">
-            <!-- <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
-                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('../assets/img/hotel/building.jpg')"></div>
-              </div>
-               -->
-                <img src="../assets/img/hotel/hotelroom.jpg" alt="Hotel" class="img-fluid rounded shadow-lg " style="width:100%;height:700px;">
-              </div>
-       
+            <div class="position-absolute top-0 h-100 d-md-block d-none me-n8">
+            <img src="../assets/img/hotel/hotelroom.jpg" alt="Hotel" class="img-fluid rounded shadow-lg ms-auto h-100 z-index-0 ms-n6  " style="width:100%;height:700px;">
+                
+            <!-- <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6 img-fluid rounded shadow-lg" style="background-image:url('../assets/img/hotel/hotelroom.jpg')"></div> -->
+            </div>
+              
         </div>
-
       </div>
-    </div>
-    </div>
     </div>
   </section>
 </main>

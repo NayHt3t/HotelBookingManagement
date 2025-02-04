@@ -20,15 +20,33 @@ class SessionsController extends Controller
             'password'=>'required' 
         ]);
 
-        if(Auth::attempt($attributes))
-        {
-            session()->regenerate();
-            return redirect('dashboard')->with(['success'=>'You are logged in.']);
-        }
-        else{
+        // if(Auth::attempt($attributes))
+        // {
+        //     session()->regenerate();
+        //     return redirect('dashboard')->with(['success'=>'You are logged in.']);
+        // }
+        // else{
 
-            return back()->withErrors(['email'=>'Email or password invalid.']);
+        //     return back()->withErrors(['email'=>'Email or password invalid.']);
+        // }
+
+        if (Auth::attempt($attributes)) {
+            $user = Auth::user(); // Get the authenticated user
+            
+            // Check if the user is enabled (assuming 'status' == 1 means enabled)
+            if ($user->status == config('user.status.enable')) {
+                session()->regenerate();
+                return redirect('dashboard')->with(['success' => 'You are logged in.']);
+            } else {
+                // Logout the user if their status is not active
+                Auth::logout();
+                return back()->withErrors(['email' => 'Your account is disabled. Please contact the administrator.']);
+            }
         }
+        
+        // Invalid credentials
+        return back()->withErrors(['email' => 'Email or password invalid.']);
+        
     }
     
     public function destroy()

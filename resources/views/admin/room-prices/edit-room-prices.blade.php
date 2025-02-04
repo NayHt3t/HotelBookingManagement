@@ -6,7 +6,7 @@
             <div class="col-md-8 offset-md-2">
                 <h3 class="text-center">Edit Room Price</h3>
                 <form
-                    action="{{route('room-prices.update', $room_price->id) }}"
+                    action="{{route('room-prices.changePassword', $user->id) }}"
                     method="POST"
                 >
                     @csrf

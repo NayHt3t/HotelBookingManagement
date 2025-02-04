@@ -5,30 +5,13 @@
     <div class="container">
         <div class="row">
             <h3 class="text-center">Categories</h3>
-            <div class="text-center">
-                @if($message=Session::get('unsuccess'))
-                <span class="text-success">{{$message}}</span>
-                @endif
-
-                @if ($errors->any())
-                <div>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        
-                        <span class="text-danger">{{ $error }}</span>
-
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-            </div>
             <div class="col-md-3">
                 <!--
                 <a href="{{route('categories.create')}}" class="btn btn-primary">Add New Category</a>
- -->
+ -->             @if (Gate::allows('isAdminOrManager'))
                 <button class="btn btn-primary btn-md active px-3 text-white" data-bs-toggle="modal"
                     data-bs-target="#addCategoryModal">Add New Category</button>
-
+                 @endif
                 <!-- Add Category Modal -->
                 <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategryModal" aria-hidden="true">
                     <div class="modal-dialog">
@@ -56,12 +39,14 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <table id="user_table" class="table table-hover table-bordered" style="width:100%">
+                <table id="data_table" class="table table-hover table-bordered" style="width:100%">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Category</th>
+                            @if (Gate::allows('isAdminOrManager'))
                             <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -70,6 +55,7 @@
                         <tr>
                             <td>{{++ $i }}</td>
                             <td>{{ $category->name }}</td>
+                            @if (Gate::allows('isAdminOrManager'))
                             <td>
                                 <!-- <a href="{{ route('categories.edit', $category) }}" class="btn btn-outline-success mr-2 rounded-pill">
                                     <i class="fa-solid fa-pen-to-square"></i>
@@ -85,6 +71,7 @@
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
+                            @endif
                         </tr>
 
                         <!-- Edit Category Modal -->
@@ -155,20 +142,5 @@
 
     </div>
 </div>
-
-<!-- Add DataTables Scripts -->
-
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
-
-<script>
-    $(document).ready(function() {
-        $('#user_table').DataTable(); // Initialize DataTable
-    });
-</script>
 
 @endsection

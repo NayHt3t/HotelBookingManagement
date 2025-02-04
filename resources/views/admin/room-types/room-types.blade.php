@@ -3,16 +3,18 @@
     <div class="container">
         <h4 class="text-center"> Room Types</h4>
         <div class="row ">
+        @if (Gate::allows('isAdminOrManager'))
             <div class="col-md-3">
                 <a href="{{ route('room-types.create') }}" class="btn btn-primary btn-md active px-3 text-white">Add New Room
                     Types</a>
             </div>
+        @endif
         </div>
 
         <div class="row mt-1">
             <div class="col-md-12">
                 <!-- DataTable Integration -->
-                <table id="user_table" class="table table-hover table-bordered" style="width:100%">
+                <table id="data_table" class="table table-hover table-bordered" style="width:100%">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -23,7 +25,9 @@
                             <th>Rooms</th>
                             <th>Available</th>
                             <th>Status</th>
+                            @if (Gate::allows('isAdminOrManager'))
                             <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -39,6 +43,7 @@
                                 <td>{{ $roomType->available_rooms }}</td>
                                 <td>{{ $roomType->status == 1 ? 'Available' : ($roomType->status == 2 ? 'Booking' : 'Unavailable') }}
                                 </td>
+                                @if (Gate::allows('isAdminOrManager'))
                                 <td>
                                     <!-- View Details Button -->
                                     <a href="{{ route('room-types.show', $roomType) }}"
@@ -58,6 +63,7 @@
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </td>
+                                @endif
                             </tr>
 
                             <!-- Delete Confirmation Modal -->
@@ -100,20 +106,4 @@
             </div>
         </div>
     </div>
-
-
-    <!-- Add DataTables Scripts -->
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#user_table').DataTable(); // Initialize DataTable
-        });
-    </script>
 @endsection

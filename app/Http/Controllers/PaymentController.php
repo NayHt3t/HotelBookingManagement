@@ -6,6 +6,7 @@ use App\Models\Booking;
 use App\Models\Payment;
 use App\Models\Promotion;
 use App\Models\RoomPrice;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\ViewServiceProvider;
@@ -21,8 +22,8 @@ class PaymentController extends Controller
     {
         //
         $payments = Payment::all();
-        
-        return view('admin.payment.payment',compact('payments'));
+
+        return view('admin.payment.payment', compact('payments'));
     }
 
     /**
@@ -49,34 +50,41 @@ class PaymentController extends Controller
             'payment_type_id' => 'required|integer|exists:payment_types,id',
             'amount' => 'required|numeric|min:0',
         ]);
-    
+
         $icommingAmount = $request->input('amount');
 
         $booking_id = request('booking_id');
         $booking = Booking::findOrFail($booking_id);
 
         $payment_type_id = $request->input('payment_type_id');
-        
+
         $days = $booking->check_out->diffInDays($booking->check_in);
         //assume for price type
         $price_type_id = 1;
         $room_type_id = $booking->roomType->id;
         $discount = 0;
-        
+
         $roomPrice = RoomPrice::where('room_type_id', $room_type_id)
-        ->where('price_type_id', $price_type_id)
-        ->first();
+            ->where('price_type_id', $price_type_id)
+            ->first();
 
         if (!$roomPrice) {
             return redirect('/bookings')->with('unsuccess', 'RoomPrice is not Found .');
         }
 
-        $promotion = Promotion::where('room_price_id', $roomPrice->id)
-                      ->whereDate('start_date', '<=', $booking->created_at) // Fixed 'create_at' to 'created_at'
-                      ->whereDate('end_date', '>=', $booking->created_at)
-                      ->first();
+        // $promotion = Promotion::where('room_price_id', $roomPrice->id)
+        //               ->whereDate('start_date', '<=', $booking->created_at) // Fixed 'create_at' to 'created_at'
+        //               ->whereDate('end_date', '>=', $booking->created_at)
+        //               ->first();
 
-        if($promotion){
+        $bookingDate = Carbon::parse($booking->created_at)->toDateString();
+
+        $promotion = Promotion::where('room_price_id', $roomPrice->id)
+            ->whereDate('start_date', '<=', $bookingDate)
+            ->whereDate('end_date', '>=', $bookingDate)
+            ->first();
+
+        if ($promotion) {
             $discount = $promotion->discount;
         }
 
@@ -85,21 +93,19 @@ class PaymentController extends Controller
         //Total Amount with discount
         $totalAmount = $days * $perDayPrice;
 
-        $currentPaymentAmount = $booking->payments()->sum('amount') + $icommingAmount ;
+        $currentPaymentAmount = $booking->payments()->sum('amount') + $icommingAmount;
 
         $payment = new Payment();
         $payment->booking_id = $booking_id;
         $payment->payment_type_id = $payment_type_id;
         $payment->amount = $icommingAmount;
 
-        if($currentPaymentAmount == $totalAmount){
-            $payment->status=config('payment.status.complete');
+        if ($currentPaymentAmount == $totalAmount) {
+            $payment->status = config('payment.status.complete');
         }
         $payment->save();
-        
+
         return redirect()->back()->with('success', 'Payment confirmed successfully!');
-        
-        
     }
 
     /**

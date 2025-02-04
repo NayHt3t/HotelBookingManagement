@@ -15,12 +15,13 @@ use App\Http\Controllers\RoomPriceController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GuestController;
-// use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\ShowDashboardController;
 use App\Http\Controllers\StayController;
-use App\Models\Booking;
-use App\Models\Payment;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 
@@ -38,9 +39,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [HomeController::class, 'home']);
-	Route::get('dashboard', function () {
-		return view('dashboard');
-	})->name('dashboard');
+	Route::get('dashboard',[ShowDashboardController::class, 'index'])->name('dashboard');
 
 	Route::resource('categories', CategoryController::class);
 	Route::resource('room-types', RoomTypeController::class);
@@ -56,21 +55,21 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('/price-types', PriceTypeController::class);
     Route::resource('/room-prices', RoomPriceController::class);
-    // Route::resource('/facilities', FacilityController::class);
+    Route::resource('/customers', CustomerController::class);
     Route::resource('/promotions', PromotionController::class);
+    Route::resource('/users', UserController::class);
 
-    Route::resource('/bookings', BookingController::class);
+	//admin change password
+    Route::get('/users/{id}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
+    Route::patch('/users/{id}/change-password', [UserController::class, 'changePassword'])->name('users.changePassword');
 
 	//bookings
+    Route::resource('/bookings', BookingController::class);
 	Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
 	Route::get('/bookings/{id}/check', [BookingController::class, 'check'])->name('bookings.check');
 	Route::post('/bookings/{id}/check_in', [BookingController::class, 'checkIn'])->name('bookings.check_in');
 	Route::post('/bookings/{id}/check_out', [BookingController::class, 'checkOut'])->name('bookings.check_out');
 
-
-	
-
-	
 
 
 	//Guests
@@ -90,38 +89,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('payments',PaymentController::class);
 
 	
-
-
-
-
-
-	
-
-
-	Route::get('billing', function () {
-		return view('billing');
-	})->name('billing');
-
-	Route::get('profile', function () {
-		return view('profile');
-	})->name('profile');
-
-	Route::get('rtl', function () {
-		return view('rtl');
-	})->name('rtl');
-
-	Route::get('user-management', function () {
-		return view('laravel-examples/user-management');
-	})->name('user-management');
-
-	Route::get('tables', function () {
-		return view('tables');
-	})->name('tables');
-
-    Route::get('virtual-reality', function () {
-		return view('virtual-reality');
-	})->name('virtual-reality');
-
     Route::get('static-sign-in', function () {
 		return view('static-sign-in');
 	})->name('sign-in');

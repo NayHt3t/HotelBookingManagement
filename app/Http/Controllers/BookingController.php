@@ -64,6 +64,7 @@ class BookingController extends Controller
     public function show($id)
     {
         //
+        
     }
 
     /**

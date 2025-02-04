@@ -4,22 +4,26 @@
     <div class="container">
         <div class="row">
             <h3 class="text-center">Room Prices</h3>
+            @if (Gate::allows('isAdminOrManager'))
             <div class="col-md-3">
                 <a href="{{ route('room-prices.create') }}" class="btn btn-primary btn-md active px-3 text-white">Add New Room Price</a>
             </div>
+             @endif
         </div>
 
         <div class="row mt-1">
             <div class="col-md-12">
                 <div class="row">
-                    <table class="table table-hover table-bordered">
+                    <table id="data_table" class="table table-hover table-bordered">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Room Type</th>
                             <th>Price Type</th>
                             <th>Price</th>
+                            @if (Gate::allows('isAdminOrManager'))
                             <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -30,6 +34,7 @@
                             <td>{{ $room_price->roomType->name}}</td>
                             <td>{{ Str::ucfirst($room_price->priceType->name)}}</td>
                             <td>{{ $room_price->price}}</td>
+                            @if (Gate::allows('isAdminOrManager'))
                             <td>
                                 <a href="{{ route('room-prices.edit', $room_price) }}" class="btn btn-outline-success mr-2 rounded-pill">
                                     <i class="fa-solid fa-pen-to-square"></i>
@@ -40,6 +45,7 @@
                                 </button>
                                 </form>
                             </td>
+                            @endif
                         </tr>
                          <!--Delete Price Type Modal -->
                          <div class="modal fade" id="deleteRoomPrice{{$room_price->id}}" tabindex="-1" aria-labelledby="deleteRoomPriceLabel" aria-hidden="true">
