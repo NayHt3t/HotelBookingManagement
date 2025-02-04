@@ -205,13 +205,28 @@
                             </div>
                             <input type="hidden" name="roomType_id" value="{{$roomType->id}}" id="">
 
+                            <div class="row mb-2">
+                                <div class="col-md-6">Promotion : </div>
+                                <div class="col-md-6">
 
+                                    @foreach ($promotions as $promotion)
+
+                                    <input type="text" class="form-control"  name="discount" id="" value="{{$promotion->discount}}%" readonly>
+
+                                    @endforeach
+
+                                </div>
+                            </div>
 
                             <div class="row mb-2">
                                 <div class="col-md-6">Total Amount : </div>
                                 <div class="col-md-6">
+
                                     @foreach ($roomType->roomPrices as $room)
-                                    <input type="text" class="form-control"  name="amount" id="totalAmount" value="{{$room->price}}" readonly>
+                                    @php
+                                    $totalamount = $room->price - ($room->price)*$promotion->discount/100 ;
+                                @endphp
+                                    <input type="text" class="form-control"  name="amount" id="totalAmount" value="{{$totalamount}}" readonly>
                                     <span>{{ $msg }}</span>
                                     @endforeach
                                 </div>
