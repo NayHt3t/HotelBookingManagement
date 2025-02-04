@@ -12,6 +12,7 @@ use App\Models\Customer;
 use App\Models\RoomType;
 use App\Models\Promotion;
 use App\Models\PaymentType;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,7 @@ class UIController extends Controller
         $promoions = Promotion::all();
     }
 
+
     public function search(Request $request)
     {
 
@@ -35,6 +37,11 @@ class UIController extends Controller
         $checkin = Carbon::parse($request->checkin)->toDateString();
         $checkout = Carbon::parse($request->checkout)->toDateString();
         //dd($checkin,$checkout);
+
+        Session([
+            'check_in' => $checkin,
+            'check_out' => $checkout
+        ]);
 
         $roomtype = RoomType::where('category_id', '=', $rooms)
             ->where('available_rooms', '>', 0)
@@ -46,18 +53,31 @@ class UIController extends Controller
         // ->orWhereBetween('check_out', [$checkin, $checkout])
         // ->groupBy('room_type_id')->get();
 
-        $booking = Booking::select('room_type_id', DB::raw('COUNT(*) AS booking_count'))
-            ->whereIn('room_type_id',  $roomtype->pluck('id'))
-            ->whereBetween(DB::raw("check_in"), [$checkin, $checkout])
-            ->whereBetween(DB::raw("check_out"), values: [$checkin, $checkout])
-            ->groupBy('room_type_id')
-            ->get();
+        // $booking = Booking::select('room_type_id', DB::raw('COUNT(*) AS booking_count'))
+        //     ->whereIn('room_type_id',  $roomtype->pluck('id'))
+        //     ->whereBetween(DB::raw("check_in"), [$checkin, $checkout])
+        //     ->whereBetween(DB::raw("check_out"), values: [$checkin, $checkout])
+        //     ->groupBy('room_type_id')
+        //     ->get();
 
-        //dd($booking);
+        // //dd($booking);
 
-        $data = RoomType::whereIn('id',  $booking->pluck('room_type_id'))->get();
+        // $data = RoomType::whereIn('id',  $booking->pluck('room_type_id'))->get();
 
-
+        $availableRooms = RoomType::select('room_types.id', 'room_types.name','room_types.featured_image','room_types.description', 
+        DB::raw('room_types.num_rooms - IFNULL(SUM(bookings.qty), 0) AS available_rooms'))
+    ->leftJoin('bookings', function ($join) use ($checkin, $checkout) {
+        $join->on('room_types.id', '=', 'bookings.room_type_id')
+             ->where('bookings.check_in', '<', $checkout)
+             ->where('bookings.check_out', '>', $checkin);
+    })
+    ->groupBy('room_types.id', 'room_types.name', 'room_types.num_rooms', 'room_types.featured_image', 'room_types.description')
+    ->havingRaw('available_rooms > 0')
+    ->get();
+//dd($availableRooms);
+    session([
+        'availableRooms' => $availableRooms
+    ]);
         //dd($data);
         // Fetch room types that do not have conflicting bookings and have available rooms
         //  $data = RoomType::where('category_id', $rooms)
@@ -77,7 +97,7 @@ class UIController extends Controller
         //          return !$hasBookingConflict || $room->available_rooms > 0;
         //         });
 
-        return view('search.searchrooms', ['data' => $data]);
+        return view('search.searchrooms', ['data' => $availableRooms]);
     }
 
     public function booking(Request $request)
@@ -95,12 +115,25 @@ class UIController extends Controller
         }
     }
 
+    
+    public function viewrooms(Request $request)
+    {
+       // dd($request->all());
+        $id = $request->roomType_id;
+        $booking = RoomType::find($id);
+        return view('search.viewrooms', ['booking' => $booking]);
+    }
+
 
     public function bookingform(Request $request)
     {
         // dd($request->all());
         $id = $request->roomType_id;
         $extra_bed = $request->extra_bed;
+
+        $availableRooms = session('availableRooms');
+
+        //dd("this is a ".$availableRooms);
 
         $msg = '';
         if ($extra_bed == 1) {
@@ -126,13 +159,18 @@ class UIController extends Controller
         //  dd($request->all());
         // dd(auth()->user()->id);
 
+        $request->merge([
+            "check_in" => session('check_in'),
+            "check_out" => session('check_out')
+        ]);
+
 
         $booking = Booking::create([
             'customer_id' => auth()->user()->id,
             'room_type_id' => $request->roomType_id,
             'qty' => $request->qty,
-            "check_in" => $request->checkIn,
-            "check_out" => $request->checkOut,
+            "check_in" => session('check_in'),
+            "check_out" => session('check_out'),
             "adult" => $request->adult,
             "child" => $request->child,
         ]);
@@ -156,6 +194,8 @@ class UIController extends Controller
             "payment_type_id" => $request->paymentType,
             "amount" => $request->amount
         ]);
+
+        return view('booking.success')->with('msg',"Your booking is pending. We will inform you later.");
     }
 
     public function history($id)
@@ -232,7 +272,7 @@ class UIController extends Controller
 
     public function verifyOtp(Request $request)
     {
-        // dd($request->all());
+       // dd($request->all());
 
 
         $request->validate([

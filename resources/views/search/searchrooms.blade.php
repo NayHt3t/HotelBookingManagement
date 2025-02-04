@@ -99,6 +99,11 @@
 
 @forelse ($data as $rooms )
 
+@php
+ //dd($rooms->available_rooms);
+@endphp
+
+
 <form action="/booking" method="post">
   @csrf
 <div class="container py-2">
@@ -112,7 +117,7 @@
       <h3>{{$rooms->category_name}}</h3>
       <h4>{{$rooms->name}}</h4>
       <p>{{$rooms->description}}</p>
-      <p>{{"Available Rooms : ".$rooms->avaliable_rooms}}</p>
+      <p>{{"Available Rooms : ".$rooms->available_rooms}}</p>
     </div>
     <input type="hidden" name="roomType_id" value="{{$rooms->id}}">
 
@@ -121,7 +126,7 @@
       <div class="position-absolute " style="bottom: 10px; right: 10px">
       <p>Price : 100$</p><br>
     @if ($rooms->num_rooms == 0)
-    <button type="submit" class="btn btn-danger">Book Now</button>
+    <button type="submit" class="btn btn-primary">Book Now</button>
     @else
     <button type="submit" class="btn btn-primary">Book Now</button>
     @endif

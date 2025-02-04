@@ -25,8 +25,8 @@
             </div>
 
             <div class="input-field">
-               <input class="pswrd" type="password" name="password" placeholder="Enter New Password" >
-               <span class="show">SHOW</span>
+               <input class="pswrd" id="pswrd" type="password" name="password" placeholder="Enter New Password" >
+               <span class="show" id="show">SHOW</span>
                @if ($errors->has('password'))
 
                   <span class="error">
@@ -47,4 +47,34 @@
      
       
    </body>
+   <script>
+   document.addEventListener('DOMContentLoaded', function () {
+       var passwordField = document.getElementById('pswrd');
+       var togglePassword = document.getElementById('show');
+
+       if (passwordField.value === "") {
+           togglePassword.style.visibility = "hidden";
+       }
+
+       passwordField.addEventListener('input', function () {
+           if (passwordField.value === '') {
+               togglePassword.style.visibility = 'hidden';
+           } else {
+               togglePassword.style.visibility = 'visible';
+           }
+       });
+
+       togglePassword.addEventListener('click', function () {
+           if (passwordField.type === "password") {
+               passwordField.type = "text";
+               togglePassword.style.color = "#1DA1F2";
+               togglePassword.textContent = "HIDE";
+           } else {
+               passwordField.type = "password";
+               togglePassword.textContent = "SHOW";
+               togglePassword.style.color = "#111";
+           }
+       });
+   });
+</script>
 </html>

@@ -20,11 +20,12 @@ class AuthController extends Controller
     public function registration(Request $request)
     {
         //dd('pk');
-        // dd($request->all());
+       //  dd($request->all());
         $request->validate([
             "name" => "required",
             "email" => "required|unique:users,email",
             "password" => "required|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/",
+            "profile" => "required",
             "confirm_password" => "required|same:password"
         ]);
 

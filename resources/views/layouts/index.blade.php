@@ -43,14 +43,16 @@
                   <label for="checkin_date" class="font-weight-bold text-black">Check In</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="date" name="checkin" id="checkin_date" class="form-control">
+                    <input type="date" name="checkin" id="checkin_date"
+                     value="{{\Carbon\Carbon::today()->toDateString()}}" class="form-control">
                   </div>
                 </div>
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                   <label for="checkout_date" class="font-weight-bold text-black">Check Out</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="date" name="checkout" id="checkout_date" class="form-control">
+                    <input type="date" name="checkout" id="checkout_date"
+                    value="{{\Carbon\Carbon::today()->toDateString()}}" class="form-control">
                   </div>
                 </div>
 
@@ -258,7 +260,7 @@
           <div class="col-md-9 text-center element-animate">
             <h2>Relax and Enjoy your Holiday</h2>
             <p class="lead mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto quidem tempore expedita facere facilis, dolores!</p>
-            <div class="btn-play-wrap"><a href="https://vimeo.com/channels/staffpicks/93951774" class="btn-play popup-vimeo "><span class="ion-ios-play"></span></a></div>
+            {{-- <div class="btn-play-wrap"><a href="https://vimeo.com/channels/staffpicks/93951774" class="btn-play popup-vimeo "><span class="ion-ios-play"></span></a></div> --}}
           </div>
         </div>
       </div>

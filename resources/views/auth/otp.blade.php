@@ -9,6 +9,7 @@
 <body >
 
 <form action="/verify-otp" method="post">
+    @csrf
    
 
             <section >

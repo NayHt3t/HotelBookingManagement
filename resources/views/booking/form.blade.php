@@ -154,12 +154,14 @@
                             <div class="row">
                             <div class=" col-md-6">
                                 <label for="">Check In</label>
-                                <input type="date" name="checkIn" class=" form-control">
+                                <input type="date" name="checkIn"readonly
+                                value="{{ session('checkIn', \Carbon\Carbon::today()->toDateString()) }}" class=" form-control">
                             </div>
 
                             <div class=" col-md-6">
                                 <label for="">Check Out</label>
-                                <input type="date" name="checkOut" class=" form-control">
+                                <input type="date" name="checkOut"readonly
+                                value="{{ session('checkOut', \Carbon\Carbon::tomorrow()->toDateString()) }}" class=" form-control">
                             </div>
 
                             </div>
@@ -168,9 +170,24 @@
                                 <label for="">Number of Rooms</label>
                                 <select name="qty" class=" form-control" id="roomCount" >
                                     <option value=""></option>
-                                    @for ($i=1; $i<=$roomType->available_rooms;$i++)
-                                        <option value="{{$i}}">{{$i}}</option>
-                                    @endfor
+
+                                    
+                               @php
+                               $availableRooms = session('availableRooms');
+                               $i = 1;
+                               @endphp
+                               
+
+@foreach ($availableRooms as $roomType)
+    
+    
+    <option value="{{$i}}">{{$i++}}</option>
+    
+   
+@endforeach
+
+
+         
                                 </select>
                             </div>
 

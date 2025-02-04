@@ -17,7 +17,7 @@
   
   <div >
 
-    <img src="otp.jpg" alt="" height="200px">
+    <img src="{{asset('images/otp.jpg')}}" alt="" height="200px">
 
   </div>
   <h4>Expired In : <span id="countdown"></span></h4>
