@@ -27,7 +27,7 @@ class HomeController extends Controller
 
     public function rooms(Request $request)
     {
-        $rooms = RoomType::paginate(9);
+        $rooms = RoomType::paginate(6);
         return view('nav.rooms',['rooms'=>$rooms])->with('i',$request->input('page',-1)*5);
     }
 

@@ -124,7 +124,7 @@
     <div class="col-md-4 position-relative">
 
       <div class="position-absolute " style="bottom: 10px; right: 10px">
-      <p>Price : 100$</p><br>
+      <p></p><br>
     @if ($rooms->num_rooms == 0)
     <button type="submit" class="btn btn-primary">Book Now</button>
     @else
