@@ -43,9 +43,9 @@ class UIController extends Controller
             'check_out' => $checkout
         ]);
 
-        $roomtype = RoomType::where('category_id', '=', $rooms)
-            ->where('available_rooms', '>', 0)
-            ->get();
+        // $roomtype = RoomType::where('category_id', '=', $rooms)
+        //     ->where('available_rooms', '>', 0)
+        //     ->get();
         //    dd($roomtype->pluck('id'));
 
         // $booking = Booking::whereIn('room_type_id',  $roomtype->pluck('id'))
@@ -66,6 +66,7 @@ class UIController extends Controller
 
         $availableRooms = RoomType::select('room_types.id', 'room_types.name','room_types.featured_image','room_types.description', 
         DB::raw('room_types.num_rooms - IFNULL(SUM(bookings.qty), 0) AS available_rooms'))
+        ->where('room_types.category_id', $rooms)
     ->leftJoin('bookings', function ($join) use ($checkin, $checkout) {
         $join->on('room_types.id', '=', 'bookings.room_type_id')
              ->where('bookings.check_in', '<', $checkout)

@@ -31,7 +31,7 @@
             <div class="media d-block room mb-0">
               <figure>
 
-                <img src="{{$room->featured_image}}" alt="Generic placeholder image" class="img-fluid">
+                <img src="{{$room->featured_image}}" style="width: 100%;height: 250px;object-fit: cover" alt="Generic placeholder image" class="img-fluid">
                 <div class="overlap-text">
                   <span>
                     Featured Room
