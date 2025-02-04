@@ -94,6 +94,7 @@
 
     <div class="container mt-3">
 
+   
 
         <div class="row my-3 justify-content-center">
             <div class="col-md-12 ">
@@ -225,17 +226,21 @@
                                 <div class="col-md-6">Total Amount : </div>
                                 <div class="col-md-6">
 
+                                
+
                                     @foreach ($roomType->roomPrices as $room)
                                     @php
                                         if($promotions->isNotEmpty()){
                                             $totalamount = $room->price - ($room->price)*$promotion->discount/100 ;
                                         }else{
                                             $totalamount = $room->price;
+                                          
                                         }
                                      @endphp
-                                    <input type="text" class="form-control"  name="amount" id="totalAmount" value="{{$totalamount}}" readonly>
-                                    <span>{{ $msg }}</span>
+                                    
+                                
                                     @endforeach
+                                    <input type="text" class="form-control"  name="amount" id="totalAmount" value="{{$totalamount}}" readonly>
                                 </div>
                             </div>
 
@@ -313,14 +318,6 @@
     <script src="{{asset('js/main.js')}}"></script>
 <script src="https://kit.fontawesome.com/a67197b46d.js" crossorigin="anonymous"></script>
 
-<script>
-const price = @json($room->price);
-document.getElementById('roomCount').addEventListener('change',function () {
-  const numberOfRoom = parseInt(this.value);
-  const totalAmount = price * numberOfRoom;
-  document.getElementById('totalAmount').value = totalAmount.toFixed(2);
-});
 
-</script>
 
 </html>
