@@ -110,7 +110,15 @@ class UIController extends Controller
         }
         $roomType = RoomType::find($id);
         $paymentType = PaymentType::all();
-        return view('booking.form', ['roomType' => $roomType, 'paymentType' => $paymentType])->with('msg', $msg);
+
+        $promotions = DB::table('promotions')
+        ->join('room_prices', 'promotions.room_price_id', '=', 'room_prices.id')
+        ->join('room_types', 'room_prices.room_type_id', '=', 'room_types.id')
+        ->where('room_types.id', $id)
+        ->select('promotions.*')
+        ->get();
+
+        return view('booking.form', ['roomType' => $roomType, 'paymentType' => $paymentType,'promotions' => $promotions])->with('msg', $msg);
     }
 
     public function storebooking(Request $request)
@@ -200,9 +208,9 @@ class UIController extends Controller
             //Cache the otp for 5 minutes
             Cache::put('otp_' . $request->email, $otp, now()->addMinutes(5));
             //dd($otp);
-            Mail::raw("Your OTP is : $otp", function ($message) use ($request) {
-
-                $message->to($request->email)->subject("Your OTP For Login");
+            Mail::send('nav.updatemail', ['otp' => $otp], function ($message) use ($request)
+            {
+               $message->to($request->email)->subject("Your OTP For Update Profile");
             });
 
             // return response()->json(['message' => 'OTP Code Send To Your Email.Please Check!']);
@@ -237,12 +245,12 @@ class UIController extends Controller
             'name' => session('name'),
             'email' => session('email'),
             'password' => session('password'),
-            'status' => session('status')
+            // 'status' => session('status')
         ]);
 
         //dd($request->all());
 
-        $cachedOtp = Cache::get('otp_' . $request->email);
+        $cachedOtp = Cache::get('otp_'.session('email'));
 
         if ($cachedOtp != $request->otp) {
             return response()->json(['message' => 'Invalid or Expired OTP'], 401);
@@ -254,12 +262,12 @@ class UIController extends Controller
             // ]);
         }
 
-        $customer = Customer::findOrFail($request->id);
+        $customer = Customer::findOrFail(auth()->user()->id);
         $customer->name = $request->name;
         $customer->email = $request->email;
         $customer->save();
 
-        $user = Customer::findOrFail($request->id);
+        $user = Customer::findOrFail(auth()->user()->id);
 
         //$user = User::where('email',$request->email)->first();
         auth()->login($customer);
