@@ -46,6 +46,7 @@ Route::group(['namespace'=>'App\Http\Controllers'],function(){
 
     Route::controller(UIController::class)->group(function(){
 
+    Route::post('/viewrooms','viewrooms');
     Route::post('/booking','booking');
     Route::post('/search','search');
     Route::post('/bookingform','bookingform');

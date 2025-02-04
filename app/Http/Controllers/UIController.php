@@ -26,6 +26,7 @@ class UIController extends Controller
         $promoions = Promotion::all();
     }
 
+
     public function search(Request $request)
     {
 
@@ -103,6 +104,15 @@ class UIController extends Controller
         } elseif (Auth::guest()) {
             return view('auth.login1');
         }
+    }
+
+    
+    public function viewrooms(Request $request)
+    {
+       // dd($request->all());
+        $id = $request->roomType_id;
+        $booking = RoomType::find($id);
+        return view('search.viewrooms', ['booking' => $booking]);
     }
 
 
@@ -236,7 +246,7 @@ class UIController extends Controller
 
     public function verifyOtp(Request $request)
     {
-        // dd($request->all());
+       // dd($request->all());
 
 
         $request->validate([

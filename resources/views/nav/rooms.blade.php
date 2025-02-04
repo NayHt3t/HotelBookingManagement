@@ -50,11 +50,11 @@
                 @endforeach
 
                 <p>{{$room->description}}</p>
-                <form action="/booking" method="post">
+                <form action="/viewrooms" method="post">
                 @csrf
                 <input type="hidden" name="roomType_id" value="{{$room->id}}">
 
-                <button type="submit"  class="btn btn-primary btn-sm">Book Now</button>
+                <button type="submit"  class="btn btn-primary btn-sm">View Detail</button>
                 </form>
               </div>
             </div>
